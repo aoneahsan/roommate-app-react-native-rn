@@ -1,0 +1,12 @@
+exports.PRIMARY = "rgba(46, 53, 228, 1)";
+exports.SECONDARY = "rgba(254, 194, 195, 1)";
+exports.GREY = "rgba(141, 139, 139, 0.3)";
+exports.GREEN = "rgba(42, 167, 92, 1)";
+exports.YELLOW = "rgba(253, 186, 53, 1)";
+exports.BLUE = "rgba(93, 177, 213, 1)";
+exports.RED = "rgba(255, 2, 2, 1)";
+exports.PINK = "rgba(255, 65, 101, 1)";
+exports.LIGHT_BROWN = "rgba(243, 188, 82, 1)";
+exports.DARK_BROWN = "rgba(134, 104, 46, 1)";
+exports.LIGHT_PURPLE = "rgba(46, 53, 228, 0.3)";
+exports.DARK_PURPLE = "rgba(112, 87, 167, 1)";
