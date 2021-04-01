@@ -9,9 +9,10 @@ exports.FONT_BLACK = "Rubik-Black";
 
 // FONT SIZE
 exports.TEXT_SIZE = 16;
-exports.HEADING_SIZE = 20;
+exports.HEADING_SIZE = 30;
 exports.SUB_HEADING_SIZE = 18;
 exports.BTN_TEXT_SIZE = 24;
+exports.HEADER_TITLE_SIZE = 24;
 
 // FONT WEIGHT
 exports.FONT_WEIGHT_LIGHT = 300;

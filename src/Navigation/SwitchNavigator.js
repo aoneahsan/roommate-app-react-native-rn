@@ -3,10 +3,10 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 
 // Custom Imports
 import LandingScreen from "./../screens/LandingScreen";
-import Auth from "./../screens/Auth";
+import { AuthStackComponents } from "./StackNavigator";
 
 const AppSwitchContainer = createSwitchNavigator({
-  Auth: Auth,
+  Auth: AuthStackComponents,
   LandingScreen: LandingScreen,
 });
 

@@ -40,6 +40,7 @@ export {
   HEADING_SIZE,
   SUB_HEADING_SIZE,
   BTN_TEXT_SIZE,
+  HEADER_TITLE_SIZE,
 } from "./fonts";
 
 export { AWS_POOL_ID } from "./keys";

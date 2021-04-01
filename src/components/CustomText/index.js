@@ -23,7 +23,7 @@ const CustomText = (props) => {
             : props.fontfamily == "extrabold"
             ? CONFIG.FONT_EXTRA_BOLD
             : CONFIG.FONT_REGULAR,
-        fontSize: props.fontsize ? props.fontsize : CONFIG.BTN_TEXT_SIZE,
+        fontSize: props.fontsize ? props.fontsize : CONFIG.TEXT_SIZE,
         color: props.color ? props.color : CONFIG.TEXT_COLOR,
         textAlign:
           props.textalign == "center"

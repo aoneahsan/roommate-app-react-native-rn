@@ -1,15 +1,27 @@
 // Core Imports
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
-const Heading = (props) => {
-  return <View style={STYLES.main}></View>;
+// Custom Imports
+import * as CONFIG from "./../../config";
+import CustomText from "./../CustomText";
+
+const CustomHeading = (props) => {
+  return (
+    <CustomText
+      style={{ ...STYLES.heading, ...props.style }}
+      fontfamily={props.fontfamily ? props.fontfamily : "medium"}
+      fontsize={props.fontsize ? props.fontsize : CONFIG.HEADING_SIZE}
+      color={props.color}
+      textalign={props.textalign}
+    >
+      {props.children}
+    </CustomText>
+  );
 };
 
 const STYLES = StyleSheet.create({
-  main: {
-    flex: 1,
-  },
+  heading: {},
 });
 
-export default Heading;
+export default CustomHeading;
