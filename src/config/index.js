@@ -1,4 +1,5 @@
 export {
+  // Generic Colors
   PRIMARY,
   SECONDARY,
   GREY,
@@ -11,9 +12,15 @@ export {
   DARK_BROWN,
   LIGHT_PURPLE,
   DARK_PURPLE,
+  WHITE,
+  BLACK,
+  // Pre Defined Colors
+  TEXT_COLOR,
+  LIGHT_TEXT_COLOR,
 } from "./colors";
 
 export {
+  // Font Family
   FONT_LIGHT,
   FONT_MEDIUM,
   FONT_REGULAR,
@@ -21,6 +28,18 @@ export {
   FONT_BOLD,
   FONT_EXTRA_BOLD,
   FONT_BLACK,
+  // Font Weight
+  FONT_WEIGHT_LIGHT,
+  FONT_WEIGHT_REGULAR,
+  FONT_WEIGHT_MEDIUM,
+  FONT_WEIGHT_SIME_BOLD,
+  FONT_WEIGHT_BOLD,
+  FONT_WEIGHT_EXTRA_BOLD,
+  // Font Size
+  TEXT_SIZE,
+  HEADING_SIZE,
+  SUB_HEADING_SIZE,
+  BTN_TEXT_SIZE,
 } from "./fonts";
 
 export { AWS_POOL_ID } from "./keys";

@@ -2,7 +2,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { AppLoading } from "expo";
+import AppLoading from "expo-app-loading";
 import * as FONT from "expo-font";
 
 // Custom Imports
@@ -28,7 +28,8 @@ export default function App() {
     return (
       <AppLoading
         startAsync={FONTS_LOADER}
-        onFinsh={() => {
+        onFinish={() => {
+          console.log("FONTS loaded!");
           setLoadingData(false);
         }}
         onError={() => {
