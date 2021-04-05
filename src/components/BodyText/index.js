@@ -5,7 +5,7 @@ import { Text } from "react-native";
 // Custom Imports
 import * as CONFIG from "./../../config";
 
-const CustomText = (props) => {
+const BodyText = (props) => {
   return (
     <Text
       style={{
@@ -57,4 +57,4 @@ const CustomText = (props) => {
 //             ? CONFIG.FONT_WEIGHT_EXTRA_BOLD
 //             : CONFIG.FONT_WEIGHT_REGULAR,
 
-export default CustomText;
+export default BodyText;

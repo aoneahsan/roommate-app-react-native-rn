@@ -1,70 +1,158 @@
 // Core Imports
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
-import CustomHeading from "./../../components/CustomHeading";
-import CustomText from "./../../components/CustomText";
-import CustomButton from "./../../components/CustomButton";
+import MainHeading from "./../../components/MainHeading";
+import BodyText from "./../../components/BodyText";
+import MainButton from "./../../components/MainButton";
 import Input from "./../../components/Input";
 import Divider from "./../../components/Divider";
+import CountryPicker from "./../../components/CountryPicker";
 
 class Auth extends React.Component {
   state = {
     isLoginMode: true,
+    form: {
+      country: {
+        name: "",
+        code: "",
+      },
+      phone: "",
+    },
   };
+
+  countryChangedHandler = (name, code) => {
+    if (!name || !code) {
+      return;
+    }
+    this.setState((state) => {
+      return {
+        form: {
+          country: {
+            name,
+            code,
+          },
+          phone: state.form.phone,
+        },
+      };
+    });
+  };
+
+  phoneChangedHandler = (phone) => {
+    if (!phone) {
+      return;
+    }
+    this.setState((state) => {
+      return {
+        form: {
+          country: state.form.country,
+          phone: phone,
+        },
+      };
+    });
+  };
+
+  formSubmitHandler = () => {
+    const { form } = this.state;
+    if (
+      !form.phone ||
+      !form.phone.length > 6 ||
+      !form.country.name ||
+      !form.country.code
+    ) {
+      alert("Enter valid data!");
+      return;
+    }
+    console.log({ form });
+    this.props.navigation.navigate({
+      name: "verifyPhone_screen",
+      params: {
+        formData: form,
+      },
+    });
+  };
+
   render() {
-    const { isLoginMode } = this.state;
+    const { isLoginMode, form } = this.state;
     return (
-      <View style={STYLES.main}>
-        <View style={STYLES.contentCon}>
-          <View>
-            <CustomHeading>Welcome Back</CustomHeading>
-            <CustomText color={CONFIG.GREY} style={{ marginTop: 4 }}>
-              Sign in to continue
-            </CustomText>
-          </View>
-          <View style={STYLES.formCon}>
-            <View style={STYLES.inputCon}>
-              <Input style={STYLES.input} />
+      <ScrollView style={STYLES.bgWhite}>
+        <View style={STYLES.main}>
+          <View style={STYLES.contentCon}>
+            <View style={STYLES.textCon}>
+              <MainHeading>Welcome Back</MainHeading>
+              <BodyText color={CONFIG.GREY} style={{ marginTop: 4 }}>
+                Sign in to continue
+              </BodyText>
             </View>
-            <View style={STYLES.inputCon}>
-              <Input style={STYLES.input} />
+            <View style={STYLES.formCon}>
+              <View style={STYLES.formInnerCon}>
+                <View style={STYLES.inputCon}>
+                  <CountryPicker
+                    style={STYLES.input}
+                    onSelect={(name, code) => {
+                      console.log({ name, code });
+                      this.countryChangedHandler(name, code);
+                    }}
+                  ></CountryPicker>
+                </View>
+                <View style={STYLES.inputCon}>
+                  <Input
+                    placeholder="123-456-789"
+                    keyboardType="phone-pad"
+                    style={STYLES.input}
+                    onChange={this.phoneChangedHandler}
+                  />
+                </View>
+                <View style={STYLES.btnCon}>
+                  <MainButton
+                    color="primary"
+                    onPress={this.formSubmitHandler}
+                    disabled={
+                      !form.phone ||
+                      !form.phone.length > 6 ||
+                      !form.country.name ||
+                      !form.country.code
+                    }
+                  >
+                    {isLoginMode ? "Login" : "SignUp"}
+                  </MainButton>
+                </View>
+              </View>
             </View>
-            <View style={STYLES.btnCon}>
-              <CustomButton>{isLoginMode ? "Login" : "SignUp"}</CustomButton>
+            <View style={STYLES.dividerCon}>
+              <Divider>or</Divider>
             </View>
-          </View>
-          <View style={STYLES.dividerCon}>
-            <Divider />
-          </View>
-          <View style={STYLES.btnsCon}>
-            <View style={STYLES.btnCon}>
-              <CustomButton fontsize={18}>Continue with WeChat</CustomButton>
+            <View style={STYLES.btnsCon}>
+              <View style={STYLES.btnCon}>
+                <MainButton fontsize={16}>Continue with WeChat</MainButton>
+              </View>
+              <View style={STYLES.btnCon}>
+                <MainButton fontsize={16}>Continue with Facebook</MainButton>
+              </View>
+              <View style={STYLES.btnCon}>
+                <MainButton fontsize={16}>Continue with Email</MainButton>
+              </View>
             </View>
-            <View style={STYLES.btnCon}>
-              <CustomButton fontsize={18}>Continue with Facebook</CustomButton>
+            <View style={STYLES.policyTextCon}>
+              <BodyText color={CONFIG.GREY} style={{ marginTop: 4 }}>
+                Terms of use & Privecy Policy
+              </BodyText>
             </View>
-            <View style={STYLES.btnCon}>
-              <CustomButton fontsize={18}>Continue with Email</CustomButton>
-            </View>
-          </View>
-          <View style={STYLES.policyTextCon}>
-            <CustomText color={CONFIG.GREY} style={{ marginTop: 4 }}>
-              Terms of use & Privecy Policy
-            </CustomText>
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const STYLES = StyleSheet.create({
+  bgWhite: {
+    backgroundColor: CONFIG.WHITE,
+  },
   main: {
     flex: 1,
-    backgroundColor: CONFIG.WHITE,
     paddingHorizontal: 10,
     paddingTop: 10,
   },
@@ -75,7 +163,15 @@ const STYLES = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
+  textCon: {
+    paddingLeft: 24,
+    marginBottom: 16,
+  },
   formCon: {
+    alignItems: "center",
+  },
+  formInnerCon: {
+    width: "100%",
     alignItems: "center",
   },
   inputCon: {
@@ -83,7 +179,10 @@ const STYLES = StyleSheet.create({
     marginVertical: 8,
   },
   input: {},
-  dividerCon: {},
+  dividerCon: {
+    marginTop: 14,
+    marginBottom: 0,
+  },
   btnsCon: {
     alignItems: "center",
   },
@@ -94,6 +193,7 @@ const STYLES = StyleSheet.create({
   btn: {},
   policyTextCon: {
     alignItems: "center",
+    marginTop: 20,
   },
   policyText: {},
 });

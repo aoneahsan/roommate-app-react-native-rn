@@ -3,10 +3,10 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 // Custom Imports
-import * as CONFIG from "./../../config";
-import CustomText from "./../CustomText";
+import * as CONFIG from "../../config";
+import CustomText from "../CustomText";
 
-const CustomHeading = (props) => {
+const MainHeading = (props) => {
   return (
     <CustomText
       style={{ ...STYLES.heading, ...props.style }}
@@ -24,4 +24,4 @@ const STYLES = StyleSheet.create({
   heading: {},
 });
 
-export default CustomHeading;
+export default MainHeading;

@@ -16,4 +16,5 @@ exports.BLACK = "#000";
 
 // Pre defined colors
 exports.TEXT_COLOR = "#000";
-exports.LIGHT_TEXT_COLOR = "#8D8B8B"
+exports.LIGHT_TEXT_COLOR = "#8D8B8B";
+exports.DIVIDER_LINE_COLOR = "#D6D9E4";

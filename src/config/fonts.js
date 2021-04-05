@@ -11,8 +11,11 @@ exports.FONT_BLACK = "Rubik-Black";
 exports.TEXT_SIZE = 16;
 exports.HEADING_SIZE = 30;
 exports.SUB_HEADING_SIZE = 18;
-exports.BTN_TEXT_SIZE = 24;
+exports.BTN_TEXT_SIZE = 24; // Main Button
+exports.SMALL_BTN_TEXT_SIZE = 18; // Main Button
 exports.HEADER_TITLE_SIZE = 24;
+exports.INPUT_LABEL_SIZE = 10;
+exports.INPUT_TEXT_SIZE = 16;
 
 // FONT WEIGHT
 exports.FONT_WEIGHT_LIGHT = 300;

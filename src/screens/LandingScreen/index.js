@@ -1,13 +1,30 @@
 // Core Imports
 import React from "react";
-import { StyleSheet, View, Text, ImageBackground } from "react-native";
+import { StyleSheet, View, ImageBackground } from "react-native";
 
+import { NavigationActions } from "react-navigation";
 // Custom Imports
 import LandingScreenBgImage from "./../../../assets/images/main-screen-bg.png";
 import Logo from "./../../components/Logo";
-import CustomButton from "./../../components/CustomButton";
+import MainButton from "./../../components/MainButton";
 
 class LandingScreen extends React.Component {
+  componentDidMount() {
+    console.log(this.props);
+  }
+
+  navigateToAuthHandler = () => {
+    this.props.navigation.dispatch(
+      NavigationActions.navigate({ routeName: "auth_stack_components" })
+    );
+  };
+
+  navigateToProfileHandler = () => {
+    this.props.navigation.dispatch(
+      NavigationActions.navigate({ routeName: "profile_stack_components" })
+    );
+  };
+
   render() {
     return (
       <View style={STYLES.main}>
@@ -19,21 +36,21 @@ class LandingScreen extends React.Component {
             <View style={STYLES.contentInnerCon}>
               <View style={STYLES.btnsCon}>
                 <View style={STYLES.btnCon}>
-                  <CustomButton
+                  <MainButton
                     style={STYLES.btn}
                     color="white"
-                    onPress={() => alert("Sign Up")}
+                    onPress={this.navigateToAuthHandler}
                   >
                     Sign Up
-                  </CustomButton>
+                  </MainButton>
                 </View>
                 <View style={STYLES.btnCon}>
-                  <CustomButton
+                  <MainButton
                     style={STYLES.btn}
-                    onPress={() => alert("Log In")}
+                    onPress={this.navigateToProfileHandler}
                   >
                     Log In
-                  </CustomButton>
+                  </MainButton>
                 </View>
               </View>
             </View>

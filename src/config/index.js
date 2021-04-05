@@ -17,6 +17,7 @@ export {
   // Pre Defined Colors
   TEXT_COLOR,
   LIGHT_TEXT_COLOR,
+  DIVIDER_LINE_COLOR,
 } from "./colors";
 
 export {
@@ -40,7 +41,10 @@ export {
   HEADING_SIZE,
   SUB_HEADING_SIZE,
   BTN_TEXT_SIZE,
+  SMALL_BTN_TEXT_SIZE,
   HEADER_TITLE_SIZE,
+  INPUT_LABEL_SIZE,
+  INPUT_TEXT_SIZE,
 } from "./fonts";
 
 export { AWS_POOL_ID } from "./keys";

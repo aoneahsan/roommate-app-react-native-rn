@@ -4,8 +4,9 @@ import { Platform } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Custom Imports
-import Auth from "./../screens/Auth";
-import * as CONFIG from "./../config";
+import * as CONFIG from "../../../config";
+import Auth from "../../../screens/Auth";
+import VerifyPhone from "../../../screens/VerifyPhone";
 
 // Stacks Definations
 const AuthStack = createStackNavigator();
@@ -19,17 +20,22 @@ export const AuthStackComponents = (navData) => {
         headerTitleAlign: "center",
         headerStyle: {
           backgroundColor: CONFIG.WHITE,
-          elevation: 0
+          elevation: 0,
         },
         headerTitleStyle: {
-          fontSize: CONFIG.HEADER_TITLE_SIZE
-        }
+          fontSize: CONFIG.HEADER_TITLE_SIZE,
+        },
       }}
     >
       <AuthStack.Screen
         name="auth_screen"
         component={Auth}
         options={{ title: "Login or Sign up" }}
+      ></AuthStack.Screen>
+      <AuthStack.Screen
+        name="verifyPhone_screen"
+        component={VerifyPhone}
+        options={{ title: "Confirm Your Number" }}
       ></AuthStack.Screen>
     </AuthStack.Navigator>
   );
