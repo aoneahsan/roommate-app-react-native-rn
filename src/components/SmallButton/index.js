@@ -54,7 +54,7 @@ const SmallButton = (props) => {
         >
           <BodyText
             textalign={props.textalign ? props.textalign : "center"}
-            fontfamily={props.fontfamily ? props.fontfamily : "medium"}
+            fontfamily={props.fontfamily ? props.fontfamily : "regular"}
             fontsize={
               props.fontsize ? props.fontsize : CONFIG.SMALL_BTN_TEXT_SIZE
             }
@@ -76,12 +76,16 @@ const STYLES = StyleSheet.create({
         : "visible",
     borderRadius: 10,
     borderWidth: 1,
+    borderColor: CONFIG.GREY
   },
   main: {
     width: "100%",
     height: "100%",
   },
-  innerCon: {},
+  innerCon: {
+    paddingVertical: 6,
+    paddingHorizontal: 20,
+  },
   whiteBtn: {
     backgroundColor: CONFIG.WHITE,
   },

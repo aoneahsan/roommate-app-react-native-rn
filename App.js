@@ -1,12 +1,14 @@
 // Core Imports
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import AppLoading from "expo-app-loading";
 import * as FONT from "expo-font";
+import { Provider } from "react-redux";
 
 // Custom Imports
 import Layout from "./src/Layout";
+import AppStore from "./src/store";
 
 // Global Constants
 const FONTS_LOADER = () => {
@@ -39,10 +41,12 @@ export default function App() {
     );
   }
   return (
-    <View style={styles.container}>
-      <Layout />
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={AppStore}>
+      <View style={styles.container}>
+        <Layout />
+        <StatusBar style="auto" />
+      </View>
+    </Provider>
   );
 }
 

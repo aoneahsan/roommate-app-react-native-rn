@@ -65,7 +65,7 @@ class Auth extends React.Component {
       alert("Enter valid data!");
       return;
     }
-    console.log({ form });
+    // console.log("Auth === formSubmitHandler == res = ", { form });
     this.props.navigation.navigate({
       name: "verifyPhone_screen",
       params: {
@@ -77,7 +77,7 @@ class Auth extends React.Component {
   render() {
     const { isLoginMode, form } = this.state;
     return (
-      <ScrollView style={STYLES.bgWhite}>
+      <ScrollView contentContainerStyle={STYLES.bgWhite}>
         <View style={STYLES.main}>
           <View style={STYLES.contentCon}>
             <View style={STYLES.textCon}>
@@ -150,6 +150,7 @@ class Auth extends React.Component {
 const STYLES = StyleSheet.create({
   bgWhite: {
     backgroundColor: CONFIG.WHITE,
+    flexGrow: 1,
   },
   main: {
     flex: 1,

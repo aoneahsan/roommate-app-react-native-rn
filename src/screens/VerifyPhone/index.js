@@ -4,9 +4,9 @@ import { StyleSheet, View, ScrollView } from "react-native";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
-import CustomText from "./../../components/CustomText";
+import BodyText from "./../../components/BodyText";
 import CodeInput from "./../../components/CodeInput";
-import CustomButton2 from "./../../components/CustomButton2";
+import FlatButton from "./../../components/FlatButton";
 
 class VerifyPhone extends React.Component {
   state = {
@@ -16,7 +16,7 @@ class VerifyPhone extends React.Component {
   componentDidMount() {
     // this.props.navigation.navigate({ name: "auth_screen" });
     const props = this.props;
-    // console.log(props.route.params);
+    // console.log("VerifyPhone === componentDidMount == res = ", props.route.params);
     if (props.route.params && props.route.params.formData) {
       this.setState({
         formData: props.route.params.formData,
@@ -36,27 +36,30 @@ class VerifyPhone extends React.Component {
   render() {
     const { formData } = this.state;
     return (
-      <ScrollView style={STYLES.bgWhite}>
+      <ScrollView contentContainerStyle={STYLES.bgWhite}>
         <View style={STYLES.main}>
           <View style={STYLES.textCon}>
-            <CustomText fontsize={16} style={STYLES.text1}>
+            <BodyText fontsize={16} style={STYLES.text1}>
               Enter the code we send over SMS to
-            </CustomText>
-            <CustomText fontsize={16} color={CONFIG.PINK} style={STYLES.text2}>
+            </BodyText>
+            <BodyText fontsize={16} color={CONFIG.PINK} style={STYLES.text2}>
               {formData ? formData.phone : "No Phone Number Passed"}
-            </CustomText>
+            </BodyText>
           </View>
           <View style={STYLES.codeInputCon}>
-            <CodeInput style={STYLES.codeinput} onChange={this.codeInputChangeHandler}></CodeInput>
+            <CodeInput
+              style={STYLES.codeinput}
+              onChange={this.codeInputChangeHandler}
+            ></CodeInput>
           </View>
           <View style={STYLES.bottomSection}>
-            <CustomText style={STYLES.text3}>Didn't get an SMS?</CustomText>
-            <CustomButton2 style={STYLES.text4}>Send again</CustomButton2>
+            <BodyText style={STYLES.text3}>Didn't get an SMS?</BodyText>
+            <FlatButton style={STYLES.text4}>Send again</FlatButton>
           </View>
           <View style={STYLES.bottomSection2}>
-            <CustomButton2 underlined style={STYLES.text5}>
+            <FlatButton underlined style={STYLES.text5}>
               More Option
-            </CustomButton2>
+            </FlatButton>
           </View>
         </View>
       </ScrollView>
@@ -67,6 +70,7 @@ class VerifyPhone extends React.Component {
 const STYLES = StyleSheet.create({
   bgWhite: {
     backgroundColor: CONFIG.WHITE,
+    flexGrow: 1,
   },
   main: {
     flex: 1,
@@ -79,7 +83,7 @@ const STYLES = StyleSheet.create({
     borderRightWidth: 1,
     elevation: 5,
     marginLeft: 4,
-    marginRight: 2
+    marginRight: 2,
   },
   textCon: {
     paddingTop: 30,

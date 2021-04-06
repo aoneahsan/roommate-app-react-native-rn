@@ -4,11 +4,11 @@ import { StyleSheet } from "react-native";
 
 // Custom Imports
 import * as CONFIG from "../../config";
-import CustomText from "../CustomText";
+import BodyText from "../BodyText";
 
 const MainHeading = (props) => {
   return (
-    <CustomText
+    <BodyText
       style={{ ...STYLES.heading, ...props.style }}
       fontfamily={props.fontfamily ? props.fontfamily : "medium"}
       fontsize={props.fontsize ? props.fontsize : CONFIG.HEADING_SIZE}
@@ -16,7 +16,7 @@ const MainHeading = (props) => {
       textalign={props.textalign}
     >
       {props.children}
-    </CustomText>
+    </BodyText>
   );
 };
 
