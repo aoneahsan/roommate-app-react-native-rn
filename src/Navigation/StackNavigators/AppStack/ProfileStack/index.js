@@ -1,12 +1,11 @@
 // Core Imports
 import React from "react";
-import { Platform } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Custom Imports
-import * as CONFIG from "../../../config";
-import Profile from "../../../screens/Profile";
-import RoleSelect from "./../../../screens/RoleSelect";
+import * as CONFIG from "../../../../config";
+import Profile from "../../../../screens/Profile";
+import RoleSelect from "./../../../../screens/RoleSelect";
 
 // Stacks Definations
 const ProfileStack = createStackNavigator();
@@ -15,7 +14,7 @@ const ProfileStack = createStackNavigator();
 export const ProfileStackComponents = (navData) => {
   return (
     <ProfileStack.Navigator
-      initialRouteName="role_select_screen"
+      initialRouteName="profile_screen"
       screenOptions={{
         headerTitleAlign: "center",
         headerStyle: {

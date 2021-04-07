@@ -9,7 +9,19 @@ import TouchableCard from "./../../components/TouchableCard";
 import Card from "./../../components/Card";
 import BodyText from "./../../components/BodyText";
 
-class _ extends React.Component {
+class RoleSelect extends React.Component {
+  navigateToAddPlaceStackHandler = () => {
+    this.props.navigation.navigate("add_place_stack_screens", {
+      screen: "add_place_step1_screen",
+    });
+  };
+
+  navigateToFindRoommateStackHandler = () => {
+    this.props.navigation.navigate("find_roommate_stack_screens", {
+      screen: "find_roommate_step3_screen",
+    });
+  };
+
   render() {
     return (
       <ScrollView contentContainerStyle={STYLES.bgWhite}>
@@ -18,7 +30,10 @@ class _ extends React.Component {
             <BodyText style={STYLES.heading}>I want to...</BodyText>
           </View>
           <View style={STYLES.optionsCon}>
-            <TouchableCard style={{ ...STYLES.option, ...STYLES.bgPrimary }}>
+            <TouchableCard
+              style={{ ...STYLES.option, ...STYLES.bgPrimary }}
+              onPress={this.navigateToAddPlaceStackHandler}
+            >
               <Card style={STYLES.optionIconCon}>
                 <Ionicons
                   style={STYLES.optionIcon}
@@ -31,7 +46,10 @@ class _ extends React.Component {
                 Post a New Place
               </BodyText>
             </TouchableCard>
-            <TouchableCard style={STYLES.option}>
+            <TouchableCard
+              style={STYLES.option}
+              onPress={this.navigateToFindRoommateStackHandler}
+            >
               <Card style={STYLES.optionIconCon}>
                 <Ionicons
                   style={STYLES.optionIcon}
@@ -66,7 +84,7 @@ const STYLES = StyleSheet.create({
   },
   heading: {
     fontSize: 30,
-    fontFamily: CONFIG.FONT_SEMI_BOLD,
+    fontFamily: CONFIG.FONT_RUBIK_SEMI_BOLD,
   },
   optionsCon: {
     flex: 0.5,
@@ -83,7 +101,7 @@ const STYLES = StyleSheet.create({
   },
   optionText: {
     fontSize: 18,
-    fontFamily: CONFIG.FONT_MEDIUM,
+    fontFamily: CONFIG.FONT_RUBIK_MEDIUM,
   },
   optionIconCon: {
     position: "absolute",
@@ -103,4 +121,4 @@ const STYLES = StyleSheet.create({
   },
 });
 
-export default _;
+export default RoleSelect;

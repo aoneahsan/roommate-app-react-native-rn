@@ -23,7 +23,7 @@ class LandingScreen extends React.Component {
 
   navigateToProfileHandler = () => {
     this.props.navigation.dispatch(
-      NavigationActions.navigate({ routeName: "profile_stack_components" })
+      NavigationActions.navigate({ routeName: "app_stack_components" })
     );
   };
 

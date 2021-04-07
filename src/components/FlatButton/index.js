@@ -77,7 +77,7 @@ const STYLES = StyleSheet.create({
   },
   text: {
     letterSpacing: 0.4,
-    fontFamily: CONFIG.FONT_BOLD,
+    fontFamily: CONFIG.FONT_RUBIK_BOLD,
     fontSize: 16,
   },
   underlined: {

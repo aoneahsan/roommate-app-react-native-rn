@@ -18,3 +18,4 @@ exports.BLACK = "#000";
 exports.TEXT_COLOR = "#000";
 exports.LIGHT_TEXT_COLOR = "#8D8B8B";
 exports.DIVIDER_LINE_COLOR = "#D6D9E4";
+exports.CHIP_BG = "rgba(46, 53, 228,.3)";

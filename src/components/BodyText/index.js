@@ -11,18 +11,18 @@ const BodyText = (props) => {
       style={{
         fontFamily:
           props.fontfamily == "light"
-            ? CONFIG.FONT_LIGHT
+            ? CONFIG.FONT_RUBIK_LIGHT
             : props.fontfamily == "regular"
-            ? CONFIG.FONT_REGULAR
+            ? CONFIG.FONT_RUBIK_REGULAR
             : props.fontfamily == "medium"
-            ? CONFIG.FONT_MEDIUM
+            ? CONFIG.FONT_RUBIK_MEDIUM
             : props.fontfamily == "simebold"
-            ? CONFIG.FONT_SEMI_BOLD
+            ? CONFIG.FONT_RUBIK_SEMI_BOLD
             : props.fontfamily == "bold"
-            ? CONFIG.FONT_BOLD
+            ? CONFIG.FONT_RUBIK_BOLD
             : props.fontfamily == "extrabold"
-            ? CONFIG.FONT_EXTRA_BOLD
-            : CONFIG.FONT_REGULAR,
+            ? CONFIG.FONT_RUBIK_EXTRA_BOLD
+            : CONFIG.FONT_RUBIK_REGULAR,
         fontSize: props.fontsize ? props.fontsize : CONFIG.TEXT_SIZE,
         color: props.color ? props.color : CONFIG.TEXT_COLOR,
         textAlign:
