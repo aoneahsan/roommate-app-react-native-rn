@@ -19,12 +19,14 @@ const Chip = (props) => {
           ...{
             backgroundColor: props.checked ? CONFIG.CHIP_BG : CONFIG.WHITE,
             marginRight: 4,
-            marginBottom: 6
+            marginBottom: 6,
           },
-          ...props.styles,
+          ...props.style,
         }}
       >
-        <BodyText style={STYLES.text}>{props.children}</BodyText>
+        <BodyText style={{ ...STYLES.text, ...props.textStyle }}>
+          {props.children}
+        </BodyText>
       </View>
     </TouchableOpacity>
   );

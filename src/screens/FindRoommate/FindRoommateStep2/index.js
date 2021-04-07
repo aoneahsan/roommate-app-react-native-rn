@@ -123,9 +123,12 @@ const FindRoommateStep2 = (props) => {
         <SelectOptionsCard
           icon={TravelIcon}
           label="Travel"
-          labelcolor="#5DB1D5"
+          labelbgcolor="#5DB1D5"
           chips={travelChips}
+          chipbgcolor="rgba(93, 177, 213,.4)"
+          chiptextcolor="#2E476E"
           onPress={travelCardPressHandler}
+          style={STYLES.optionsCard}
         />
       </View>
     </ScrollView>
@@ -148,6 +151,9 @@ const STYLES = StyleSheet.create({
   textarea: {
     // minHeight: 160,
   },
+  optionsCard: {
+    marginTop: 20
+  }
 });
 
 export default FindRoommateStep2;
