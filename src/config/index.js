@@ -19,6 +19,7 @@ export {
   LIGHT_TEXT_COLOR,
   DIVIDER_LINE_COLOR,
   CHIP_BG,
+  BORDER_COLOR_LIGHT,
 } from "./colors";
 
 export {

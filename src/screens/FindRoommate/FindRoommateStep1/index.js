@@ -5,13 +5,11 @@ import {
   View,
   ScrollView,
   Alert,
-  TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
-import { Ionicons } from "@expo/vector-icons";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 // Custom Imports
 import * as CONFIG from "../../../config";
@@ -20,9 +18,10 @@ import CustomInput from "../../../components/CustomInput";
 import Chip from "../../../components/Chip";
 import StepFooter from "../../../components/StepFooter";
 
+// ******************************************************
 const FORM_INPUT_CHANGED = "FORM_INPUT_CHANGED";
 
-const formStateReducer = (state, action) => {
+const FORM_STATE_REDUCER = (state, action) => {
   switch (action.type) {
     case FORM_INPUT_CHANGED:
       const updatedValues = {
@@ -47,7 +46,7 @@ const formStateReducer = (state, action) => {
   }
 };
 
-const initFormState = {
+const INIT_FORM_STATE = {
   inputValues: {
     selected_date: new Date(),
     location: "",
@@ -67,27 +66,16 @@ const initFormState = {
   formIsValid: false,
 };
 
-const PLACE_PREFERENCE_CHANGED = "PLACE_PREFERENCE_CHANGED";
-const BUILDING_TYPE_CHANGED = "BUILDING_TYPE_CHANGED";
+const CHIPS_DATA_CHANGED = "CHIPS_DATA_CHANGED";
 
 const chipsStateReducer = (state, action) => {
   switch (action.type) {
-    case PLACE_PREFERENCE_CHANGED:
-      const updatedPlacePreferences = [...state.placePreferences];
-      updatedPlacePreferences[action.index].checked = !action.checked; // because here "action.checked" will store the last value, hence user clicked on this chip so we should update it with value opposite to last value
-      console.log("FindRoommateStep1 === chipsStateReducer == res = ", {
-        updatedPlacePreferences,
-      });
+    case CHIPS_DATA_CHANGED:
+      const dataClone = [...state[action.id]];
+      dataClone[action.index].checked = !action.checked; // because here "action.checked" will store the last value, hence user clicked on this chip so we should update it with value opposite to last value
       return {
         ...state,
-        placePreferences: updatedPlacePreferences,
-      };
-    case BUILDING_TYPE_CHANGED:
-      const updatedbuildingTypes = [...state.buildingTypes];
-      updatedbuildingTypes[action.index].checked = !action.checked; // because here "action.checked" will store the last value, hence user clicked on this chip so we should update it with value opposite to last value
-      return {
-        ...state,
-        buildingTypes: updatedbuildingTypes,
+        [action.id]: dataClone,
       };
     default:
       return state;
@@ -98,22 +86,22 @@ const FindRoommateStep1 = (props) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const [formState, dispatcherFormState] = useReducer(
-    formStateReducer,
-    initFormState
+    FORM_STATE_REDUCER,
+    INIT_FORM_STATE
   );
 
   const [chipsData, dispatchChipsData] = useReducer(chipsStateReducer, {
     placePreferences: [
-      { id: "extire_place", value: "Entire Place", checked: false },
-      { id: "shared_place", value: "Shared Place", checked: false },
+      { id: "1", value: "Entire Place", checked: false },
+      { id: "2", value: "Shared Place", checked: false },
     ],
     buildingTypes: [
-      { id: "No Preference", value: "No Preference", checked: false },
-      { id: "Condo", value: "Condo", checked: false },
-      { id: "Apartment", value: "Apartment", checked: false },
-      { id: "TwonHouse", value: "TwonHouse", checked: false },
-      { id: "House", value: "House", checked: false },
-      { id: "Basement", value: "Basement", checked: false },
+      { id: "1", value: "No Preference", checked: false },
+      { id: "2", value: "Condo", checked: false },
+      { id: "3", value: "Apartment", checked: false },
+      { id: "4", value: "TwonHouse", checked: false },
+      { id: "5", value: "House", checked: false },
+      { id: "6", value: "Basement", checked: false },
     ],
   });
 
@@ -150,6 +138,28 @@ const FindRoommateStep1 = (props) => {
       return;
     }
   };
+
+  const navigateToFindRoommateStep2Screen = () => {
+    props.navigation.navigate({ name: "find_roommate_step2_screen" });
+  };
+
+  const navigateToUserListScreen = () => {
+    props.navigation.navigate({ name: "find_roommate_step2_screen" });
+  };
+
+  props.navigation.setOptions({
+    headerRight: () => {
+      return (
+        <HeaderButtons>
+          <Item
+            title="cancel"
+            color={CONFIG.BLACK}
+            onPress={navigateToUserListScreen}
+          />
+        </HeaderButtons>
+      );
+    },
+  });
 
   return (
     <ScrollView contentContainerStyle={STYLES.bgWhite}>
@@ -278,9 +288,10 @@ const FindRoommateStep1 = (props) => {
                     checked={item.checked}
                     onPress={() =>
                       onChipSelectHandler({
+                        id: "placePreferences",
                         index,
                         checked: item.checked,
-                        type: PLACE_PREFERENCE_CHANGED,
+                        type: CHIPS_DATA_CHANGED,
                       })
                     }
                   >
@@ -321,9 +332,10 @@ const FindRoommateStep1 = (props) => {
                     checked={item.checked}
                     onPress={() =>
                       onChipSelectHandler({
+                        id: "buildingTypes",
                         index,
                         checked: item.checked,
-                        type: BUILDING_TYPE_CHANGED,
+                        type: CHIPS_DATA_CHANGED,
                       })
                     }
                   >
@@ -335,7 +347,11 @@ const FindRoommateStep1 = (props) => {
           </View>
         </View>
       </View>
-      <StepFooter currentStep="1" totalSteps="5"></StepFooter>
+      <StepFooter
+        currentStep="1"
+        totalSteps="5"
+        onPress={navigateToFindRoommateStep2Screen}
+      ></StepFooter>
     </ScrollView>
   );
 };
@@ -357,7 +373,7 @@ const STYLES = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     borderBottomWidth: 1,
-    borderBottomColor: "#C4C4C4",
+    borderBottomColor: CONFIG.BORDER_COLOR_LIGHT,
     paddingBottom: 8,
     marginBottom: 12,
   },

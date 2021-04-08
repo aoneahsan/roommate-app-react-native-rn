@@ -17,7 +17,7 @@ const FindRoommateStack = createStackNavigator();
 export const FindRoommateStackComponents = (navData) => {
   return (
     <FindRoommateStack.Navigator
-      initialRouteName="find_roommate_step2_screen"
+      initialRouteName="find_roommate_step5_screen"
       screenOptions={{
         headerTitleAlign: "center",
         headerStyle: {
@@ -26,6 +26,7 @@ export const FindRoommateStackComponents = (navData) => {
         },
         headerTitleStyle: {
           fontSize: CONFIG.HEADER_TITLE_SIZE,
+          fontFamily: CONFIG.FONT_RUBIK_BOLD,
         },
       }}
     >

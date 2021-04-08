@@ -1,13 +1,7 @@
 // Core Imports
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 
 // Custom Imports
 import * as CONFIG from "../../config";
@@ -155,6 +149,7 @@ const STYLES = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 6,
     height: "auto",
+    minHeight: 70,
     flexDirection: "row",
     flexWrap: "wrap",
   },
