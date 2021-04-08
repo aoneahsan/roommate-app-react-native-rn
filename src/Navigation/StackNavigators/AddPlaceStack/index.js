@@ -3,9 +3,9 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Custom Imports
-import * as CONFIG from "../../../../config";
-import AddPlaceStep1 from "../../../../screens/AddPlace/AddPlaceStep1";
-import AddPlaceStep2 from "../../../../screens/AddPlace/AddPlaceStep2";
+import * as CONFIG from "../../../config";
+import AddPlaceStep1 from "../../../screens/AddPlace/AddPlaceStep1";
+import AddPlaceStep2 from "../../../screens/AddPlace/AddPlaceStep2";
 
 // Stacks Definations
 const AddPlaceStack = createStackNavigator();

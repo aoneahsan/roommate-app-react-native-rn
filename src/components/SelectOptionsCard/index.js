@@ -78,7 +78,7 @@ const SelectOptionsCard = (props) => {
                   textStyle={{
                     color: props.chiptextcolor
                       ? props.chiptextcolor
-                      : "#2E476E",
+                      : CONFIG.CHIP_TEXT,
                   }}
                 >
                   {item.value}
@@ -138,7 +138,7 @@ const STYLES = StyleSheet.create({
   selectText: {
     fontFamily: CONFIG.FONT_RUBIK_REGULAR,
     fontSize: 16,
-    color: "#2E476E",
+    color: CONFIG.CHIP_TEXT,
   },
   selectIcon: {
     color: CONFIG.LIGHT_TEXT_COLOR,

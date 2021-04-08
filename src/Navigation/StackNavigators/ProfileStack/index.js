@@ -3,9 +3,9 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Custom Imports
-import * as CONFIG from "../../../../config";
-import Profile from "../../../../screens/Profile";
-import RoleSelect from "./../../../../screens/RoleSelect";
+import * as CONFIG from "./../../../config";
+import Profile from "./../../../screens/Profile";
+import RoleSelect from "./../../../screens/RoleSelect";
 
 // Stacks Definations
 const ProfileStack = createStackNavigator();

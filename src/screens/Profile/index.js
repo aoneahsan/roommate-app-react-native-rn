@@ -68,7 +68,14 @@ class Profile extends React.Component {
               </View>
             </View>
             <View style={STYLES.section1_rightside}>
-              <ImageCard defaultImage={profileImage}></ImageCard>
+              <ImageCard
+                onImageSelect={(image) => {
+                  console.log("Profile === ImageCard/onImageSelect == res = ", {
+                    image,
+                  });
+                }}
+                defaultImage={profileImage}
+              ></ImageCard>
             </View>
           </View>
         </View>

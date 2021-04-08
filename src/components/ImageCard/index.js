@@ -1,5 +1,5 @@
 // Core Imports
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -13,11 +13,11 @@ const ImageCard = (props) => {
   const [pickedImage, setPickedImage] = useState(null);
   const [cardWidth, setCardWidth] = useState(40);
 
-  useEffect(() => {
-    if (props.defaultImage) {
-      setPickedImage(props.defaultImage);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (props.defaultImage) {
+  //     setPickedImage(props.defaultImage);
+  //   }
+  // }, []);
 
   const onCardLayout = (event) => {
     const cardLayout = event.nativeEvent.layout;
@@ -47,7 +47,14 @@ const ImageCard = (props) => {
             },
           }}
         >
-          <View style={STYLES.card}>
+          <View
+            style={{
+              ...STYLES.card,
+              ...{
+                borderRadius: cardWidth / 7,
+              },
+            }}
+          >
             {!pickedImage && (
               <Ionicons
                 name="add"
@@ -56,8 +63,17 @@ const ImageCard = (props) => {
                 size={cardWidth / 2}
               />
             )}
-            {pickedImage && <Image source={pickedImage} style={STYLES.image} />}
-            {/* <Image source={Avatar} style={STYLES.image} /> */}
+            {pickedImage && (
+              <Image
+                source={{ uri: pickedImage.uri }}
+                style={{
+                  ...STYLES.image,
+                  ...{
+                    borderRadius: cardWidth / 7,
+                  },
+                }}
+              />
+            )}
           </View>
         </View>
       </View>
@@ -71,24 +87,25 @@ const STYLES = StyleSheet.create({
     height: "100%",
   },
   main: {
-    // backgroundColor: "red",
     width: "100%",
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
   innerCon: {
-    backgroundColor: CONFIG.WHITE,
     justifyContent: "center",
     alignItems: "center",
     width: "85%",
     height: "90%",
     elevation: 9,
     borderColor: CONFIG.WHITE,
+    backgroundColor: CONFIG.WHITE,
   },
   card: {
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
+    height: "100%",
   },
   icon: {
     marginLeft: 6,

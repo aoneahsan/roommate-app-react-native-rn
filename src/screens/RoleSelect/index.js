@@ -18,7 +18,7 @@ class RoleSelect extends React.Component {
 
   navigateToFindRoommateStackHandler = () => {
     this.props.navigation.navigate("find_roommate_stack_screens", {
-      screen: "find_roommate_step3_screen",
+      screen: "find_roommate_step1_screen",
     });
   };
 

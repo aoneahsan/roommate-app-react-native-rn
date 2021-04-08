@@ -13,6 +13,7 @@ export {
   LIGHT_PURPLE,
   DARK_PURPLE,
   WHITE,
+  PURPLE,
   BLACK,
   // Pre Defined Colors
   TEXT_COLOR,
@@ -20,6 +21,7 @@ export {
   DIVIDER_LINE_COLOR,
   CHIP_BG,
   BORDER_COLOR_LIGHT,
+  CHIP_TEXT,
 } from "./colors";
 
 export {

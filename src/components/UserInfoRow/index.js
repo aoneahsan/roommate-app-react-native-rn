@@ -1,5 +1,5 @@
 // Core Imports
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,6 +9,23 @@ import * as CONFIG from "../../config";
 import BodyText from "../BodyText";
 
 const UserInfoRow = (props) => {
+  const [value, setValue] = useState(
+    props.selectedValue
+      ? props.selectedValue
+      : props.listitems
+      ? props.listitems[0].value
+      : ""
+  );
+
+  const changeHandler = (value) => {
+    if (props.onValueChange) {
+      props.onValueChange(value);
+    } else {
+      alert("pass 'onValueChange' props");
+    }
+    setValue(value);
+  };
+
   return (
     <View style={STYLES.userinfo_row}>
       <View style={STYLES.userinfo_key}>
@@ -19,21 +36,16 @@ const UserInfoRow = (props) => {
       <View style={STYLES.userinfo_value}>
         {props.listitems && (
           <Picker
-            selectedValue={
-              props.selectedValue
-                ? props.selectedValue
-                : props.listitems
-                ? props.listitems[0].value
-                : ""
-            }
+            selectedValue={value}
             style={STYLES.userinfo_valueSelect}
-            onValueChange={props.onValueChange}
+            onValueChange={changeHandler}
             itemStyle={STYLES.userinfo_valueSelectText}
           >
             {props.listitems
               ? props.listitems.map((item, index) => {
                   return (
                     <Picker.Item
+                      key={index}
                       label={item.label ? item.label : item.value}
                       value={item.value}
                     />
@@ -42,10 +54,12 @@ const UserInfoRow = (props) => {
               : null}
           </Picker>
         )}
-        {!props.hideicon && <Ionicons
-          name="chevron-forward"
-          style={STYLES.userinfo_valueSelectIcon}
-        />}
+        {!props.hideicon && (
+          <Ionicons
+            name="chevron-forward"
+            style={STYLES.userinfo_valueSelectIcon}
+          />
+        )}
       </View>
     </View>
   );
@@ -53,11 +67,11 @@ const UserInfoRow = (props) => {
 
 const STYLES = StyleSheet.create({
   userinfo_row: {
-    flex: 1,
+    // flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     borderBottomWidth: 1,
-    borderBottomColor: "#C4C4C4",
+    borderBottomColor: CONFIG.BORDER_COLOR_LIGHT,
     paddingBottom: 4,
     marginBottom: 12,
   },

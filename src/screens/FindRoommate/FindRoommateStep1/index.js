@@ -1,5 +1,5 @@
 // Core Imports
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -144,22 +144,26 @@ const FindRoommateStep1 = (props) => {
   };
 
   const navigateToUserListScreen = () => {
-    props.navigation.navigate({ name: "find_roommate_step2_screen" });
+    props.navigation.navigate("users_list_stack_screens", {
+      screen: "users_list_screen",
+    });
   };
 
-  props.navigation.setOptions({
-    headerRight: () => {
-      return (
-        <HeaderButtons>
-          <Item
-            title="cancel"
-            color={CONFIG.BLACK}
-            onPress={navigateToUserListScreen}
-          />
-        </HeaderButtons>
-      );
-    },
-  });
+  useEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => {
+        return (
+          <HeaderButtons>
+            <Item
+              title="cancel"
+              color={CONFIG.BLACK}
+              onPress={navigateToUserListScreen}
+            />
+          </HeaderButtons>
+        );
+      },
+    });
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={STYLES.bgWhite}>

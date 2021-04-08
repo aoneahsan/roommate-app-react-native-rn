@@ -1,5 +1,5 @@
 // Core Imports
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import { StyleSheet, View, ScrollView, Alert } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
@@ -151,19 +151,21 @@ const FindRoommateStep3 = (props) => {
     props.navigation.navigate({ name: "find_roommate_step4_screen" });
   };
 
-  props.navigation.setOptions({
-    headerRight: () => {
-      return (
-        <HeaderButtons>
-          <Item
-            title="skip"
-            color={CONFIG.BLACK}
-            onPress={navigateToFindRoommateStep4Screen}
-          />
-        </HeaderButtons>
-      );
-    },
-  });
+  useEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => {
+        return (
+          <HeaderButtons>
+            <Item
+              title="skip"
+              color={CONFIG.BLACK}
+              onPress={navigateToFindRoommateStep4Screen}
+            />
+          </HeaderButtons>
+        );
+      },
+    });
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={STYLES.bgWhite}>

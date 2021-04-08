@@ -5,9 +5,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 
 // Custom Imports
 import * as CONFIG from "../../../config";
-import { ProfileStackComponents } from "./ProfileStack";
-import { AddPlaceStackComponents } from "./AddPlaceStack";
-import { FindRoommateStackComponents } from "./FindRoommateStack";
+import * as StackNavigators from "./../../StackNavigators";
+import * as BottomTabNavigators from "./../../BottomTabNavigators";
 
 // Stacks Definations
 const AppDrawer = createDrawerNavigator();
@@ -15,18 +14,22 @@ const AppDrawer = createDrawerNavigator();
 // Stack Creatings
 export const AppDrawerComponents = (navData) => {
   return (
-    <AppDrawer.Navigator initialRouteName="find_roommate_stack_screens">
+    <AppDrawer.Navigator initialRouteName="users_list_stack_screens">
       <AppDrawer.Screen
         name="profile_stack_screens"
-        component={ProfileStackComponents}
+        component={StackNavigators.ProfileStackComponents}
       ></AppDrawer.Screen>
       <AppDrawer.Screen
         name="find_roommate_stack_screens"
-        component={FindRoommateStackComponents}
+        component={StackNavigators.FindRoommateStackComponents}
       ></AppDrawer.Screen>
       <AppDrawer.Screen
         name="add_place_stack_screens"
-        component={AddPlaceStackComponents}
+        component={StackNavigators.AddPlaceStackComponents}
+      ></AppDrawer.Screen>
+      <AppDrawer.Screen
+        name="users_list_stack_screens"
+        component={BottomTabNavigators.appTabsNavigator}
       ></AppDrawer.Screen>
     </AppDrawer.Navigator>
   );

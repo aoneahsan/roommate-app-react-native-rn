@@ -3,12 +3,12 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Custom Imports
-import * as CONFIG from "../../../../config";
-import FindRoommateStep1 from "../../../../screens/FindRoommate/FindRoommateStep1";
-import FindRoommateStep2 from "../../../../screens/FindRoommate/FindRoommateStep2";
-import FindRoommateStep3 from "../../../../screens/FindRoommate/FindRoommateStep3";
-import FindRoommateStep4 from "../../../../screens/FindRoommate/FindRoommateStep4";
-import FindRoommateStep5 from "../../../../screens/FindRoommate/FindRoommateStep5";
+import * as CONFIG from "../../../config";
+import FindRoommateStep1 from "../../../screens/FindRoommate/FindRoommateStep1";
+import FindRoommateStep2 from "../../../screens/FindRoommate/FindRoommateStep2";
+import FindRoommateStep3 from "../../../screens/FindRoommate/FindRoommateStep3";
+import FindRoommateStep4 from "../../../screens/FindRoommate/FindRoommateStep4";
+import FindRoommateStep5 from "../../../screens/FindRoommate/FindRoommateStep5";
 
 // Stacks Definations
 const FindRoommateStack = createStackNavigator();
@@ -17,7 +17,7 @@ const FindRoommateStack = createStackNavigator();
 export const FindRoommateStackComponents = (navData) => {
   return (
     <FindRoommateStack.Navigator
-      initialRouteName="find_roommate_step5_screen"
+      initialRouteName="find_roommate_step1_screen"
       screenOptions={{
         headerTitleAlign: "center",
         headerStyle: {

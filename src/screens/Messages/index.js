@@ -4,14 +4,14 @@ import { StyleSheet, View, ScrollView } from "react-native";
 
 // Custom Imports
 import * as CONFIG from "../../config";
-import BodyText from "./../../components/BodyText";
+import BodyText from "../../components/BodyText";
 
-class RoleSelect extends React.Component {
+class Messages extends React.Component {
   render() {
     return (
       <ScrollView contentContainerStyle={STYLES.bgWhite}>
         <View style={STYLES.main}>
-          <BodyText>RoleSelect</BodyText>
+          <BodyText>Messages</BodyText>
         </View>
       </ScrollView>
     );
@@ -28,4 +28,4 @@ const STYLES = StyleSheet.create({
   },
 });
 
-export default RoleSelect;
+export default Messages;

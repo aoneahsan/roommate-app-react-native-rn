@@ -184,7 +184,6 @@ const STYLES = StyleSheet.create({
   doneText: {
     fontSize: 16,
   },
-  backIcon: {},
   addNewCon: {
     flexDirection: "row",
     justifyContent: "space-between",

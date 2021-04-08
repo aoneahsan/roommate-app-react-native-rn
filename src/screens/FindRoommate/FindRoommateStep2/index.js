@@ -1,5 +1,5 @@
 // Core Imports
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
@@ -130,6 +130,23 @@ const FindRoommateStep2 = (props) => {
     items: null,
     show: false,
   });
+
+  useEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => {
+        return (
+          <HeaderButtons>
+            <Item
+              title="skip"
+              color={CONFIG.BLACK}
+              onPress={navigateToFindRoommateStep3Screen}
+            />
+          </HeaderButtons>
+        );
+      },
+    });
+  }, []);
+
   const [formState, dispatcherFormState] = useReducer(
     FORM_STATE_REDUCER,
     INIT_FORM_STATE
@@ -183,20 +200,6 @@ const FindRoommateStep2 = (props) => {
     props.navigation.navigate({ name: "find_roommate_step3_screen" });
   };
 
-  props.navigation.setOptions({
-    headerRight: () => {
-      return (
-        <HeaderButtons>
-          <Item
-            title="skip"
-            color={CONFIG.BLACK}
-            onPress={navigateToFindRoommateStep3Screen}
-          />
-        </HeaderButtons>
-      );
-    },
-  });
-
   return (
     <ScrollView contentContainerStyle={STYLES.bgWhite}>
       <View style={STYLES.main}>
@@ -221,7 +224,7 @@ const FindRoommateStep2 = (props) => {
           labelbgcolor="rgba(0, 65, 112, 1)"
           chips={formState.inputValues.musicChips}
           chipbgcolor="rgba(0, 65, 112, .2)"
-          chiptextcolor="#2E476E"
+          chiptextcolor={CONFIG.CHIP_TEXT}
           onPress={() =>
             showSelectOptionsModalHandler({
               id: "musicChips",
@@ -239,7 +242,7 @@ const FindRoommateStep2 = (props) => {
           labelbgcolor="#4E64BC"
           chips={formState.inputValues.movieChips}
           chipbgcolor="rgba(78, 100, 188,.3)"
-          chiptextcolor="#2E476E"
+          chiptextcolor={CONFIG.CHIP_TEXT}
           onPress={() =>
             showSelectOptionsModalHandler({
               id: "movieChips",
@@ -257,7 +260,7 @@ const FindRoommateStep2 = (props) => {
           labelbgcolor="#5DB1D5"
           chips={formState.inputValues.travelChips}
           chipbgcolor="rgba(93, 177, 213,.4)"
-          chiptextcolor="#2E476E"
+          chiptextcolor={CONFIG.CHIP_TEXT}
           onPress={() =>
             showSelectOptionsModalHandler({
               id: "travelChips",
@@ -275,7 +278,7 @@ const FindRoommateStep2 = (props) => {
           labelbgcolor="rgba(255, 188, 66,1)"
           chips={formState.inputValues.bookChips}
           chipbgcolor="rgba(255, 188, 66,.2)"
-          chiptextcolor="#2E476E"
+          chiptextcolor={CONFIG.CHIP_TEXT}
           onPress={() =>
             showSelectOptionsModalHandler({
               id: "bookChips",
@@ -293,7 +296,7 @@ const FindRoommateStep2 = (props) => {
           labelbgcolor="rgb(219, 84, 97)"
           chips={formState.inputValues.gymChips}
           chipbgcolor="rgba(219, 84, 97, .2)"
-          chiptextcolor="#2E476E"
+          chiptextcolor={CONFIG.CHIP_TEXT}
           onPress={() =>
             showSelectOptionsModalHandler({
               id: "gymChips",
@@ -311,7 +314,7 @@ const FindRoommateStep2 = (props) => {
           labelbgcolor="rgba(143, 45, 86, 1)"
           chips={formState.inputValues.foodChips}
           chipbgcolor="rgba(143, 45, 86, .2)"
-          chiptextcolor="#2E476E"
+          chiptextcolor={CONFIG.CHIP_TEXT}
           onPress={() =>
             showSelectOptionsModalHandler({
               id: "foodChips",

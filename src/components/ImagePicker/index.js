@@ -40,17 +40,17 @@ const ImagePicker = (props) => {
       return false;
     } else {
       const imageData = await EXPO_IMAGE_PICKER.launchCameraAsync({
-        allowsEditing: true,
+        // allowsEditing: true,
         aspect: [1, 1],
         quality: 0.5,
       });
       // console.log("ImagePicker === imagePickerHandler == res = ", {
-      // imageData,
+      //   imageData,
       // });
       if (imageData.cancelled) {
         return;
       }
-      props.onImageSelect(imageData.uri);
+      props.onImageSelect(imageData);
     }
   };
   return (
@@ -60,6 +60,4 @@ const ImagePicker = (props) => {
   );
 };
 
-export default React.forwardRef((props, ref) => (
-  <ImagePicker ref={ref} {...props} />
-));
+export default ImagePicker;
