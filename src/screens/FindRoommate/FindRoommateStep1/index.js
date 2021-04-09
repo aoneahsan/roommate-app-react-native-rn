@@ -14,7 +14,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 // Custom Imports
 import * as CONFIG from "../../../config";
 import BodyText from "../../../components/BodyText";
-import CustomInput from "../../../components/CustomInput";
+import Input from "../../../components/Input";
 import Chip from "../../../components/Chip";
 import StepFooter from "../../../components/StepFooter";
 
@@ -238,7 +238,7 @@ const FindRoommateStep1 = (props) => {
             </View>
             <View style={{ ...STYLES.userinfo_value, ...{ flex: 0.75 } }}>
               <View style={STYLES.userinfo_valueInputCon}>
-                <CustomInput
+                <Input
                   number
                   label="Min"
                   placeholder="$10"
@@ -249,7 +249,7 @@ const FindRoommateStep1 = (props) => {
                 />
               </View>
               <View style={STYLES.userinfo_valueInputCon}>
-                <CustomInput
+                <Input
                   number
                   label="Max"
                   placeholder={"$10,000"}

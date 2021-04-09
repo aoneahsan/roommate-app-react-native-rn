@@ -6,7 +6,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 // Custom Imports
 import * as CONFIG from "../../../config";
 import BodyText from "../../../components/BodyText";
-import CustomInput from "../../../components/CustomInput";
+import Input from "../../../components/Input";
 import SelectOptionsCard from "../../../components/SelectOptionsCard";
 import StepFooter from "../../../components/StepFooter";
 import SelectOptionsModal from "../../../components/SelectOptionsModal";
@@ -206,7 +206,7 @@ const FindRoommateStep2 = (props) => {
         <BodyText style={{ ...STYLES.pageHeading, ...{ marginBottom: 10 } }}>
           About Me
         </BodyText>
-        <CustomInput
+        <Input
           id="aboutme"
           placeholder="Maximum 250 words"
           multiline={true}

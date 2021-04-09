@@ -12,12 +12,20 @@ const ProgressBar = (props) => {
     <View style={STYLES.progressBarCon}>
       {!props.hideTopText && (
         <BodyText
-          style={{ ...STYLES.progressBarScoreText, ...{ marginBottom: 8, marginTop: 10 } }}
+          style={{
+            ...STYLES.progressBarScoreText,
+            ...{ marginBottom: 8, marginTop: 10 },
+          }}
         >
           {props.topText}
         </BodyText>
       )}
-      <Card style={STYLES.progressBarBg}>
+      <Card
+        style={{
+          ...STYLES.progressBarBg,
+          height: props.height ? props.height : 40,
+        }}
+      >
         <View
           style={{
             ...STYLES.progressBar,
@@ -51,9 +59,7 @@ const STYLES = StyleSheet.create({
   progressBarCon: {
     paddingHorizontal: 20,
   },
-  progressBarBg: {
-    height: 40,
-  },
+  progressBarBg: {},
   progressBar: {
     justifyContent: "center",
     alignItems: "center",

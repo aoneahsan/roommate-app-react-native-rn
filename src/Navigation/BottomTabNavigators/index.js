@@ -6,6 +6,7 @@ import {
   Feather,
   Foundation,
   FontAwesome5,
+  AntDesign
 } from "@expo/vector-icons";
 
 import UsersList from "./../../screens/UsersList";
@@ -19,7 +20,7 @@ const Tabs = createBottomTabNavigator();
 export const appTabsNavigator = (navData) => {
   return (
     <Tabs.Navigator
-      initialRouteName="users_list_tab_screen"
+      initialRouteName="messages_tab_screen"
       tabBarOptions={{
         labelStyle: {
           fontFamily: CONFIG.FONT_RUBIK_BOLD,
@@ -78,8 +79,8 @@ export const appTabsNavigator = (navData) => {
                   navData.navigation.navigate({ name: "messages_tab_screen" })
                 }
               >
-                <Ionicons
-                  name="chatbubble-outline"
+                <AntDesign
+                  name="message1"
                   size={30}
                   style={{ color: index == 2 ? activeColor : inactiveColor }}
                 />

@@ -7,7 +7,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 // Custom Imports
 import * as CONFIG from "../../../config";
 import BodyText from "../../../components/BodyText";
-import CustomInput from "../../../components/CustomInput";
+import Input from "../../../components/Input";
 import Chip from "../../../components/Chip";
 import StepFooter from "../../../components/StepFooter";
 
@@ -448,7 +448,7 @@ const FindRoommateStep4 = (props) => {
                 ...STYLES.userinfo_value,
               }}
             >
-              <CustomInput
+              <Input
                 style={{ flex: 1 }}
                 placeholder="Minimax 250 words"
                 maxlength={250}
@@ -456,7 +456,7 @@ const FindRoommateStep4 = (props) => {
                 multiline={true}
                 numberOfLines={4}
                 radius={6}
-              ></CustomInput>
+              ></Input>
             </View>
           </View>
         </View>

@@ -8,6 +8,7 @@ import * as CONFIG from "./../../config";
 const BodyText = (props) => {
   return (
     <Text
+      {...props}
       style={{
         fontFamily:
           props.fontfamily == "light"

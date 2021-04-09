@@ -1,13 +1,13 @@
 // Core Imports
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, ScrollView, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
 // Custom Imports
 import * as CONFIG from "../../config";
-import BodyText from "../../components/BodyText";
 import UsersListPageHeader from "../../components/UsersListPageHeader";
 import UserListItem from "../../components/UserListItem";
+import UserListFiltersModal from "../../components/UserListFiltersModal";
 
 // Image
 import AvatarLarge from "./../../../assets/images/avatar-large.png";
@@ -17,6 +17,7 @@ import AvatarLarge from "./../../../assets/images/avatar-large.png";
 const DEVICE_WIDTH = Dimensions.get("window").width;
 
 const UsersList = (props) => {
+  const [showFiltersModal, setShowFiltersModal] = useState(false);
   const carouselData = [
     {
       id: 1,
@@ -92,10 +93,16 @@ const UsersList = (props) => {
     },
   ];
 
+  const changeFiltersModalVisibility = (status) => {
+    setShowFiltersModal(status);
+  };
+
   return (
     <ScrollView contentContainerStyle={STYLES.bgWhite}>
       <View style={STYLES.main}>
-        <UsersListPageHeader></UsersListPageHeader>
+        <UsersListPageHeader
+          onFilterClick={() => changeFiltersModalVisibility(true)}
+        ></UsersListPageHeader>
         <View style={STYLES.carouselCon}>
           <Carousel
             data={carouselData}
@@ -108,6 +115,12 @@ const UsersList = (props) => {
           />
         </View>
       </View>
+      {showFiltersModal && (
+        <UserListFiltersModal
+          closemodal={() => changeFiltersModalVisibility(false)}
+          visible={showFiltersModal}
+        ></UserListFiltersModal>
+      )}
     </ScrollView>
   );
 };

@@ -97,6 +97,7 @@ const UserListItem = (props) => {
             topText={progressBarTopText}
             progress={itemData.progress}
             hideBottomText
+            height={32}
           />
         </View>
       </Card>
