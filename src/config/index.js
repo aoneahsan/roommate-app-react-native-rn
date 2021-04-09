@@ -22,6 +22,7 @@ export {
   CHIP_BG,
   BORDER_COLOR_LIGHT,
   CHIP_TEXT,
+  BADGE_BG,
 } from "./colors";
 
 export {

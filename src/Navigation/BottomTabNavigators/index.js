@@ -1,11 +1,16 @@
 import React from "react";
+import { StyleSheet, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, Feather } from "@expo/vector-icons";
+import {
+  Ionicons,
+  Feather,
+  Foundation,
+  FontAwesome5,
+} from "@expo/vector-icons";
 
 import UsersList from "./../../screens/UsersList";
 import Messages from "./../../screens/Messages";
 import * as CONFIG from "../../config";
-import BodyText from "../../components/BodyText";
 import Card from "../../components/Card";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -24,29 +29,87 @@ export const appTabsNavigator = (navData) => {
         inactiveTintColor: "#484848",
         activeTintColor: CONFIG.PRIMARY,
       }}
-      sceneContainerStyle={{}}
-      barStyle={{
-        width: "90%",
-        flex: 0.6,
+      // sceneContainerStyle={{}}
+      // barStyle={{
+      //   width: "90%",
+      //   flex: 0.6,
+      // }}
+      tabBar={(navItemData) => {
+        const index = navItemData.state.index;
+        const activeColor = navItemData.activeTintColor;
+        const inactiveColor = navItemData.inactiveTintColor;
+        console.log("BottomTabNavigators === appTabsNavigator == tabBar = ", {
+          // navItemData,
+          index,
+          activeColor,
+          inactiveColor,
+        });
+        return (
+          <View style={STYLES.tabBarCon}>
+            <Card style={STYLES.tabBar}>
+              <TouchableOpacity
+                onPress={() =>
+                  navData.navigation.navigate({ name: "users_list_tab_screen" })
+                }
+              >
+                <Feather
+                  name="user-plus"
+                  size={30}
+                  style={{ color: index == 0 ? activeColor : inactiveColor }}
+                />
+                {/* <BodyText
+                >
+                  wo
+                </BodyText> */}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  navData.navigation.navigate({ name: "home_tab_screen" })
+                }
+              >
+                <Foundation
+                  name="home"
+                  size={30}
+                  style={{ color: index == 1 ? activeColor : inactiveColor }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  navData.navigation.navigate({ name: "messages_tab_screen" })
+                }
+              >
+                <Ionicons
+                  name="chatbubble-outline"
+                  size={30}
+                  style={{ color: index == 2 ? activeColor : inactiveColor }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  navData.navigation.navigate({ name: "globe_tab_screen" })
+                }
+              >
+                <FontAwesome5
+                  name="globe-americas"
+                  size={30}
+                  style={{ color: index == 3 ? activeColor : inactiveColor }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  navData.navigation.navigate({ name: "user_tab_screen" })
+                }
+              >
+                <Feather
+                  name="user"
+                  size={30}
+                  style={{ color: index == 4 ? activeColor : inactiveColor }}
+                />
+              </TouchableOpacity>
+            </Card>
+          </View>
+        );
       }}
-      tabBar={() => (
-        <Card style={{ height: "auto", marginBottom: 20 }}>
-          <TouchableOpacity
-            onPress={() =>
-              navData.navigation.navigate({ name: "messages_tab_screen" })
-            }
-          >
-            <BodyText>wo</BodyText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navData.navigation.navigate({ name: "users_list_tab_screen" })
-            }
-          >
-            <BodyText>wo2</BodyText>
-          </TouchableOpacity>
-        </Card>
-      )}
       screenOptions={{
         tabBarVisible: true,
       }}
@@ -62,19 +125,27 @@ export const appTabsNavigator = (navData) => {
           tabBarColor: CONFIG.RED,
         }}
       />
-      <Tabs.Screen
-        name="messages_tab_screen"
-        component={Messages}
-        options={{
-          title: "Messages",
-          tabBarIcon: (tabInfo) => {
-            return (
-              <Ionicons name="ios-heart" size={25} color={tabInfo.color} />
-            );
-          },
-          tabBarColor: CONFIG.SECONDARY,
-        }}
-      />
+      <Tabs.Screen name="home_tab_screen" component={Messages} />
+      <Tabs.Screen name="messages_tab_screen" component={Messages} />
+      <Tabs.Screen name="globe_tab_screen" component={Messages} />
+      <Tabs.Screen name="user_tab_screen" component={Messages} />
     </Tabs.Navigator>
   );
 };
+
+const STYLES = StyleSheet.create({
+  tabBarCon: {
+    paddingHorizontal: 12,
+    backgroundColor: CONFIG.WHITE,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 14,
+  },
+  tabBar: {
+    height: "auto",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    paddingVertical: 10,
+  },
+});

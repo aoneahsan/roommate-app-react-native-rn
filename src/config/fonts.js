@@ -40,7 +40,7 @@ exports.SUB_HEADING_SIZE = 18;
 exports.BTN_TEXT_SIZE = 24; // Main Button
 exports.SMALL_BTN_TEXT_SIZE = 18; // Main Button
 exports.HEADER_TITLE_SIZE = 18;
-exports.INPUT_LABEL_SIZE = 10;
+exports.INPUT_LABEL_SIZE = 13;
 exports.INPUT_TEXT_SIZE = 16;
 
 // FONT WEIGHT

@@ -7,6 +7,7 @@ import * as CONFIG from "./../../config";
 import MainHeading from "./../../components/MainHeading";
 import BodyText from "./../../components/BodyText";
 import MainButton from "./../../components/MainButton";
+import CustomInput from "./../../components/CustomInput";
 import Input from "./../../components/Input";
 import Divider from "./../../components/Divider";
 import CountryPicker from "./../../components/CountryPicker";
@@ -98,11 +99,19 @@ class Auth extends React.Component {
                   ></CountryPicker>
                 </View>
                 <View style={STYLES.inputCon}>
-                  <Input
+                  <CustomInput
                     placeholder="123-456-789"
                     keyboardType="phone-pad"
                     style={STYLES.input}
+                    label="Country/Region"
+                    labelStyle={{
+                      color: CONFIG.LIGHT_TEXT_COLOR,
+                      marginLeft: -6,
+                      marginBottom: -1,
+                      fontSize: 14
+                    }}
                     onChange={this.phoneChangedHandler}
+                    radius={16}
                   />
                 </View>
                 <View style={STYLES.btnCon}>

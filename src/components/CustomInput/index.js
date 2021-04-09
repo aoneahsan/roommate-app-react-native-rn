@@ -98,6 +98,7 @@ const CustomInput = (props) => {
                 marginLeft: 10,
                 marginBottom: 4,
               },
+              ...props.labelStyle,
             }}
           >
             {props.label}
@@ -150,7 +151,9 @@ const CustomInput = (props) => {
           }}
         >
           {!props.hidelabel && (
-            <BodyText style={STYLES.formInputTitle}>{props.label}</BodyText>
+            <BodyText style={{ ...STYLES.formInputTitle, ...props.labelStyle }}>
+              {props.label}
+            </BodyText>
           )}
           <TextInput
             value={inputState.value}
@@ -197,7 +200,7 @@ const STYLES = StyleSheet.create({
     fontFamily: CONFIG.FONT_RUBIK_REGULAR,
   },
   formInputGroup: {
-    borderBottomColor: CONFIG.GREY,
+    borderColor: CONFIG.LIGHT_TEXT_COLOR,
     borderWidth: 1,
     paddingLeft: 20,
     paddingVertical: 2,

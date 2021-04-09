@@ -9,7 +9,7 @@ import BodyText from "../BodyText";
 const ImageCard = (props) => {
   return (
     <View style={STYLES.main}>
-      <BodyText>working</BodyText>
+      <BodyText>ImageCard</BodyText>
     </View>
   );
 };

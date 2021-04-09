@@ -14,7 +14,10 @@ const AppDrawer = createDrawerNavigator();
 // Stack Creatings
 export const AppDrawerComponents = (navData) => {
   return (
-    <AppDrawer.Navigator initialRouteName="users_list_stack_screens">
+    <AppDrawer.Navigator
+      initialRouteName="users_list_stack_screens"
+      screenOptions={{ swipeEnabled: false }}
+    >
       <AppDrawer.Screen
         name="profile_stack_screens"
         component={StackNavigators.ProfileStackComponents}

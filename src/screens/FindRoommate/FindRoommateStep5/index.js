@@ -9,7 +9,7 @@ import ProgressCircle from "react-native-progress-circle";
 import * as CONFIG from "../../../config";
 import BodyText from "../../../components/BodyText";
 import StepFooter from "../../../components/StepFooter";
-import Card from "../../../components/Card";
+import ProgressBar from "../../../components/ProgressBar";
 import PickmeCreditCarouselItem from "../../../components/PickmeCreditCarouselItem";
 
 const DEVICE_WIDTH = Dimensions.get("window").width;
@@ -50,31 +50,11 @@ const FindRoommateStep5 = (props) => {
     <ScrollView contentContainerStyle={STYLES.bgWhite}>
       <View style={STYLES.main}>
         <BodyText style={STYLES.pagetitle}>Credit Score</BodyText>
-        <View style={STYLES.progressBarCon}>
-          <Card style={STYLES.progressBarBg}>
-            <View
-              style={{
-                ...STYLES.progressBar,
-                ...{
-                  width:
-                    lineBarProgress < 11 ? 10 + "%" : lineBarProgress + "%",
-                },
-              }}
-            >
-              <BodyText
-                style={{
-                  ...STYLES.progressBarText,
-                  fontSize: lineBarProgress < 11 ? 18 : 24,
-                }}
-              >
-                {lineBarProgress}%
-              </BodyText>
-            </View>
-          </Card>
-          <BodyText style={STYLES.progressBarScoreText}>
-            Your current credit score
-          </BodyText>
-        </View>
+        <ProgressBar
+          bottomText="Your current credit score"
+          progress={lineBarProgress}
+          hideTopText
+        />
         <View style={STYLES.carouselCon}>
           {/* <PickmeCreditCarouselItem /> */}
           <Carousel
@@ -114,7 +94,11 @@ const FindRoommateStep5 = (props) => {
           </View>
         </View>
       </View>
-      <StepFooter currentStep="5" totalSteps="5" onPress={navigateToUserListScreen}></StepFooter>
+      <StepFooter
+        currentStep="5"
+        totalSteps="5"
+        onPress={navigateToUserListScreen}
+      ></StepFooter>
     </ScrollView>
   );
 };
@@ -132,28 +116,6 @@ const STYLES = StyleSheet.create({
     fontFamily: CONFIG.FONT_RUBIK_MEDIUM,
     color: CONFIG.PURPLE,
     paddingHorizontal: 20,
-  },
-  progressBarCon: {
-    paddingHorizontal: 20,
-  },
-  progressBarBg: {
-    height: 40,
-  },
-  progressBar: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: CONFIG.PRIMARY,
-    borderRadius: 50,
-    height: "100%",
-  },
-  progressBarText: {
-    color: CONFIG.WHITE,
-  },
-  progressBarScoreText: {
-    color: CONFIG.LIGHT_TEXT_COLOR,
-    fontSize: 14,
-    marginTop: 10,
-    marginLeft: 10,
   },
   carouselCon: {
     marginTop: 10,
