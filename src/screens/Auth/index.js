@@ -40,7 +40,8 @@ class Auth extends React.Component {
     });
   };
 
-  phoneChangedHandler = (phone) => {
+  phoneChangedHandler = ({ id, value, isvalid }) => {
+    const phone = value;
     if (!phone) {
       return;
     }
@@ -103,6 +104,7 @@ class Auth extends React.Component {
                     keyboardType="phone-pad"
                     style={STYLES.input}
                     label="Country/Region"
+                    number
                     labelStyle={{
                       color: CONFIG.LIGHT_TEXT_COLOR,
                       marginLeft: -6,

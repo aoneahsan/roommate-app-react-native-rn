@@ -15,7 +15,7 @@ const AppDrawer = createDrawerNavigator();
 export const AppDrawerComponents = (navData) => {
   return (
     <AppDrawer.Navigator
-      initialRouteName="users_list_stack_screens"
+      initialRouteName="profile_stack_screens"
       screenOptions={{ swipeEnabled: false }}
     >
       <AppDrawer.Screen
