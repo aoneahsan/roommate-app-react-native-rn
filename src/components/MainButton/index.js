@@ -88,6 +88,7 @@ const STYLES = StyleSheet.create({
   innerCon: {
     paddingVertical: 16,
     borderRadius: 100,
+    justifyContent: "center"
   },
   whiteBtn: {
     backgroundColor: CONFIG.WHITE,

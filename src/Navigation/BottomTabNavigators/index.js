@@ -6,21 +6,24 @@ import {
   Feather,
   Foundation,
   FontAwesome5,
-  AntDesign
+  AntDesign,
 } from "@expo/vector-icons";
 
-import UsersList from "./../../screens/UsersList";
-import Messages from "./../../screens/Messages";
 import * as CONFIG from "../../config";
 import Card from "../../components/Card";
 import { TouchableOpacity } from "react-native-gesture-handler";
+// import UsersList from "./../../screens/UsersList";
+// import UserListItemView from "./../../screens/UserListItemView";
+import MessagesAndNotifications from "./../../screens/MessagesAndNotifications";
+
+import * as StackNavigators from "./../StackNavigators";
 
 const Tabs = createBottomTabNavigator();
 
 export const appTabsNavigator = (navData) => {
   return (
     <Tabs.Navigator
-      initialRouteName="messages_tab_screen"
+      initialRouteName="users_list_tab_screen"
       tabBarOptions={{
         labelStyle: {
           fontFamily: CONFIG.FONT_RUBIK_BOLD,
@@ -39,12 +42,12 @@ export const appTabsNavigator = (navData) => {
         const index = navItemData.state.index;
         const activeColor = navItemData.activeTintColor;
         const inactiveColor = navItemData.inactiveTintColor;
-        console.log("BottomTabNavigators === appTabsNavigator == tabBar = ", {
-          // navItemData,
-          index,
-          activeColor,
-          inactiveColor,
-        });
+        // console.log("BottomTabNavigators === appTabsNavigator == tabBar = ", {
+        //   // navItemData,
+        //   index,
+        //   activeColor,
+        //   inactiveColor,
+        // });
         return (
           <View style={STYLES.tabBarCon}>
             <Card style={STYLES.tabBar}>
@@ -115,9 +118,10 @@ export const appTabsNavigator = (navData) => {
         tabBarVisible: true,
       }}
     >
+      {/* Screens with Icons */}
       <Tabs.Screen
         name="users_list_tab_screen"
-        component={UsersList}
+        component={StackNavigators.UsersListStackComponents}
         options={{
           title: "",
           tabBarIcon: (tabInfo) => {
@@ -126,10 +130,24 @@ export const appTabsNavigator = (navData) => {
           tabBarColor: CONFIG.RED,
         }}
       />
-      <Tabs.Screen name="home_tab_screen" component={Messages} />
-      <Tabs.Screen name="messages_tab_screen" component={Messages} />
-      <Tabs.Screen name="globe_tab_screen" component={Messages} />
-      <Tabs.Screen name="user_tab_screen" component={Messages} />
+      <Tabs.Screen
+        name="home_tab_screen"
+        component={StackNavigators.UsersListStackComponents}
+      />
+      <Tabs.Screen
+        name="messages_tab_screen"
+        component={MessagesAndNotifications}
+      />
+      <Tabs.Screen
+        name="globe_tab_screen"
+        component={StackNavigators.UsersListStackComponents}
+      />
+      <Tabs.Screen
+        name="user_tab_screen"
+        component={StackNavigators.UsersListStackComponents}
+      />
+      {/* Screens Without Icons */}
+      {/* <Tabs.Screen name="users_list_item_detail_tab_screen" component={UserListItemView} /> */}
     </Tabs.Navigator>
   );
 };

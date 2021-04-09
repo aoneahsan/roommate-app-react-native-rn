@@ -14,9 +14,9 @@ import SelectOptionsModal from "../../../components/SelectOptionsModal";
 // Images
 import FoodIcon from "./../../../../assets/images/icons/food.png";
 import MusicIcon from "./../../../../assets/images/icons/music.png";
+import MovieIcon from "./../../../../assets/images/icons/movie.png";
 import GymIcon from "./../../../../assets/images/icons/gym.png";
 import TravelIcon from "./../../../../assets/images/icons/travel.png";
-import MovieIcon from "./../../../../assets/images/icons/movie.png";
 import BookIcon from "./../../../../assets/images/icons/book.png";
 
 // **************************************************************************

@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 // Custom Imports
 import * as CONFIG from "./../../../config";
 import UsersList from "./../../../screens/UsersList";
+import UserListItemView from "./../../../screens/UserListItemView";
 
 // Stacks Definations
 const UsersListStack = createStackNavigator();
@@ -28,7 +29,12 @@ export const UsersListStackComponents = (navData) => {
       <UsersListStack.Screen
         name="users_list_screen"
         component={UsersList}
-        options={{ title: "Users List" }}
+        options={{ title: "", headerStyle: { height: 0 } }}
+      ></UsersListStack.Screen>
+      <UsersListStack.Screen
+        name="users_list_item_detail_screen"
+        component={UserListItemView}
+        options={{ title: "User Details" }}
       ></UsersListStack.Screen>
     </UsersListStack.Navigator>
   );

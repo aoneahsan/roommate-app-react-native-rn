@@ -6,27 +6,36 @@ import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import * as CONFIG from "../../config";
 import BodyText from "../BodyText";
 import Card from "../Card";
+import MainButton from "../MainButton";
 
-const MessagesListItem = (props) => {
+const NotificationsListItem = (props) => {
   const itemData = props.item;
   return (
     <TouchableOpacity>
       <View style={{ ...STYLES.main, ...props.style }}>
-        <Card style={{ ...STYLES.imageCard, ...props.cardStyle }}>
-          {itemData.alerts && itemData.alerts > 1 && (
-            <BodyText style={{ ...STYLES.alerts }}>{itemData.alerts}</BodyText>
-          )}
+        <Card style={{ ...STYLES.imageCard }}>
           <Image style={{ ...STYLES.image }} source={itemData.image} />
         </Card>
-        <View style={{ ...STYLES.infoCon }}>
+        <View style={{ ...STYLES.infoCon, ...STYLES.row }}>
           <View style={{ ...STYLES.row }}>
             <BodyText style={{ ...STYLES.name }}>{itemData.name}</BodyText>
-            <BodyText style={{ ...STYLES.time }}>{itemData.time}</BodyText>
           </View>
-          <View style={{ ...STYLES.messageCon, ...{} }}>
-            <BodyText numberOfLines={2} style={{ ...STYLES.message, ...{} }}>
-              {itemData.message}
-            </BodyText>
+          <View style={{ ...STYLES.btnCon }}>
+            {itemData.status == "pending" && (
+              <MainButton
+                color="primary"
+                style={{ ...STYLES.btn }}
+                radius={10}
+                fontsize={18}
+              >
+                Accept
+              </MainButton>
+            )}
+            {itemData.status == "accepted" && (
+              <BodyText style={{ fontSize: 20, marginRight: 14 }}>
+                Accepted
+              </BodyText>
+            )}
           </View>
         </View>
       </View>
@@ -38,7 +47,7 @@ const STYLES = StyleSheet.create({
   main: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 14,
+    marginBottom: 10,
     width: "100%",
   },
   imageCard: {
@@ -46,21 +55,6 @@ const STYLES = StyleSheet.create({
     height: 54,
     maxWidth: 58,
     marginLeft: 4,
-    position: "relative",
-  },
-  alerts: {
-    position: "absolute",
-    top: -6,
-    right: -6,
-    fontSize: 12,
-    backgroundColor: CONFIG.RED,
-    color: CONFIG.WHITE,
-    fontFamily: CONFIG.FONT_RUBIK_MEDIUM,
-    borderRadius: 12,
-    width: 20,
-    height: 20,
-    paddingTop: 3,
-    textAlign: "center",
   },
   image: {
     height: "100%",
@@ -85,21 +79,12 @@ const STYLES = StyleSheet.create({
     fontSize: 12,
     color: CONFIG.LIGHT_TEXT_COLOR,
   },
-  messageCon: {
-    flex: 0.7,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    width: "100%",
-  },
-  message: {
-    color: CONFIG.LIGHT_TEXT_COLOR,
-    // fontSize: 14,
-    textAlign: "justify",
-    paddingLeft: 10,
-    paddingRight: 8,
-    flex: 1,
-    flexWrap: "wrap",
+  btnCon: {},
+  btn: {
+    height: 36,
+    minWidth: 120,
+    paddingVertical: 4,
   },
 });
 
-export default MessagesListItem;
+export default NotificationsListItem;

@@ -15,6 +15,7 @@ import AvatarLarge from "./../../../assets/images/avatar-large.png";
 // ****************************************************************
 
 const DEVICE_WIDTH = Dimensions.get("window").width;
+const DEVICE_HEIGHT = Dimensions.get("window").height;
 
 const UsersList = (props) => {
   const [showFiltersModal, setShowFiltersModal] = useState(false);
@@ -97,20 +98,34 @@ const UsersList = (props) => {
     setShowFiltersModal(status);
   };
 
+  const openUserDetailPage = (user) => {
+    props.navigation.navigate({ name: "users_list_item_detail_screen" });
+  };
+
+  const onCarouselConLayout = (event) => {
+    const cardLayout = event.nativeEvent.layout;
+    const { height } = cardLayout;
+    // console.log("UsersList === onCarouselConLayout == res = ", {
+    //   height,
+    //   cardLayout,
+    // });
+  };
+
   return (
     <ScrollView contentContainerStyle={STYLES.bgWhite}>
       <View style={STYLES.main}>
         <UsersListPageHeader
           onFilterClick={() => changeFiltersModalVisibility(true)}
         ></UsersListPageHeader>
-        <View style={STYLES.carouselCon}>
+        <View style={STYLES.carouselCon} onLayout={onCarouselConLayout}>
           <Carousel
-            data={carouselData}
-            renderItem={UserListItem}
             sliderWidth={DEVICE_WIDTH}
             itemWidth={DEVICE_WIDTH - 80}
+            renderItem={UserListItem}
+            data={carouselData}
             firstItem={1}
             layout={"default"}
+            onTouchStart={openUserDetailPage}
             containerCustomStyle={STYLES.carousel}
           />
         </View>
