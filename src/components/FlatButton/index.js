@@ -43,7 +43,7 @@ const FlatButton = (props) => {
         props.onPress ? props.onPress : () => alert("Pass a onPress function.")
       }
     >
-      <View style={STYLES.wrapper}>
+      <View style={{ ...STYLES.wrapper, ...props.style }}>
         <BodyText
           textalign={props.textalign ? props.textalign : "left"}
           fontfamily={props.fontfamily ? props.fontfamily : "medium"}

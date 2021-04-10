@@ -1,17 +1,43 @@
 // Core Imports
 import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
+import {
+  CognitoUserPool,
+  CognitoUserAttribute,
+  AuthenticationDetails,
+  CognitoUser,
+} from "amazon-cognito-identity-js";
+import Amplify, { Auth } from "aws-amplify";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
 import MainHeading from "./../../components/MainHeading";
 import BodyText from "./../../components/BodyText";
 import MainButton from "./../../components/MainButton";
+import FlatButton from "./../../components/FlatButton";
 import Input from "./../../components/Input";
 import Divider from "./../../components/Divider";
 import CountryPicker from "./../../components/CountryPicker";
 
-class Auth extends React.Component {
+// Amplify
+Amplify.configure({
+  Auth: {
+    region: "us-east-2",
+    userPoolId: "us-east-2_WH5GrfH4k",
+    userPoolWebClientId: "25g6m9cjtqa86ktbudea5qv6l3",
+    authenticationFlowType: "CUSTOM_AUTH",
+  },
+});
+
+// AWS COGNITO CONFIG
+const POOL_DATA = {
+  UserPoolId: "us-east-2_WH5GrfH4k",
+  ClientId: "25g6m9cjtqa86ktbudea5qv6l3",
+};
+
+const USER_POOL = new CognitoUserPool(POOL_DATA);
+
+class AuthScreen extends React.Component {
   state = {
     isLoginMode: true,
     form: {
@@ -21,6 +47,17 @@ class Auth extends React.Component {
       },
       phone: "",
     },
+  };
+
+  componentDidMount() {
+    this.setPageTitle();
+  }
+
+  setPageTitle = () => {
+    const { isLoginMode } = this.state;
+    this.props.navigation.setOptions({
+      title: isLoginMode ? "Log In" : "Sign Up",
+    });
   };
 
   countryChangedHandler = (name, code) => {
@@ -55,7 +92,15 @@ class Auth extends React.Component {
     });
   };
 
-  formSubmitHandler = () => {
+  formSubmitHandler = async () => {
+    if (this.state.isLoginMode) {
+      await this.signInHandler();
+    } else {
+      await this.signUpHandler();
+    }
+  };
+
+  signUpHandler = async () => {
     const { form } = this.state;
     if (
       !form.phone ||
@@ -66,13 +111,76 @@ class Auth extends React.Component {
       alert("Enter valid data!");
       return;
     }
-    // console.log("Auth === formSubmitHandler == res = ", { form });
-    this.props.navigation.navigate({
-      name: "verifyPhone_screen",
-      params: {
-        formData: form,
-      },
+    const phoneNumber = "+" + form.country.code + form.phone;
+
+    // Signup using amazon-cognito-identity-js package
+    // const authAttributes = [];
+    // const phoneNumberAttr = new CognitoUserAttribute({
+    //   Name: "phone_number",
+    //   Value: phoneNumber,
+    // });
+    // authAttributes.push(phoneNumberAttr);
+    // console.log("Auth === signUpHandler == res = ", { form });
+    // USER_POOL.signUp(
+    //   phoneNumber,
+    //   new Date().toString(),
+    //   authAttributes,
+    //   null,
+    //   (err, result) => {
+    //     if (err) {
+    //       alert("Error occured while signup");
+    //       console.log("Auth === USER_POOL.signUp == err = ", { err });
+    //       return;
+    //     } else {
+    //       console.log("Auth === USER_POOL.signUp == res = ", { result });
+    //     }
+    //   }
+    // );
+
+    // signup using aws-amplify
+    try {
+      const result = await Auth.signUp(phoneNumber, new Date().toString());
+      console.log({ result });
+    } catch (err) {
+      alert("Error occured while signup");
+      console.log("Auth === Auth.signUp == err = ", { err });
+    }
+
+    // redirect after signup, to verify screen
+    // this.props.navigation.navigate({
+    //   name: "verifyPhone_screen",
+    //   params: {
+    //     formData: form,
+    //   },
+    // });
+  };
+
+  signInHandler = async () => {
+    const { form } = this.state;
+    if (
+      !form.phone ||
+      !form.phone.length > 6 ||
+      !form.country.name ||
+      !form.country.code
+    ) {
+      alert("Enter valid data!");
+      return;
+    }
+    const phoneNumber = "+" + form.country.code + form.phone;
+    try {
+      const cognitoUser = await Auth.signIn(phoneNumber);
+      console.log("Auth === Auth.signIn == res = ", { cognitoUser });
+    } catch (err) {
+      alert("Error occured while signIn");
+      console.log("Auth === Auth.signIn == err = ", { err });
+    }
+  };
+
+  switchAuthModeHandler = async () => {
+    await this.setState((oldState) => {
+      return { isLoginMode: !oldState.isLoginMode };
     });
+    await this.setPageTitle();
   };
 
   render() {
@@ -84,7 +192,7 @@ class Auth extends React.Component {
             <View style={STYLES.textCon}>
               <MainHeading>Welcome Back</MainHeading>
               <BodyText color={CONFIG.GREY} style={{ marginTop: 4 }}>
-                Sign in to continue
+                {isLoginMode ? "Sign in" : "Sign Up"} to continue
               </BodyText>
             </View>
             <View style={STYLES.formCon}>
@@ -93,7 +201,10 @@ class Auth extends React.Component {
                   <CountryPicker
                     style={STYLES.input}
                     onSelect={(name, code) => {
-                      console.log({ name, code });
+                      // console.log("Auth === CountryPicker/onSelect == res = ", {
+                      //   name,
+                      //   code,
+                      // });
                       this.countryChangedHandler(name, code);
                     }}
                   ></CountryPicker>
@@ -128,6 +239,16 @@ class Auth extends React.Component {
                   >
                     {isLoginMode ? "Login" : "SignUp"}
                   </MainButton>
+                  <FlatButton
+                    style={{
+                      alignItems: "center",
+                      marginTop: 10,
+                    }}
+                    color="primary"
+                    onPress={this.switchAuthModeHandler}
+                  >
+                    Switch Mode
+                  </FlatButton>
                 </View>
               </View>
             </View>
@@ -209,4 +330,4 @@ const STYLES = StyleSheet.create({
   policyText: {},
 });
 
-export default Auth;
+export default AuthScreen;

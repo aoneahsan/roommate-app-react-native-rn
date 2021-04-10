@@ -70,7 +70,7 @@ const Input = (props) => {
       alert(7);
       isvalid = false;
     }
-    console.log("Input === inputChangeHandler == res = ", { isvalid });
+    // console.log("Input === inputChangeHandler == res = ", { isvalid });
     // parent event to store input value in parent
     if (props.onChange) {
       props.onChange({
