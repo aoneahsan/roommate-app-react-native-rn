@@ -1,13 +1,6 @@
 // Core Imports
 import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import {
-  CognitoUserPool,
-  CognitoUserAttribute,
-  AuthenticationDetails,
-  CognitoUser,
-} from "amazon-cognito-identity-js";
-import Amplify, { Auth } from "aws-amplify";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
@@ -18,24 +11,6 @@ import FlatButton from "./../../components/FlatButton";
 import Input from "./../../components/Input";
 import Divider from "./../../components/Divider";
 import CountryPicker from "./../../components/CountryPicker";
-
-// Amplify
-Amplify.configure({
-  Auth: {
-    region: "us-east-2",
-    userPoolId: "us-east-2_WH5GrfH4k",
-    userPoolWebClientId: "25g6m9cjtqa86ktbudea5qv6l3",
-    authenticationFlowType: "CUSTOM_AUTH",
-  },
-});
-
-// AWS COGNITO CONFIG
-const POOL_DATA = {
-  UserPoolId: "us-east-2_WH5GrfH4k",
-  ClientId: "25g6m9cjtqa86ktbudea5qv6l3",
-};
-
-const USER_POOL = new CognitoUserPool(POOL_DATA);
 
 class AuthScreen extends React.Component {
   state = {
@@ -113,39 +88,6 @@ class AuthScreen extends React.Component {
     }
     const phoneNumber = "+" + form.country.code + form.phone;
 
-    // Signup using amazon-cognito-identity-js package
-    // const authAttributes = [];
-    // const phoneNumberAttr = new CognitoUserAttribute({
-    //   Name: "phone_number",
-    //   Value: phoneNumber,
-    // });
-    // authAttributes.push(phoneNumberAttr);
-    // console.log("Auth === signUpHandler == res = ", { form });
-    // USER_POOL.signUp(
-    //   phoneNumber,
-    //   new Date().toString(),
-    //   authAttributes,
-    //   null,
-    //   (err, result) => {
-    //     if (err) {
-    //       alert("Error occured while signup");
-    //       console.log("Auth === USER_POOL.signUp == err = ", { err });
-    //       return;
-    //     } else {
-    //       console.log("Auth === USER_POOL.signUp == res = ", { result });
-    //     }
-    //   }
-    // );
-
-    // signup using aws-amplify
-    try {
-      const result = await Auth.signUp(phoneNumber, new Date().toString());
-      console.log({ result });
-    } catch (err) {
-      alert("Error occured while signup");
-      console.log("Auth === Auth.signUp == err = ", { err });
-    }
-
     // redirect after signup, to verify screen
     // this.props.navigation.navigate({
     //   name: "verifyPhone_screen",
@@ -168,7 +110,6 @@ class AuthScreen extends React.Component {
     }
     const phoneNumber = "+" + form.country.code + form.phone;
     try {
-      const cognitoUser = await Auth.signIn(phoneNumber);
       console.log("Auth === Auth.signIn == res = ", { cognitoUser });
     } catch (err) {
       alert("Error occured while signIn");
