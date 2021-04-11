@@ -101,7 +101,7 @@ export const appTabsNavigator = (navData) => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() =>
-                  navData.navigation.navigate({ name: "user_tab_screen" })
+                  navData.navigation.navigate({ name: "profile_stack_screens" })
                 }
               >
                 <Feather

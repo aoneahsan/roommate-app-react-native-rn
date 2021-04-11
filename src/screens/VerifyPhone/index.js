@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet, View, ScrollView, Alert } from "react-native";
-import { NavigationActions } from "react-navigation";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
@@ -17,10 +16,10 @@ const VerifyPhone = (props) => {
   const [countryCode, setCountryCode] = useState("");
   const [canRequestNewCode, setCanRequestNewCode] = useState(true);
 
+  const isLoggedIn = useSelector((store) => store.authR.isLoggedIn);
+
   useEffect(() => {
-    // dispatch(ACTIONS.setIsLoadingFalse());
-    // props.navigation.navigate({ name: "auth_screen" });
-    // console.log("VerifyPhone === componentDidMount == res = ", props.route.params);
+    dispatch(ACTIONS.setIsLoadingFalse());
     if (
       props.route.params &&
       props.route.params.phone &&
@@ -28,14 +27,17 @@ const VerifyPhone = (props) => {
     ) {
       setPhoneCountryCodeFromParams();
     }
+    if (isLoggedIn) {
+      navigateToProfileScreen();
+    }
   }, []);
 
-  setPhoneCountryCodeFromParams = async () => {
+  const setPhoneCountryCodeFromParams = async () => {
     await setPhone(props.route.params.phone);
     await setCountryCode(props.route.params.countryCode);
   };
 
-  codeInputChangeHandler = (val) => {
+  const codeInputChangeHandler = (val) => {
     if (!val) {
       return;
     }
@@ -44,7 +46,7 @@ const VerifyPhone = (props) => {
     }
   };
 
-  verifyPhoneCode = async (code) => {
+  const verifyPhoneCode = async (code) => {
     dispatch(ACTIONS.setIsLoadingTrue());
     const result = await dispatch(ACTIONS.verifyCode(phone, code));
     dispatch(ACTIONS.setIsLoadingFalse());
@@ -63,19 +65,21 @@ const VerifyPhone = (props) => {
       );
       return;
     } else {
-      props.navigation.dispatch(
-        NavigationActions.navigate({ routeName: "app_stack_components" })
-      );
+      props.navigation.navigate("profile_stack_screens", {
+        screen: "profile_screen",
+      });
     }
   };
 
-  resendVerificationCode = async () => {
+  const resendVerificationCode = async () => {
     dispatch(ACTIONS.setIsLoadingTrue());
     await setCanRequestNewCode(false);
     const result = await dispatch(ACTIONS.resendVerificationCode(phone));
     dispatch(ACTIONS.setIsLoadingFalse());
     if (!result.success) {
-      alert("Error Occured while verifing code, try again!");
+      Alert.alert("Error", "Error Occured while verifing code, try again!", [
+        { text: "OKAY" },
+      ]);
       return;
     } else {
       Alert.alert("Code Send", "verification code send successfully!", [
@@ -87,7 +91,7 @@ const VerifyPhone = (props) => {
     }
   };
 
-  const goToAppStack = () => {
+  const navigateToProfileScreen = () => {
     props.navigation.navigate("profile_stack_screens", {
       screen: "profile_screen",
     });
@@ -117,7 +121,7 @@ const VerifyPhone = (props) => {
           </FlatButton>
         </View>
         <View style={STYLES.bottomSection2}>
-          <FlatButton underlined style={STYLES.text5} onPress={goToAppStack}>
+          <FlatButton underlined style={STYLES.text5} onPress={() => {}}>
             More Option
           </FlatButton>
         </View>
@@ -132,7 +136,6 @@ const STYLES = StyleSheet.create({
     flexGrow: 1,
   },
   main: {
-    flex: 1,
     padding: 10,
     backgroundColor: CONFIG.WHITE,
     borderBottomWidth: 1,

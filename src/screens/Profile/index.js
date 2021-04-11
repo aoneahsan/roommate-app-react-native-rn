@@ -1,10 +1,7 @@
 // Core Imports
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-// import RNPickerSelect from "react-native-picker-select";
-// import { Picker } from "@react-native-picker/picker";
-// import { NavigationActions } from "react-navigation";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
@@ -14,184 +11,168 @@ import ImageCard from "./../../components/ImageCard";
 import ImagePicker from "./../../components/ImagePicker";
 import UserInfoRow from "./../../components/UserInfoRow";
 
-class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-    // this.localImagePickerRef = React.createRef();
-  }
+const Profile = (props) => {
+  const [uploadedPhotosCount, setUploadedPhotosCount] = useState(0);
+  const [profileImage, setProfileImage] = useState(null);
 
-  state = {
-    uploaded_photos_count: 0,
-    profileImage: null,
+  const navigateToRoleSelectHandler = () => {
+    props.navigation.navigate({ name: "role_select_screen" });
   };
 
-  componentDidMount() {
-    // this.props.navigation.navigate({ name: "auth_screen" });
-    const props = this.props;
-    // console.log(props.route.params);
-  }
-
-  navigateToRoleSelectHandler = () => {
-    this.props.navigation.navigate({ name: "role_select_screen" });
+  const profileImageChangeHandler = async (image) => {
+    await setProfileImage(image);
   };
 
-  render() {
-    const { uploaded_photos_count, profileImage } = this.state;
-    const selectedItem = {
-      title: "Selected item title",
-      description: "Secondary long descriptive text ...",
-    };
-
-    return (
-      <ScrollView contentContainerStyle={STYLES.bgWhite}>
-        <View style={STYLES.main}>
-          <View style={STYLES.section1}>
-            <View style={STYLES.section1_leftside}>
-              <BodyText
-                style={STYLES.uploadPhotoText}
-                fontsize={18}
-                fontfamily="medium"
-              >
-                Upload photo ({uploaded_photos_count}/9)
-              </BodyText>
-              <View style={STYLES.smallBtnCon}>
-                <ImagePicker>
-                  <SmallButton style={STYLES.smallBtn}>
-                    Local Pictures
-                  </SmallButton>
-                </ImagePicker>
-              </View>
-              <View style={STYLES.smallBtnCon}>
-                <SmallButton style={STYLES.smallBtn} color="primary">
-                  PikyMe Avatar
+  return (
+    <ScrollView contentContainerStyle={STYLES.bgWhite}>
+      <View style={STYLES.main}>
+        <View style={STYLES.section1}>
+          <View style={STYLES.section1_leftside}>
+            <BodyText
+              style={STYLES.uploadPhotoText}
+              fontsize={18}
+              fontfamily="medium"
+            >
+              Upload photo ({uploadedPhotosCount}/9)
+            </BodyText>
+            <View style={STYLES.smallBtnCon}>
+              <ImagePicker onImageSelect={profileImageChangeHandler}>
+                <SmallButton style={STYLES.smallBtn}>
+                  Local Pictures
                 </SmallButton>
-              </View>
+              </ImagePicker>
             </View>
-            <View style={STYLES.section1_rightside}>
-              <ImageCard
-                onImageSelect={(image) => {
-                  console.log("Profile === ImageCard/onImageSelect == res = ", {
-                    image,
-                  });
-                }}
-                defaultImage={profileImage}
-              ></ImageCard>
+            <View style={STYLES.smallBtnCon}>
+              <SmallButton style={STYLES.smallBtn} color="primary">
+                PikyMe Avatar
+              </SmallButton>
             </View>
           </View>
-        </View>
-        <View style={STYLES.section2}>
-          <View style={STYLES.section2_row}>
-            <View style={STYLES.section2_imageCardCon}>
-              <ImageCard></ImageCard>
-            </View>
-            <View style={STYLES.section2_imageCardCon}>
-              <ImageCard></ImageCard>
-            </View>
-            <View style={STYLES.section2_imageCardCon}>
-              <ImageCard></ImageCard>
-            </View>
-            <View style={STYLES.section2_imageCardCon}>
-              <ImageCard></ImageCard>
-            </View>
-          </View>
-          <View style={STYLES.section2_row}>
-            <View style={STYLES.section2_imageCardCon}>
-              <ImageCard></ImageCard>
-            </View>
-            <View style={STYLES.section2_imageCardCon}>
-              <ImageCard></ImageCard>
-            </View>
-            <View style={STYLES.section2_imageCardCon}>
-              <ImageCard></ImageCard>
-            </View>
-            <View style={STYLES.section2_imageCardCon}>
-              <ImageCard></ImageCard>
-            </View>
+          <View style={STYLES.section1_rightside}>
+            <ImageCard
+              onImageSelect={(image) => {
+                // console.log("Profile === ImageCard/onImageSelect == res = ", {
+                //   image,
+                // });
+                profileImageChangeHandler(image);
+              }}
+              defaultImage={profileImage}
+            ></ImageCard>
           </View>
         </View>
-        <View style={STYLES.section3}>
-          {/* Name */}
-          <UserInfoRow
-            label="Name"
-            selectedValue="java"
-            onValueChange={(itemValue, itemIndex) =>
-              console.log({ itemValue, itemIndex })
-            }
-            listitems={[
-              { label: "Java", value: "java" },
-              { label: "JavaScript", value: "js" },
-            ]}
-          />
-          {/* Age */}
-          <UserInfoRow
-            label="Age"
-            onValueChange={(itemValue, itemIndex) =>
-              console.log({ itemValue, itemIndex })
-            }
-            listitems={[
-              { label: "25-30", value: "25-30" },
-              { label: "30-35", value: "30-35" },
-            ]}
-          />
-          {/* Gender */}
-          <UserInfoRow
-            label="Gender"
-            onValueChange={(itemValue, itemIndex) =>
-              console.log({ itemValue, itemIndex })
-            }
-            listitems={[
-              { label: "Male", value: "male" },
-              { label: "Female", value: "female" },
-              { label: "Non Binary", value: "non-binary" },
-            ]}
-          />
-          {/* Constellations */}
-          <UserInfoRow
-            label="Constellations"
-            onValueChange={(itemValue, itemIndex) =>
-              console.log({ itemValue, itemIndex })
-            }
-            listitems={[
-              { label: "Aries", value: "Aries" },
-              { label: "Taurus", value: "Taurus" },
-            ]}
-          />
-          {/* Hometown */}
-          <UserInfoRow
-            label="Hometown"
-            onValueChange={(itemValue, itemIndex) =>
-              console.log({ itemValue, itemIndex })
-            }
-            listitems={[
-              { label: "Ontario", value: "Ontario" },
-              { label: "Ontario2", value: "Ontario2" },
-            ]}
-          />
-          {/* Language */}
-          <UserInfoRow
-            label="Language"
-            onValueChange={(itemValue, itemIndex) =>
-              console.log({ itemValue, itemIndex })
-            }
-            listitems={[
-              { label: "English", value: "English" },
-              { label: "Franch", value: "Franch" },
-            ]}
-          />
+      </View>
+      <View style={STYLES.section2}>
+        <View style={STYLES.section2_row}>
+          <View style={STYLES.section2_imageCardCon}>
+            <ImageCard></ImageCard>
+          </View>
+          <View style={STYLES.section2_imageCardCon}>
+            <ImageCard></ImageCard>
+          </View>
+          <View style={STYLES.section2_imageCardCon}>
+            <ImageCard></ImageCard>
+          </View>
+          <View style={STYLES.section2_imageCardCon}>
+            <ImageCard></ImageCard>
+          </View>
         </View>
-        <View style={STYLES.section4}>
-          <TouchableOpacity
-            onPress={this.navigateToRoleSelectHandler}
-            style={STYLES.section4_innerCon}
-          >
-            <BodyText style={STYLES.nextText}>Next</BodyText>
-            <Ionicons name="arrow-forward" size={38} style={STYLES.nextIcon} />
-          </TouchableOpacity>
+        <View style={STYLES.section2_row}>
+          <View style={STYLES.section2_imageCardCon}>
+            <ImageCard></ImageCard>
+          </View>
+          <View style={STYLES.section2_imageCardCon}>
+            <ImageCard></ImageCard>
+          </View>
+          <View style={STYLES.section2_imageCardCon}>
+            <ImageCard></ImageCard>
+          </View>
+          <View style={STYLES.section2_imageCardCon}>
+            <ImageCard></ImageCard>
+          </View>
         </View>
-      </ScrollView>
-    );
-  }
-}
+      </View>
+      <View style={STYLES.section3}>
+        {/* Name */}
+        <UserInfoRow
+          label="Name"
+          selectedValue="java"
+          onValueChange={(itemValue, itemIndex) =>
+            console.log({ itemValue, itemIndex })
+          }
+          listitems={[
+            { label: "Java", value: "java" },
+            { label: "JavaScript", value: "js" },
+          ]}
+        />
+        {/* Age */}
+        <UserInfoRow
+          label="Age"
+          onValueChange={(itemValue, itemIndex) =>
+            console.log({ itemValue, itemIndex })
+          }
+          listitems={[
+            { label: "25-30", value: "25-30" },
+            { label: "30-35", value: "30-35" },
+          ]}
+        />
+        {/* Gender */}
+        <UserInfoRow
+          label="Gender"
+          onValueChange={(itemValue, itemIndex) =>
+            console.log({ itemValue, itemIndex })
+          }
+          listitems={[
+            { label: "Male", value: "male" },
+            { label: "Female", value: "female" },
+            { label: "Non Binary", value: "non-binary" },
+          ]}
+        />
+        {/* Constellations */}
+        <UserInfoRow
+          label="Constellations"
+          onValueChange={(itemValue, itemIndex) =>
+            console.log({ itemValue, itemIndex })
+          }
+          listitems={[
+            { label: "Aries", value: "Aries" },
+            { label: "Taurus", value: "Taurus" },
+          ]}
+        />
+        {/* Hometown */}
+        <UserInfoRow
+          label="Hometown"
+          onValueChange={(itemValue, itemIndex) =>
+            console.log({ itemValue, itemIndex })
+          }
+          listitems={[
+            { label: "Ontario", value: "Ontario" },
+            { label: "Ontario2", value: "Ontario2" },
+          ]}
+        />
+        {/* Language */}
+        <UserInfoRow
+          label="Language"
+          onValueChange={(itemValue, itemIndex) =>
+            console.log({ itemValue, itemIndex })
+          }
+          listitems={[
+            { label: "English", value: "English" },
+            { label: "Franch", value: "Franch" },
+          ]}
+        />
+      </View>
+      <View style={STYLES.section4}>
+        <TouchableOpacity
+          onPress={navigateToRoleSelectHandler}
+          style={STYLES.section4_innerCon}
+        >
+          <BodyText style={STYLES.nextText}>Next</BodyText>
+          <Ionicons name="arrow-forward" size={38} style={STYLES.nextIcon} />
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+  );
+};
 
 const STYLES = StyleSheet.create({
   bgWhite: {

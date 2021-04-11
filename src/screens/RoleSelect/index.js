@@ -9,63 +9,61 @@ import TouchableCard from "./../../components/TouchableCard";
 import Card from "./../../components/Card";
 import BodyText from "./../../components/BodyText";
 
-class RoleSelect extends React.Component {
-  navigateToAddPlaceStackHandler = () => {
-    this.props.navigation.navigate("add_place_stack_screens", {
+const RoleSelect = (props) => {
+  const navigateToAddPlaceStackHandler = () => {
+    props.navigation.navigate("add_place_stack_screens", {
       screen: "add_place_step1_screen",
     });
   };
 
-  navigateToFindRoommateStackHandler = () => {
-    this.props.navigation.navigate("find_roommate_stack_screens", {
+  const navigateToFindRoommateStackHandler = () => {
+    props.navigation.navigate("find_roommate_stack_screens", {
       screen: "find_roommate_step1_screen",
     });
   };
 
-  render() {
-    return (
-      <ScrollView contentContainerStyle={STYLES.bgWhite}>
-        <View style={STYLES.main}>
-          <View style={STYLES.headingCon}>
-            <BodyText style={STYLES.heading}>I want to...</BodyText>
-          </View>
-          <View style={STYLES.optionsCon}>
-            <TouchableCard
-              style={{ ...STYLES.option, ...STYLES.bgPrimary }}
-              onPress={this.navigateToAddPlaceStackHandler}
-            >
-              <Card style={STYLES.optionIconCon}>
-                <Ionicons
-                  style={STYLES.optionIcon}
-                  size={26}
-                  name="checkmark"
-                  color={CONFIG.LIGHT_TEXT_COLOR}
-                />
-              </Card>
-              <BodyText style={{ ...STYLES.optionText, ...STYLES.textWhite }}>
-                Post a New Place
-              </BodyText>
-            </TouchableCard>
-            <TouchableCard
-              style={STYLES.option}
-              onPress={this.navigateToFindRoommateStackHandler}
-            >
-              <Card style={STYLES.optionIconCon}>
-                <Ionicons
-                  style={STYLES.optionIcon}
-                  size={26}
-                  name="checkmark"
-                  color={CONFIG.LIGHT_TEXT_COLOR}
-                />
-              </Card>
-              <BodyText style={STYLES.optionText}>Find Roommates</BodyText>
-            </TouchableCard>
-          </View>
+  return (
+    <ScrollView contentContainerStyle={STYLES.bgWhite}>
+      <View style={STYLES.main}>
+        <View style={STYLES.headingCon}>
+          <BodyText style={STYLES.heading}>I want to...</BodyText>
         </View>
-      </ScrollView>
-    );
-  }
-}
+        <View style={STYLES.optionsCon}>
+          <TouchableCard
+            style={{ ...STYLES.option, ...STYLES.bgPrimary }}
+            onPress={navigateToAddPlaceStackHandler}
+          >
+            <Card style={STYLES.optionIconCon}>
+              <Ionicons
+                style={STYLES.optionIcon}
+                size={26}
+                name="checkmark"
+                color={CONFIG.LIGHT_TEXT_COLOR}
+              />
+            </Card>
+            <BodyText style={{ ...STYLES.optionText, ...STYLES.textWhite }}>
+              Post a New Place
+            </BodyText>
+          </TouchableCard>
+          <TouchableCard
+            style={STYLES.option}
+            onPress={navigateToFindRoommateStackHandler}
+          >
+            <Card style={STYLES.optionIconCon}>
+              <Ionicons
+                style={STYLES.optionIcon}
+                size={26}
+                name="checkmark"
+                color={CONFIG.LIGHT_TEXT_COLOR}
+              />
+            </Card>
+            <BodyText style={STYLES.optionText}>Find Roommates</BodyText>
+          </TouchableCard>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
 
 const STYLES = StyleSheet.create({
   bgWhite: {

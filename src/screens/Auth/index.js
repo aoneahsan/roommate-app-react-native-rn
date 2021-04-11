@@ -25,7 +25,7 @@ const AuthScreen = (props) => {
   const [phone, setPhone] = useState("");
 
   useEffect(() => {
-    // dispatch(ACTIONS.setIsLoadingFalse());
+    dispatch(ACTIONS.setIsLoadingFalse());
     // props.navigation.navigate({
     //   name: "verifyPhone_screen",
     //   params: {
@@ -33,16 +33,16 @@ const AuthScreen = (props) => {
     //     countryCode,
     //   },
     // });
+    // navigateToVerifyPhoneScreen(); // just for development, comment/remove before moving to production
     setPageTitle();
     if (isLoggedIn) {
-      navigateToUserListsScreens();
+      navigateToProfileScreen();
     }
   }, []);
 
-  const navigateToUserListsScreens = async () => {
-    dispatch(ACTIONS.setIsLoadingTrue());
-    props.navigation.navigate("users_list_stack_screens", {
-      screen: "users_list_tab_screen",
+  const navigateToProfileScreen = () => {
+    props.navigation.navigate("profile_stack_screens", {
+      screen: "profile_screen",
     });
   };
 
@@ -82,18 +82,23 @@ const AuthScreen = (props) => {
       } else {
         alert("Error Occured while Sign Up, try again!");
       }
+      dispatch(ACTIONS.setIsLoadingFalse());
       return;
     } else {
       dispatch(ACTIONS.setIsLoadingFalse());
       // redirect after signup, to verify screen
-      props.navigation.navigate({
-        name: "verifyPhone_screen",
-        params: {
-          phone,
-          countryCode,
-        },
-      });
+      navigateToVerifyPhoneScreen();
     }
+  };
+
+  const navigateToVerifyPhoneScreen = () => {
+    props.navigation.navigate({
+      name: "verifyPhone_screen",
+      params: {
+        phone,
+        countryCode,
+      },
+    });
   };
 
   const switchAuthModeHandler = async () => {
@@ -198,6 +203,7 @@ const STYLES = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     paddingTop: 10,
+    paddingBottom: 20,
   },
   contentCon: {
     flex: 1,

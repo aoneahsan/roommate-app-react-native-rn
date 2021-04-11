@@ -6,26 +6,22 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import * as CONFIG from "../../config";
 import BodyText from "./../../components/BodyText";
 
-class RoleSelect extends React.Component {
-  render() {
-    return (
-      <ScrollView contentContainerStyle={STYLES.bgWhite}>
-        <View style={STYLES.main}>
-          <BodyText>RoleSelect</BodyText>
-        </View>
-      </ScrollView>
-    );
-  }
-}
+const RoleSelect = (props) => {
+  return (
+    <ScrollView contentContainerStyle={STYLES.bgWhite}>
+      <View style={STYLES.main}>
+        <BodyText>RoleSelect</BodyText>
+      </View>
+    </ScrollView>
+  );
+};
 
 const STYLES = StyleSheet.create({
   bgWhite: {
     backgroundColor: CONFIG.WHITE,
     flexGrow: 1,
   },
-  main: {
-    flex: 1,
-  },
+  main: {},
 });
 
 export default RoleSelect;

@@ -18,7 +18,11 @@ export const authAction = (authData, isLoginMode) => {
       const data = response.data;
       return data;
     } catch (error) {
-      throw error;
+      const response = error.response;
+      console.log("auth-actions === authAction == catch error = ", {
+        response,
+      });
+      return response.data;
     }
   };
 };
@@ -61,7 +65,11 @@ export const resendVerificationCode = (phone) => {
       const data = response.data;
       return data;
     } catch (error) {
-      throw error;
+      const response = error.response;
+      console.log("auth-actions === resendVerificationCode == catch error = ", {
+        response,
+      });
+      return response.data;
     }
   };
 };
@@ -70,11 +78,68 @@ export const logout = () => {
   return async (dispatch) => {
     try {
       const result = await removeLocalUserAuthData();
-      await dispatch({
+      const response = await dispatch({
         type: ACTION_TYPES.LOGOUT,
       });
+      return result;
     } catch (error) {
-      throw error;
+      const response = error.response;
+      console.log("auth-actions === logout == catch error = ", {
+        response,
+      });
+      return response.data;
+    }
+  };
+};
+
+export const autoLogin = () => {
+  return async (dispatch) => {
+    try {
+      const authData = await getLocalUserAuthData();
+      if (!authData) {
+        return false;
+      } else {
+        await dispatch({
+          type: ACTION_TYPES.SET_AUTH_DATA,
+          payload: {
+            authData: authData,
+          },
+        });
+        return authData;
+      }
+    } catch (error) {
+      const response = error.response;
+      console.log("auth-actions === autoLogin == catch error = ", {
+        response,
+      });
+      return response.data;
+    }
+  };
+};
+
+export const checkLoginStatus = () => {
+  return async (dispatch, getStore) => {
+    try {
+      const store = getStore();
+      const authToken = store.authR.token;
+      const response = await axios.post(
+        "/check-login-status",
+        {},
+        {
+          headers: {
+            [CONFIG.AXIOS_HEADER_AUTH_KEY]: authToken,
+          },
+        }
+      );
+      // console.log("auth-actions === checkLoginStatus == res = ", { response });
+      const data = response.data;
+      return data;
+    } catch (error) {
+      const response = error.response;
+      // console.log("auth-actions === checkLoginStatus == catch error = ", {
+      //   response,
+      // });
+      return response.data;
     }
   };
 };
@@ -92,7 +157,7 @@ const getLocalUserAuthData = async () => {
   if (data != null) {
     return JSON.parse(data);
   } else {
-    return null;
+    return false;
   }
 };
 

@@ -1,10 +1,12 @@
 // Core Imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView, Dimensions } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import Carousel from "react-native-snap-carousel";
 
 // Custom Imports
 import * as CONFIG from "../../config";
+import * as ACTIONS from "./../../store/actions";
 import UsersListPageHeader from "../../components/UsersListPageHeader";
 import UserListItem from "../../components/UserListItem";
 import UserListFiltersModal from "../../components/UserListFiltersModal";
@@ -18,6 +20,8 @@ const DEVICE_WIDTH = Dimensions.get("window").width;
 const DEVICE_HEIGHT = Dimensions.get("window").height;
 
 const UsersList = (props) => {
+  const dispatch = useDispatch();
+
   const [showFiltersModal, setShowFiltersModal] = useState(false);
   const carouselData = [
     {
@@ -93,6 +97,10 @@ const UsersList = (props) => {
       image: AvatarLarge,
     },
   ];
+
+  useEffect(() => {
+    dispatch(ACTIONS.setIsLoadingFalse());
+  }, []);
 
   const changeFiltersModalVisibility = (status) => {
     setShowFiltersModal(status);

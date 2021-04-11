@@ -6,26 +6,22 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import * as CONFIG from "../../../config";
 import BodyText from "./../../../components/BodyText";
 
-class AddPlaceStep2 extends React.Component {
-  render() {
-    return (
-      <ScrollView contentContainerStyle={STYLES.bgWhite}>
-        <View style={STYLES.main}>
-          <BodyText>AddPlaceStep2</BodyText>
-        </View>
-      </ScrollView>
-    );
-  }
-}
+const AddPlaceStep2 = (props) => {
+  return (
+    <ScrollView contentContainerStyle={STYLES.bgWhite}>
+      <View style={STYLES.main}>
+        <BodyText>AddPlaceStep2</BodyText>
+      </View>
+    </ScrollView>
+  );
+};
 
 const STYLES = StyleSheet.create({
   bgWhite: {
     backgroundColor: CONFIG.WHITE,
     flexGrow: 1,
   },
-  main: {
-    flex: 1,
-  },
+  main: {},
 });
 
 export default AddPlaceStep2;

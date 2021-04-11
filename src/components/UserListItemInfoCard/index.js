@@ -17,10 +17,10 @@ const UserListItemInfoCard = (props) => {
         <View style={{ ...STYLES.content }}>
           {items &&
             Object.keys(items).map((keyName, index) => {
-              console.log("UserListItemInfoCard === map == res = ", {
-                keyName,
-                index,
-              });
+              // console.log("UserListItemInfoCard === map == res = ", {
+              //   keyName,
+              //   index,
+              // });
               return (
                 <View style={{ ...STYLES.row }} key={index}>
                   <BodyText style={{ ...STYLES.text, ...{marginRight: 10} }}>{keyName}:</BodyText>
