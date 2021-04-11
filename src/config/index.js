@@ -74,4 +74,4 @@ export {
   INPUT_TEXT_SIZE,
 } from "./fonts";
 
-export { AWS_POOL_ID } from "./keys";
+export { AXIOS_HEADER_AUTH_KEY, API_ROOT_URL, LOCAL_AUTH_KEY } from "./keys";

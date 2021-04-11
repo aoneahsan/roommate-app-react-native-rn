@@ -1,71 +1,130 @@
 // Core Imports
-import React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { StyleSheet, View, ScrollView, Alert } from "react-native";
+import { NavigationActions } from "react-navigation";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
+import * as ACTIONS from "./../../store/actions";
 import BodyText from "./../../components/BodyText";
 import CodeInput from "./../../components/CodeInput";
 import FlatButton from "./../../components/FlatButton";
 
-class VerifyPhone extends React.Component {
-  state = {
-    formData: null,
-  };
+const VerifyPhone = (props) => {
+  const dispatch = useDispatch();
+  const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("");
+  const [canRequestNewCode, setCanRequestNewCode] = useState(true);
 
-  componentDidMount() {
-    // this.props.navigation.navigate({ name: "auth_screen" });
-    const props = this.props;
+  useEffect(() => {
+    // dispatch(ACTIONS.setIsLoadingFalse());
+    // props.navigation.navigate({ name: "auth_screen" });
     // console.log("VerifyPhone === componentDidMount == res = ", props.route.params);
-    if (props.route.params && props.route.params.formData) {
-      this.setState({
-        formData: props.route.params.formData,
-      });
+    if (
+      props.route.params &&
+      props.route.params.phone &&
+      props.route.params.countryCode
+    ) {
+      setPhoneCountryCodeFromParams();
     }
-  }
+  }, []);
+
+  setPhoneCountryCodeFromParams = async () => {
+    await setPhone(props.route.params.phone);
+    await setCountryCode(props.route.params.countryCode);
+  };
 
   codeInputChangeHandler = (val) => {
     if (!val) {
       return;
     }
     if (val.length == 4) {
-      alert(val);
+      verifyPhoneCode(val);
     }
   };
 
-  render() {
-    const { formData } = this.state;
-    return (
-      <ScrollView contentContainerStyle={STYLES.bgWhite}>
-        <View style={STYLES.main}>
-          <View style={STYLES.textCon}>
-            <BodyText fontsize={16} style={STYLES.text1}>
-              Enter the code we send over SMS to
-            </BodyText>
-            <BodyText fontsize={16} color={CONFIG.PINK} style={STYLES.text2}>
-              {formData ? formData.phone : "No Phone Number Passed"}
-            </BodyText>
-          </View>
-          <View style={STYLES.codeInputCon}>
-            <CodeInput
-              style={STYLES.codeinput}
-              onChange={this.codeInputChangeHandler}
-            ></CodeInput>
-          </View>
-          <View style={STYLES.bottomSection}>
-            <BodyText style={STYLES.text3}>Didn't get an SMS?</BodyText>
-            <FlatButton style={STYLES.text4}>Send again</FlatButton>
-          </View>
-          <View style={STYLES.bottomSection2}>
-            <FlatButton underlined style={STYLES.text5}>
-              More Option
-            </FlatButton>
-          </View>
-        </View>
-      </ScrollView>
+  verifyPhoneCode = async (code) => {
+    dispatch(ACTIONS.setIsLoadingTrue());
+    const result = await dispatch(ACTIONS.verifyCode(phone, code));
+    dispatch(ACTIONS.setIsLoadingFalse());
+    if (!result.success && result.status_code != 422) {
+      Alert.alert(
+        "Error Occured",
+        "Error Occured while verifing code, try again!",
+        [{ text: "OKAY" }]
+      );
+      return;
+    } else if (result.status_code == 422) {
+      Alert.alert(
+        "Invalid Code",
+        "Invalid verification code entered, enter correct code, or request new one!",
+        [{ text: "OKAY" }]
+      );
+      return;
+    } else {
+      props.navigation.dispatch(
+        NavigationActions.navigate({ routeName: "app_stack_components" })
+      );
+    }
+  };
+
+  resendVerificationCode = async () => {
+    dispatch(ACTIONS.setIsLoadingTrue());
+    await setCanRequestNewCode(false);
+    const result = await dispatch(ACTIONS.resendVerificationCode(phone));
+    dispatch(ACTIONS.setIsLoadingFalse());
+    if (!result.success) {
+      alert("Error Occured while verifing code, try again!");
+      return;
+    } else {
+      Alert.alert("Code Send", "verification code send successfully!", [
+        { text: "OKAY" },
+      ]);
+      setTimeout(() => {
+        setCountryCode(true);
+      }, 10000);
+    }
+  };
+
+  const goToAppStack = () => {
+    props.navigation.dispatch(
+      NavigationActions.navigate({ routeName: "auth_screen" })
     );
-  }
-}
+  };
+
+  return (
+    <ScrollView contentContainerStyle={STYLES.bgWhite}>
+      <View style={STYLES.main}>
+        <View style={STYLES.textCon}>
+          <BodyText fontsize={16} style={STYLES.text1}>
+            Enter the code we send over SMS to
+          </BodyText>
+          <BodyText fontsize={16} color={CONFIG.PINK} style={STYLES.text2}>
+            {phone ? "+" + countryCode + phone : "No Phone Number Passed"}
+          </BodyText>
+        </View>
+        <View style={STYLES.codeInputCon}>
+          <CodeInput
+            style={STYLES.codeinput}
+            onChange={codeInputChangeHandler}
+          ></CodeInput>
+        </View>
+        <View style={STYLES.bottomSection}>
+          <BodyText style={STYLES.text3}>Didn't get an SMS?</BodyText>
+          <FlatButton disabled={!canRequestNewCode} style={STYLES.text4}>
+            Send again
+          </FlatButton>
+        </View>
+        <View style={STYLES.bottomSection2}>
+          <FlatButton underlined style={STYLES.text5} onPress={goToAppStack}>
+            More Option
+          </FlatButton>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
 
 const STYLES = StyleSheet.create({
   bgWhite: {

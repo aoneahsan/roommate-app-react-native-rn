@@ -1,8 +1,8 @@
 // Core Imports
 import React from "react";
 import { StyleSheet, View, ImageBackground, ScrollView } from "react-native";
-
 import { NavigationActions } from "react-navigation";
+
 // Custom Imports
 import * as CONFIG from "./../../config";
 import LandingScreenBgImage from "./../../../assets/images/main-screen-bg.png";

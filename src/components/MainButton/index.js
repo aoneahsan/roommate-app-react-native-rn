@@ -32,16 +32,20 @@ const MainButton = (props) => {
     disabledStyles = STYLES.disabledStyles;
   }
 
+  const clickHandler = () => {
+    props.disabled
+      ? () => {}
+      : props.onPress
+      ? props.onPress()
+      : () => alert("Pass a onPress function.");
+  };
+
   return (
     <View style={STYLES.wrapper}>
       <BaseTouchable
         style={{ ...STYLES.main }}
         opacity={props.touchableOpacity ? props.touchableOpacity : 0.1}
-        onPress={
-          props.onPress
-            ? props.onPress
-            : () => alert("Pass a onPress function.")
-        }
+        onPress={clickHandler}
       >
         {/* onPress={props.onPress} */}
         <View
@@ -88,7 +92,7 @@ const STYLES = StyleSheet.create({
   innerCon: {
     paddingVertical: 16,
     borderRadius: 100,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   whiteBtn: {
     backgroundColor: CONFIG.WHITE,

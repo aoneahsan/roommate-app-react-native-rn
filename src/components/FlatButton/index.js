@@ -35,13 +35,19 @@ const FlatButton = (props) => {
     underlineStyles = STYLES.underlined;
   }
 
+  const clickHandler = () => {
+    props.disabled
+      ? () => {}
+      : props.onPress
+      ? props.onPress()
+      : () => alert("Pass a onPress function.");
+  };
+
   return (
     <BaseTouchable
       style={{ ...STYLES.main }}
       opacity={props.touchableOpacity ? props.touchableOpacity : 0.1}
-      onPress={
-        props.onPress ? props.onPress : () => alert("Pass a onPress function.")
-      }
+      onPress={clickHandler}
     >
       <View style={{ ...STYLES.wrapper, ...props.style }}>
         <BodyText

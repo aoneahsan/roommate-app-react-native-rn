@@ -24,6 +24,14 @@ const AuthScreen = (props) => {
   const [phone, setPhone] = useState("");
 
   useEffect(() => {
+    // dispatch(ACTIONS.setIsLoadingFalse());
+    // props.navigation.navigate({
+    //   name: "verifyPhone_screen",
+    //   params: {
+    //     phone,
+    //     countryCode,
+    //   },
+    // });
     setPageTitle();
   }, []);
 
@@ -49,46 +57,32 @@ const AuthScreen = (props) => {
   };
 
   formSubmitHandler = async () => {
-    dispatch(ACTIONS.setIsLoadingTrue());
-    if (isLoginMode) {
-      await signInHandler();
-    } else {
-      await signUpHandler();
-    }
-  };
-
-  signUpHandler = async () => {
     if (!phone || phone.length < 6 || !countryCode) {
       alert("Enter valid data!");
       return;
     }
-    const phoneNumber = "+" + countryCode + phone;
-
-    // redirect after signup, to verify screen
-    // props.navigation.navigate({
-    //   name: "verifyPhone_screen",
-    //   params: {
-    //     formData: form,
-    //   },
-    // });
-  };
-
-  signInHandler = async () => {
-    await setTimeout(() => {
-      if (!phone || !phone.length < 6 || !countryCode) {
-      alert("Enter valid data!");
+    dispatch(ACTIONS.setIsLoadingTrue());
+    const result = await dispatch(
+      ACTIONS.authAction({ phone, countryCode }, isLoginMode)
+    );
+    if (!result.success) {
+      if (isLoginMode) {
+        alert("Error Occured while Login, try again!");
+      } else {
+        alert("Error Occured while Sign Up, try again!");
+      }
       return;
+    } else {
+      dispatch(ACTIONS.setIsLoadingFalse());
+      // redirect after signup, to verify screen
+      props.navigation.navigate({
+        name: "verifyPhone_screen",
+        params: {
+          phone,
+          countryCode,
+        },
+      });
     }
-    const phoneNumber = "+" + countryCode + phone;
-    try {
-      console.log("Auth === Auth.signIn == res = ");
-    } catch (err) {
-      alert("Error occured while signIn");
-      console.log("Auth === Auth.signIn == err = ", { err });
-    }
-    }, 3000);
-    dispatch(ACTIONS.setIsLoadingFalse());
-    
   };
 
   switchAuthModeHandler = async () => {
