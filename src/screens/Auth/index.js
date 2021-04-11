@@ -1,6 +1,7 @@
 // Core Imports
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
@@ -11,85 +12,60 @@ import FlatButton from "./../../components/FlatButton";
 import Input from "./../../components/Input";
 import Divider from "./../../components/Divider";
 import CountryPicker from "./../../components/CountryPicker";
+import * as ACTIONS from "./../../store/actions";
 
-class AuthScreen extends React.Component {
-  state = {
-    isLoginMode: true,
-    form: {
-      country: {
-        name: "",
-        code: "",
-      },
-      phone: "",
-    },
-  };
+const AuthScreen = (props) => {
+  // Define Dispatch
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    this.setPageTitle();
-  }
+  // Define States Constants
+  const [isLoginMode, setIsLoginMode] = useState(true);
+  const [countryCode, setCountryCode] = useState("");
+  const [phone, setPhone] = useState("");
 
-  setPageTitle = () => {
-    const { isLoginMode } = this.state;
-    this.props.navigation.setOptions({
+  useEffect(() => {
+    setPageTitle();
+  }, []);
+
+  setPageTitle = async () => {
+    await props.navigation.setOptions({
       title: isLoginMode ? "Log In" : "Sign Up",
     });
   };
 
-  countryChangedHandler = (name, code) => {
+  countryChangedHandler = async (name, code) => {
     if (!name || !code) {
       return;
     }
-    this.setState((state) => {
-      return {
-        form: {
-          country: {
-            name,
-            code,
-          },
-          phone: state.form.phone,
-        },
-      };
-    });
+    await setCountryCode(code);
   };
 
-  phoneChangedHandler = ({ id, value, isvalid }) => {
+  phoneChangedHandler = async ({ id, value, isvalid }) => {
     const phone = value;
     if (!phone) {
       return;
     }
-    this.setState((state) => {
-      return {
-        form: {
-          country: state.form.country,
-          phone: phone,
-        },
-      };
-    });
+    setPhone(phone);
   };
 
   formSubmitHandler = async () => {
-    if (this.state.isLoginMode) {
-      await this.signInHandler();
+    dispatch(ACTIONS.setIsLoadingTrue());
+    if (isLoginMode) {
+      await signInHandler();
     } else {
-      await this.signUpHandler();
+      await signUpHandler();
     }
   };
 
   signUpHandler = async () => {
-    const { form } = this.state;
-    if (
-      !form.phone ||
-      !form.phone.length > 6 ||
-      !form.country.name ||
-      !form.country.code
-    ) {
+    if (!phone || phone.length < 6 || !countryCode) {
       alert("Enter valid data!");
       return;
     }
-    const phoneNumber = "+" + form.country.code + form.phone;
+    const phoneNumber = "+" + countryCode + phone;
 
     // redirect after signup, to verify screen
-    // this.props.navigation.navigate({
+    // props.navigation.navigate({
     //   name: "verifyPhone_screen",
     //   params: {
     //     formData: form,
@@ -98,126 +74,114 @@ class AuthScreen extends React.Component {
   };
 
   signInHandler = async () => {
-    const { form } = this.state;
-    if (
-      !form.phone ||
-      !form.phone.length > 6 ||
-      !form.country.name ||
-      !form.country.code
-    ) {
+    await setTimeout(() => {
+      if (!phone || !phone.length < 6 || !countryCode) {
       alert("Enter valid data!");
       return;
     }
-    const phoneNumber = "+" + form.country.code + form.phone;
+    const phoneNumber = "+" + countryCode + phone;
     try {
-      console.log("Auth === Auth.signIn == res = ", { cognitoUser });
+      console.log("Auth === Auth.signIn == res = ");
     } catch (err) {
       alert("Error occured while signIn");
       console.log("Auth === Auth.signIn == err = ", { err });
     }
+    }, 3000);
+    dispatch(ACTIONS.setIsLoadingFalse());
+    
   };
 
   switchAuthModeHandler = async () => {
-    await this.setState((oldState) => {
-      return { isLoginMode: !oldState.isLoginMode };
-    });
-    await this.setPageTitle();
+    await setIsLoginMode(!isLoginMode);
+    await setPageTitle();
   };
 
-  render() {
-    const { isLoginMode, form } = this.state;
-    return (
-      <ScrollView contentContainerStyle={STYLES.bgWhite}>
-        <View style={STYLES.main}>
-          <View style={STYLES.contentCon}>
-            <View style={STYLES.textCon}>
-              <MainHeading>Welcome Back</MainHeading>
-              <BodyText color={CONFIG.GREY} style={{ marginTop: 4 }}>
-                {isLoginMode ? "Sign in" : "Sign Up"} to continue
-              </BodyText>
-            </View>
-            <View style={STYLES.formCon}>
-              <View style={STYLES.formInnerCon}>
-                <View style={STYLES.inputCon}>
-                  <CountryPicker
-                    style={STYLES.input}
-                    onSelect={(name, code) => {
-                      // console.log("Auth === CountryPicker/onSelect == res = ", {
-                      //   name,
-                      //   code,
-                      // });
-                      this.countryChangedHandler(name, code);
-                    }}
-                  ></CountryPicker>
-                </View>
-                <View style={STYLES.inputCon}>
-                  <Input
-                    placeholder="123-456-789"
-                    keyboardType="phone-pad"
-                    style={STYLES.input}
-                    label="Country/Region"
-                    number
-                    labelStyle={{
-                      color: CONFIG.LIGHT_TEXT_COLOR,
-                      marginLeft: -6,
-                      marginBottom: -1,
-                      fontSize: 14,
-                    }}
-                    onChange={this.phoneChangedHandler}
-                    radius={16}
-                  />
-                </View>
-                <View style={STYLES.btnCon}>
-                  <MainButton
-                    color="primary"
-                    onPress={this.formSubmitHandler}
-                    disabled={
-                      !form.phone ||
-                      !form.phone.length > 6 ||
-                      !form.country.name ||
-                      !form.country.code
-                    }
-                  >
-                    {isLoginMode ? "Login" : "SignUp"}
-                  </MainButton>
-                  <FlatButton
-                    style={{
-                      alignItems: "center",
-                      marginTop: 10,
-                    }}
-                    color="primary"
-                    onPress={this.switchAuthModeHandler}
-                  >
-                    Switch Mode
-                  </FlatButton>
-                </View>
+  return (
+    <ScrollView contentContainerStyle={STYLES.bgWhite}>
+      <View style={STYLES.main}>
+        <View style={STYLES.contentCon}>
+          <View style={STYLES.textCon}>
+            <MainHeading>Welcome Back</MainHeading>
+            <BodyText color={CONFIG.GREY} style={{ marginTop: 4 }}>
+              {isLoginMode ? "Sign in" : "Sign Up"} to continue
+            </BodyText>
+          </View>
+          <View style={STYLES.formCon}>
+            <View style={STYLES.formInnerCon}>
+              <View style={STYLES.inputCon}>
+                <CountryPicker
+                  style={STYLES.input}
+                  onSelect={(name, code) => {
+                    // console.log("Auth === CountryPicker/onSelect == res = ", {
+                    //   name,
+                    //   code,
+                    // });
+                    countryChangedHandler(name, code);
+                  }}
+                ></CountryPicker>
               </View>
-            </View>
-            <View style={STYLES.dividerCon}>
-              <Divider>or</Divider>
-            </View>
-            <View style={STYLES.btnsCon}>
-              <View style={STYLES.btnCon}>
-                <MainButton fontsize={16}>Continue with WeChat</MainButton>
+              <View style={STYLES.inputCon}>
+                <Input
+                  placeholder="123-456-789"
+                  keyboardType="phone-pad"
+                  style={STYLES.input}
+                  label="Country/Region"
+                  number
+                  labelStyle={{
+                    color: CONFIG.LIGHT_TEXT_COLOR,
+                    marginLeft: -6,
+                    marginBottom: -1,
+                    fontSize: 14,
+                  }}
+                  onChange={phoneChangedHandler}
+                  radius={16}
+                />
               </View>
               <View style={STYLES.btnCon}>
-                <MainButton fontsize={16}>Continue with Facebook</MainButton>
+                <MainButton
+                  color="primary"
+                  onPress={formSubmitHandler}
+                  disabled={!phone || !phone.length > 6 || !countryCode}
+                >
+                  {isLoginMode ? "Login" : "SignUp"}
+                </MainButton>
+                <FlatButton
+                  style={{
+                    alignItems: "center",
+                    marginTop: 10,
+                  }}
+                  color="primary"
+                  onPress={switchAuthModeHandler}
+                >
+                  Switch Mode
+                </FlatButton>
               </View>
-              <View style={STYLES.btnCon}>
-                <MainButton fontsize={16}>Continue with Email</MainButton>
-              </View>
-            </View>
-            <View style={STYLES.policyTextCon}>
-              <BodyText color={CONFIG.GREY} style={{ marginTop: 4 }}>
-                Terms of use & Privecy Policy
-              </BodyText>
             </View>
           </View>
+          <View style={STYLES.dividerCon}>
+            <Divider>or</Divider>
+          </View>
+          <View style={STYLES.btnsCon}>
+            <View style={STYLES.btnCon}>
+              <MainButton fontsize={16}>Continue with WeChat</MainButton>
+            </View>
+            <View style={STYLES.btnCon}>
+              <MainButton fontsize={16}>Continue with Facebook</MainButton>
+            </View>
+            <View style={STYLES.btnCon}>
+              <MainButton fontsize={16}>Continue with Email</MainButton>
+            </View>
+          </View>
+          <View style={STYLES.policyTextCon}>
+            <BodyText color={CONFIG.GREY} style={{ marginTop: 4 }}>
+              Terms of use & Privecy Policy
+            </BodyText>
+          </View>
         </View>
-      </ScrollView>
-    );
-  }
-}
+      </View>
+    </ScrollView>
+  );
+};
 
 const STYLES = StyleSheet.create({
   bgWhite: {
