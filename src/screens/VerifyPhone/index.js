@@ -88,9 +88,9 @@ const VerifyPhone = (props) => {
   };
 
   const goToAppStack = () => {
-    props.navigation.dispatch(
-      NavigationActions.navigate({ routeName: "auth_screen" })
-    );
+    props.navigation.navigate("profile_stack_screens", {
+      screen: "profile_screen",
+    });
   };
 
   return (

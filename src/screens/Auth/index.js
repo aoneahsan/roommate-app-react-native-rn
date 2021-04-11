@@ -17,6 +17,7 @@ import * as ACTIONS from "./../../store/actions";
 const AuthScreen = (props) => {
   // Define Dispatch
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.authR.isLoggedIn);
 
   // Define States Constants
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -33,22 +34,32 @@ const AuthScreen = (props) => {
     //   },
     // });
     setPageTitle();
+    if (isLoggedIn) {
+      navigateToUserListsScreens();
+    }
   }, []);
 
-  setPageTitle = async () => {
+  const navigateToUserListsScreens = async () => {
+    dispatch(ACTIONS.setIsLoadingTrue());
+    props.navigation.navigate("users_list_stack_screens", {
+      screen: "users_list_tab_screen",
+    });
+  };
+
+  const setPageTitle = async () => {
     await props.navigation.setOptions({
       title: isLoginMode ? "Log In" : "Sign Up",
     });
   };
 
-  countryChangedHandler = async (name, code) => {
+  const countryChangedHandler = async (name, code) => {
     if (!name || !code) {
       return;
     }
     await setCountryCode(code);
   };
 
-  phoneChangedHandler = async ({ id, value, isvalid }) => {
+  const phoneChangedHandler = async ({ id, value, isvalid }) => {
     const phone = value;
     if (!phone) {
       return;
@@ -56,7 +67,7 @@ const AuthScreen = (props) => {
     setPhone(phone);
   };
 
-  formSubmitHandler = async () => {
+  const formSubmitHandler = async () => {
     if (!phone || phone.length < 6 || !countryCode) {
       alert("Enter valid data!");
       return;
@@ -85,7 +96,7 @@ const AuthScreen = (props) => {
     }
   };
 
-  switchAuthModeHandler = async () => {
+  const switchAuthModeHandler = async () => {
     await setIsLoginMode(!isLoginMode);
     await setPageTitle();
   };
@@ -134,6 +145,7 @@ const AuthScreen = (props) => {
               <View style={STYLES.btnCon}>
                 <MainButton
                   color="primary"
+                  const
                   onPress={formSubmitHandler}
                   disabled={!phone || !phone.length > 6 || !countryCode}
                 >

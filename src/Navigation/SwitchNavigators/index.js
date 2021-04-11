@@ -7,9 +7,9 @@ import * as StackNavigators from "../StackNavigators";
 import * as DrawerNavigators from "../DrawerNavigators";
 
 const AppSwitchContainer = createSwitchNavigator({
-  auth_stack_components: StackNavigators.AuthStackComponents,
-  landing_screen: LandingScreen,
-  app_stack_components: DrawerNavigators.AppDrawerComponents,
+  // landing_screen: LandingScreen,
+  // auth_stack_components: StackNavigators.AuthStackComponents,
+  // app_stack_components: DrawerNavigators.AppDrawerComponents,
 });
 
 export default createAppContainer(AppSwitchContainer);

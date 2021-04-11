@@ -3,12 +3,12 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
 // Custom Imports
-import SwitchNavigators from "./SwitchNavigators";
+import { AppDrawerComponents } from "./DrawerNavigators";
 
 const Navigation = (props) => {
   return (
     <NavigationContainer>
-      <SwitchNavigators />
+      <AppDrawerComponents />
     </NavigationContainer>
   );
 };

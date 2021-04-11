@@ -5,6 +5,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 
 // Custom Imports
 import * as CONFIG from "../../../config";
+import LandingScreen from "./../../../screens/LandingScreen";
 import * as StackNavigators from "./../../StackNavigators";
 import * as BottomTabNavigators from "./../../BottomTabNavigators";
 
@@ -15,9 +16,17 @@ const AppDrawer = createDrawerNavigator();
 export const AppDrawerComponents = (navData) => {
   return (
     <AppDrawer.Navigator
-      initialRouteName="profile_stack_screens"
+      initialRouteName="app_landing_screen"
       screenOptions={{ swipeEnabled: false }}
     >
+      <AppDrawer.Screen
+        name="app_landing_screen"
+        component={LandingScreen}
+      ></AppDrawer.Screen>
+      <AppDrawer.Screen
+        name="auth_stack_screens"
+        component={StackNavigators.AuthStackComponents}
+      ></AppDrawer.Screen>
       <AppDrawer.Screen
         name="profile_stack_screens"
         component={StackNavigators.ProfileStackComponents}
