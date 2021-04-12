@@ -27,13 +27,24 @@ const Profile = (props) => {
 
   const profileData = useSelector((store) => store.userR.profileData);
 
-  useFocusEffect(() => {
-    // this will run when screen gets focused
-    getProfileData();
-    return () => {
-      // Useful for cleanup functions
-    };
-  });
+  useEffect(() => {
+    console.log("Profile === useEffect == profileData = ", { profileData });
+  }, [profileData]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      (async function () {
+        dispatch(ACTIONS.setIsLoadingFalse());
+        await getProfileData();
+      })();
+
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
 
   const navigateToRoleSelectHandler = () => {
     props.navigation.navigate({ name: "role_select_screen" });

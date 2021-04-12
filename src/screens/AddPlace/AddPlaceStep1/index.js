@@ -9,9 +9,12 @@ import {
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { Ionicons } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 
 // Custom Imports
 import * as CONFIG from "../../../config";
+import * as ACTIONS from "./../../../store/actions";
 import BodyText from "../../../components/BodyText";
 import Input from "../../../components/Input";
 import StepFooter from "../../../components/StepFooter";
@@ -59,10 +62,25 @@ const INIT_FORM_STATE = {
 };
 
 const AddPlaceStep1 = (props) => {
+  const dispatch = useDispatch();
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [formState, dispatcherFormState] = useReducer(
     FORM_STATE_REDUCER,
     INIT_FORM_STATE
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      (async function () {
+        dispatch(ACTIONS.setIsLoadingFalse());
+      })();
+
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
   );
 
   const inputChangedHandler = (data) => {

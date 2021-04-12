@@ -1,7 +1,8 @@
 // Core Imports
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, ScrollView, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { useFocusEffect } from "@react-navigation/native";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
@@ -24,25 +25,28 @@ const AuthScreen = (props) => {
   const [countryCode, setCountryCode] = useState("");
   const [phone, setPhone] = useState("");
 
-  useEffect(() => {
-    dispatch(ACTIONS.setIsLoadingFalse());
-    // props.navigation.navigate({
-    //   name: "verifyPhone_screen",
-    //   params: {
-    //     phone,
-    //     countryCode,
-    //   },
-    // });
-    // navigateToVerifyPhoneScreen(); // just for development, comment/remove before moving to production
-    setPageTitle();
-    if (isLoggedIn) {
-      navigateToProfileScreen();
-    }
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      (async function () {
+        dispatch(ACTIONS.setIsLoadingFalse());
+        // navigateToVerifyPhoneScreen(); // just for development, comment/remove before moving to production
+        setPageTitle();
+        if (isLoggedIn) {
+          navigateToUsersListScreen();
+        }
+      })();
 
-  const navigateToProfileScreen = () => {
-    props.navigation.navigate("profile_stack_screens", {
-      screen: "profile_screen",
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
+
+  const navigateToUsersListScreen = () => {
+    props.navigation.navigate("users_list_stack_screens", {
+      screen: "users_list_tab_screen",
     });
   };
 

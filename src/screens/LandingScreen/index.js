@@ -1,7 +1,8 @@
 // Core Imports
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { StyleSheet, View, ImageBackground, ScrollView } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
@@ -15,16 +16,24 @@ const LandingScreen = (props) => {
 
   const isLoggedIn = useSelector((store) => store.authR.isLoggedIn);
 
-  useEffect(() => {
-    dispatch(ACTIONS.setIsLoadingFalse());
-    navigateToUsersListScreen(); // just for testing, kindly comment before making build
-    // navigateToAuthScreen(); // just for testing, kindly comment before making build
-    // checkAutoLogin();
-    // // logout();
-    // if (isLoggedIn) {
-    //   navigateToUsersListScreen();
-    // }
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      (async function () {
+        dispatch(ACTIONS.setIsLoadingFalse());
+        if (isLoggedIn) {
+          navigateToUsersListScreen();
+        } else {
+          checkAutoLogin();
+        }
+      })();
+
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
 
   const checkAutoLogin = async () => {
     dispatch(ACTIONS.setIsLoadingTrue());
@@ -60,25 +69,6 @@ const LandingScreen = (props) => {
   const navigateToAuthScreen = () => {
     props.navigation.navigate("auth_stack_screens", {
       screen: "auth_screen",
-    });
-    // const resetAction = StackActions.reset({
-    //   index: 1,
-    //   actions: [
-    //     NavigationActions.navigate({
-    //       name: "auth_stack_screens",
-    //       key: "auth_stack_screens",
-    //       routeName: "auth_stack_screens",
-    //       screen: "auth_stack_screens",
-    //     }),
-    //   ],
-    //   key: null,
-    // });
-    // props.navigation.dispatch(resetAction);
-  };
-
-  const navigateToProfileScreen = () => {
-    props.navigation.navigate("profile_stack_screens", {
-      screen: "profile_screen",
     });
   };
 

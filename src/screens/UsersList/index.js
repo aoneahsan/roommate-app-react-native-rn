@@ -1,8 +1,9 @@
 // Core Imports
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ScrollView, Dimensions } from "react-native";
+import { StyleSheet, View, ScrollView, Dimensions, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Carousel from "react-native-snap-carousel";
+import { useFocusEffect } from "@react-navigation/native";
 
 // Custom Imports
 import * as CONFIG from "../../config";
@@ -23,6 +24,7 @@ const UsersList = (props) => {
   const dispatch = useDispatch();
 
   const [showFiltersModal, setShowFiltersModal] = useState(false);
+  const usersList = useSelector((store) => store.userR.usersList);
   const carouselData = [
     {
       id: 1,
@@ -99,8 +101,38 @@ const UsersList = (props) => {
   ];
 
   useEffect(() => {
+    console.log("UsersList === useEffect == usersList = ", { usersList });
+  }, [usersList]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      (async function () {
+        dispatch(ACTIONS.setIsLoadingFalse());
+        await getUsersListData();
+      })();
+
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
+
+  const getUsersListData = async () => {
+    dispatch(ACTIONS.setIsLoadingTrue());
+    const result = await dispatch(ACTIONS.fetchUsersListData());
     dispatch(ACTIONS.setIsLoadingFalse());
-  }, []);
+    if (!result.success) {
+      Alert.alert(
+        "Error",
+        result.message
+          ? result.message
+          : "Error occured while processing request, try again!",
+        [{ text: "OKAY" }]
+      );
+    }
+  };
 
   const changeFiltersModalVisibility = (status) => {
     setShowFiltersModal(status);
