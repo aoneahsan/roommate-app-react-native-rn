@@ -7,3 +7,8 @@ exports.SET_LOADING_FALSE = prefix + "SET_LOADING_FALSE";
 prefix = "AUTH/";
 exports.SET_AUTH_DATA = prefix + "SET_AUTH_DATA";
 exports.LOGOUT = prefix + "LOGOUT";
+
+// USER Actions Related Action Types
+prefix = "USER/";
+exports.SET_USERS_LIST_DATA = prefix + "SET_USERS_LIST_DATA";
+exports.SET_PROFILE_DATA = prefix + "SET_PROFILE_DATA";
