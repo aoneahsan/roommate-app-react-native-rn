@@ -18,14 +18,27 @@ import AvatarLarge from "./../../../assets/images/avatar-large.png";
 // ****************************************************************
 
 const DEVICE_WIDTH = Dimensions.get("window").width;
-const DEVICE_HEIGHT = Dimensions.get("window").height;
+
+const BG_COLORS = [
+  "#5D00B5",
+  "#5D0000",
+  "#5DB1D5",
+  "#5DB100",
+  "#B1D005",
+  "#000",
+  "#a10Da5",
+  "#a10D00",
+  "#0B01D5",
+  "#0a01a0",
+  "#005",
+];
 
 const UsersList = (props) => {
   const dispatch = useDispatch();
 
   const [showFiltersModal, setShowFiltersModal] = useState(false);
   const usersList = useSelector((store) => store.userR.usersList);
-  const carouselData = [
+  const [carouselData, setCarouselData] = useState([
     {
       id: 1,
       info: {
@@ -38,70 +51,54 @@ const UsersList = (props) => {
         },
       },
       percentage: "20",
-      imageBgColor: "#5D00B5",
-      badgeBgColor: "#5D0000",
+      imageBgColor: BG_COLORS[Math.floor(Math.random() * BG_COLORS.length)],
+      badgeBgColor: BG_COLORS[Math.floor(Math.random() * BG_COLORS.length)],
       badgetext: "PikeMe",
       progress: 15,
       image: AvatarLarge,
     },
-    {
-      id: 1,
-      info: {
-        name: "Gigi",
-        gender: "Female",
-        occupation: "Student",
-        budget: {
-          min: 700,
-          max: 1200,
-        },
-      },
-      percentage: "20",
-      imageBgColor: "#5DB1D5",
-      badgeBgColor: "#5DB100",
-      badgetext: "PikeMe",
-      progress: 15,
-      image: AvatarLarge,
-    },
-    {
-      id: 1,
-      info: {
-        name: "Gigi",
-        gender: "Female",
-        occupation: "Student",
-        budget: {
-          min: 700,
-          max: 1200,
-        },
-      },
-      percentage: "20",
-      imageBgColor: "#B1D005",
-      badgeBgColor: "#000",
-      badgetext: "PikeMe",
-      progress: 15,
-      image: AvatarLarge,
-    },
-    {
-      id: 1,
-      info: {
-        name: "Gigi",
-        gender: "Female",
-        occupation: "Student",
-        budget: {
-          min: 700,
-          max: 1200,
-        },
-      },
-      percentage: "20",
-      imageBgColor: "#a10Da5",
-      badgeBgColor: "#a10D00",
-      badgetext: "PikeMe",
-      progress: 15,
-      image: AvatarLarge,
-    },
-  ];
+  ]);
 
   useEffect(() => {
-    console.log("UsersList === useEffect == usersList = ", { usersList });
+    (async function () {
+      // console.log("UsersList === useEffect == usersList = ", { usersList });
+      if (usersList) {
+        let newCarouselData = await usersList.map((el) => {
+          const profileImage = el.userProfileImages
+            ? el.userProfileImages.length > 0
+              ? el.userProfileImages[0].url
+              : AvatarLarge
+            : AvatarLarge;
+          const isUrlImage = el.userProfileImages
+            ? el.userProfileImages.length > 0
+              ? true
+              : false
+            : false;
+          return {
+            id: el.id,
+            info: {
+              name: el.name ? el.name : "Gigi",
+              gender: el.gender ? el.gender : "Male",
+              occupation: "Student",
+              budget: {
+                min: 700,
+                max: 1200,
+              },
+            },
+            percentage: "20",
+            imageBgColor:
+              BG_COLORS[Math.floor(Math.random() * BG_COLORS.length)],
+            badgeBgColor:
+              BG_COLORS[Math.floor(Math.random() * BG_COLORS.length)],
+            badgetext: "PikeMe",
+            progress: 15,
+            image: profileImage,
+            isUrlImage,
+          };
+        });
+        await setCarouselData(newCarouselData);
+      }
+    })();
   }, [usersList]);
 
   useFocusEffect(
@@ -138,7 +135,7 @@ const UsersList = (props) => {
     setShowFiltersModal(status);
   };
 
-  const openUserDetailPage = (user) => {
+  const openUserDetailPage = (itemData) => {
     props.navigation.navigate({ name: "users_list_item_detail_screen" });
   };
 
@@ -161,11 +158,16 @@ const UsersList = (props) => {
           <Carousel
             sliderWidth={DEVICE_WIDTH}
             itemWidth={DEVICE_WIDTH - 80}
-            renderItem={UserListItem}
+            renderItem={(data) => (
+              <UserListItem
+                item={data.item}
+                onPress={(item) => openUserDetailPage(item)}
+              />
+            )}
             data={carouselData}
-            firstItem={1}
+            // firstItem={0}
             layout={"default"}
-            onTouchStart={openUserDetailPage}
+            enableMomentum={true}
             containerCustomStyle={STYLES.carousel}
           />
         </View>

@@ -43,10 +43,11 @@ const ImagePicker = (props) => {
         // allowsEditing: true,
         aspect: [1, 1],
         quality: 0.5,
+        base64: true,
       });
-      // console.log("ImagePicker === imagePickerHandler == res = ", {
-      //   imageData,
-      // });
+      console.log("ImagePicker === imagePickerHandler == res = ", {
+        imageData,
+      });
       if (imageData.cancelled) {
         return;
       }

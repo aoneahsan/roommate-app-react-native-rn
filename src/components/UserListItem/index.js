@@ -1,6 +1,12 @@
 // Core Imports
 import React from "react";
-import { StyleSheet, View, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  TouchableWithoutFeedback,
+  Alert,
+} from "react-native";
 
 // Custom Imports
 import * as CONFIG from "../../config";
@@ -11,97 +17,112 @@ import ProgressBar from "../ProgressBar";
 const UserListItem = (props) => {
   const itemData = props.item;
   const progressBarTopText = "PikyMe Credit";
+
+  const onClickHandler = () => {
+    if (props.onPress) {
+      props.onPress(itemData);
+    } else {
+      Alert.alert("Action", "Pass 'onPress' props", [{ text: "OKAY" }]);
+    }
+  };
+
   return (
-    <View style={{ ...STYLES.main }}>
-      <Card
-        style={{
-          ...STYLES.card,
-          ...{
-            backgroundColor: itemData.bgColor ? itemData.bgColor : CONFIG.WHITE,
-          },
-        }}
-      >
-        <View
+    <TouchableWithoutFeedback onPress={onClickHandler}>
+      <View style={{ ...STYLES.main }}>
+        <Card
           style={{
-            ...STYLES.profileImageCon,
+            ...STYLES.card,
             ...{
-              backgroundColor: itemData.imageBgColor
-                ? itemData.imageBgColor
-                : CONFIG.PRIMARY,
+              backgroundColor: itemData.bgColor
+                ? itemData.bgColor
+                : CONFIG.WHITE,
             },
           }}
         >
-          <ImageBackground
-            style={{ ...STYLES.profileImage }}
-            source={itemData.image}
+          <View
+            style={{
+              ...STYLES.profileImageCon,
+              ...{
+                backgroundColor: itemData.imageBgColor
+                  ? itemData.imageBgColor
+                  : CONFIG.PRIMARY,
+              },
+            }}
           >
-            <View
-              style={{
-                ...STYLES.profileDetails,
-                ...{
-                  backgroundColor: props.infoBgColor
-                    ? props.infoBgColor
-                    : "rgba(255,255,255, .2)",
-                },
-              }}
+            <ImageBackground
+              style={{ ...STYLES.profileImage }}
+              source={
+                itemData.isUrlImage ? { uri: itemData.image } : itemData.image
+              }
             >
-              <BodyText
-                style={{ ...STYLES.profileDetailsText, ...{ width: "70%" } }}
-              >
-                {itemData.info.name}
-              </BodyText>
-              <BodyText
-                style={{ ...STYLES.profileDetailsText, ...{ width: "84%" } }}
-              >
-                {itemData.info.gender}
-              </BodyText>
-              <BodyText
-                style={{ ...STYLES.profileDetailsText, ...{ width: "90%" } }}
-              >
-                {itemData.info.occupation}
-              </BodyText>
-              <BodyText
-                style={{ ...STYLES.profileDetailsText, ...{ width: "97%" } }}
-              >
-                {itemData.info.budget.min}-{itemData.info.budget.max}
-              </BodyText>
-            </View>
-            <View
-              style={{
-                ...STYLES.badgeCon,
-                ...{
-                  backgroundColor: itemData.badgeBgColor
-                    ? itemData.badgeBgColor
-                    : CONFIG.BADGE_BG,
-                },
-              }}
-            >
-              <BodyText
+              <View
                 style={{
-                  ...STYLES.badgeText,
+                  ...STYLES.profileDetails,
                   ...{
-                    color: itemData.badgeTextColor
-                      ? itemData.badgeTextColor
-                      : CONFIG.WHITE,
+                    backgroundColor: props.infoBgColor
+                      ? props.infoBgColor
+                      : "rgba(255,255,255, .2)",
                   },
                 }}
               >
-                {itemData.badgetext}
-              </BodyText>
-            </View>
-          </ImageBackground>
-        </View>
-        <View style={STYLES.progressCon}>
-          <ProgressBar
-            style={STYLES.progress}
-            topText={progressBarTopText}
-            progress={itemData.progress}
-            hideBottomText
-            height={32}
-          />
-        </View>
-      </Card>
-    </View>
+                <BodyText
+                  style={{ ...STYLES.profileDetailsText, ...{ width: "70%" } }}
+                >
+                  {itemData.info.name}
+                </BodyText>
+                <BodyText
+                  style={{ ...STYLES.profileDetailsText, ...{ width: "84%" } }}
+                >
+                  {itemData.info.gender}
+                </BodyText>
+                <BodyText
+                  style={{ ...STYLES.profileDetailsText, ...{ width: "90%" } }}
+                >
+                  {itemData.info.occupation}
+                </BodyText>
+                <BodyText
+                  style={{ ...STYLES.profileDetailsText, ...{ width: "97%" } }}
+                >
+                  {itemData.info.budget.min}-{itemData.info.budget.max}
+                </BodyText>
+              </View>
+              <View
+                style={{
+                  ...STYLES.badgeCon,
+                  ...{
+                    backgroundColor: itemData.badgeBgColor
+                      ? itemData.badgeBgColor
+                      : CONFIG.BADGE_BG,
+                  },
+                }}
+              >
+                <BodyText
+                  style={{
+                    ...STYLES.badgeText,
+                    ...{
+                      color: itemData.badgeTextColor
+                        ? itemData.badgeTextColor
+                        : CONFIG.WHITE,
+                    },
+                  }}
+                >
+                  {itemData.badgetext}
+                </BodyText>
+              </View>
+            </ImageBackground>
+          </View>
+          <View style={STYLES.progressCon}>
+            <ProgressBar
+              style={STYLES.progress}
+              topText={progressBarTopText}
+              progress={itemData.progress}
+              hideBottomText
+              height={32}
+            />
+          </View>
+        </Card>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

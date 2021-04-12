@@ -17,4 +17,5 @@ export {
   fetchUsersListData,
   updateProfile,
   uploadFile,
+  uploadProfileImage,
 } from "./user-actions";

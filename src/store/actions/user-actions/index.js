@@ -41,11 +41,15 @@ export const updateProfile = (profileData) => {
     try {
       const store = getStore();
       const token = store.authR.token;
-      const response = await axios.post("/profile", profileData, {
-        headers: {
-          [CONFIG.AXIOS_HEADER_AUTH_KEY]: token,
-        },
-      });
+      const response = await axios.post(
+        "/profile",
+        { ...profileData },
+        {
+          headers: {
+            [CONFIG.AXIOS_HEADER_AUTH_KEY]: token,
+          },
+        }
+      );
       // console.log(response);
       const data = response.data;
       const responseData = data.data;
@@ -66,12 +70,42 @@ export const updateProfile = (profileData) => {
   };
 };
 
+export const uploadProfileImage = (image, imageOrderNo) => {
+  return async (dispatch, getStore) => {
+    try {
+      const store = getStore();
+      const token = store.authR.token;
+      const response = await axios.post(
+        "/upload-image",
+        {
+          base64ImageData: image,
+          imageOrderNo,
+        },
+        {
+          headers: {
+            [CONFIG.AXIOS_HEADER_AUTH_KEY]: token,
+          },
+        }
+      );
+      // console.log(response);
+      const data = response.data;
+      return data;
+    } catch (error) {
+      const response = error.response;
+      console.log("user-actions === uploadProfileImage == catch error = ", {
+        response,
+      });
+      return response.data;
+    }
+  };
+};
+
 export const fetchUsersListData = () => {
   return async (dispatch, getStore) => {
     try {
       const store = getStore();
       const token = store.authR.token;
-      const response = await axios.get("/resend-verify-code", {
+      const response = await axios.get("/users-list", {
         headers: {
           [CONFIG.AXIOS_HEADER_AUTH_KEY]: token,
         },

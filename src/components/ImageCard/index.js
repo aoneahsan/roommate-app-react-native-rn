@@ -1,7 +1,8 @@
 // Core Imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 // Custom Imports
 import * as CONFIG from "../../config";
@@ -11,13 +12,17 @@ import ImagePicker from "../ImagePicker";
 
 const ImageCard = (props) => {
   const [pickedImage, setPickedImage] = useState(null);
+  const [isUrlImage, setIsUrlImage] = useState(false);
   const [cardWidth, setCardWidth] = useState(40);
 
-  // useEffect(() => {
-  //   if (props.defaultImage) {
-  //     setPickedImage(props.defaultImage);
-  //   }
-  // }, []);
+  useEffect(() => {
+    (async function () {
+      if (props.defaultImage) {
+        await setPickedImage(props.defaultImage);
+        await setIsUrlImage(true);
+      }
+    })();
+  }, []);
 
   const onCardLayout = (event) => {
     const cardLayout = event.nativeEvent.layout;
@@ -65,7 +70,7 @@ const ImageCard = (props) => {
             )}
             {pickedImage && (
               <Image
-                source={{ uri: pickedImage.uri }}
+                source={{ uri: isUrlImage ? pickedImage : pickedImage.uri }}
                 style={{
                   ...STYLES.image,
                   ...{

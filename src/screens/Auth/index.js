@@ -30,8 +30,6 @@ const AuthScreen = (props) => {
       // Do something when the screen is focused
       (async function () {
         dispatch(ACTIONS.setIsLoadingFalse());
-        // navigateToVerifyPhoneScreen(); // just for development, comment/remove before moving to production
-        setPageTitle();
         if (isLoggedIn) {
           navigateToUsersListScreen();
         }
@@ -47,12 +45,6 @@ const AuthScreen = (props) => {
   const navigateToUsersListScreen = () => {
     props.navigation.navigate("users_list_stack_screens", {
       screen: "users_list_tab_screen",
-    });
-  };
-
-  const setPageTitle = async () => {
-    await props.navigation.setOptions({
-      title: isLoginMode ? "Log In" : "Sign Up",
     });
   };
 
@@ -111,7 +103,6 @@ const AuthScreen = (props) => {
 
   const switchAuthModeHandler = async () => {
     await setIsLoginMode(!isLoginMode);
-    await setPageTitle();
   };
 
   return (

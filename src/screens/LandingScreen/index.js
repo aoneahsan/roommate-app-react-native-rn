@@ -19,6 +19,7 @@ const LandingScreen = (props) => {
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
+      // logout(); // just for testing/development purpose, remove before making APK
       (async function () {
         dispatch(ACTIONS.setIsLoadingFalse());
         if (isLoggedIn) {
@@ -66,7 +67,7 @@ const LandingScreen = (props) => {
     });
   };
 
-  const navigateToAuthScreen = () => {
+  const navigateToAuthScreen = (mode = "login") => {
     props.navigation.navigate("auth_stack_screens", {
       screen: "auth_screen",
     });

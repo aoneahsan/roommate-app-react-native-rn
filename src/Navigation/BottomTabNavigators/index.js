@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useDispatch } from "react-redux";
 import {
-  Ionicons,
   Feather,
   Foundation,
   FontAwesome5,
@@ -10,10 +10,9 @@ import {
 } from "@expo/vector-icons";
 
 import * as CONFIG from "../../config";
+import * as ACTIONS from "./../../store/actions";
 import Card from "../../components/Card";
 import { TouchableOpacity } from "react-native-gesture-handler";
-// import UsersList from "./../../screens/UsersList";
-// import UserListItemView from "./../../screens/UserListItemView";
 import MessagesAndNotifications from "./../../screens/MessagesAndNotifications";
 
 import * as StackNavigators from "./../StackNavigators";
@@ -21,6 +20,7 @@ import * as StackNavigators from "./../StackNavigators";
 const Tabs = createBottomTabNavigator();
 
 export const appTabsNavigator = (navData) => {
+  const reduxDispatch = useDispatch();
   return (
     <Tabs.Navigator
       initialRouteName="users_list_tab_screen"
@@ -61,10 +61,6 @@ export const appTabsNavigator = (navData) => {
                   size={30}
                   style={{ color: index == 0 ? activeColor : inactiveColor }}
                 />
-                {/* <BodyText
-                >
-                  wo
-                </BodyText> */}
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() =>
@@ -89,9 +85,15 @@ export const appTabsNavigator = (navData) => {
                 />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() =>
-                  navData.navigation.navigate({ name: "globe_tab_screen" })
-                }
+                onPress={() => {
+                  (async function () {
+                    // navData.navigation.navigate({ name: "globe_tab_screen" }); // this is default action, but for test (logout functionality), we will place logout action on this icon click
+
+                    reduxDispatch(ACTIONS.setIsLoadingTrue());
+                    await reduxDispatch(ACTIONS.logout());
+                    reduxDispatch(ACTIONS.setIsLoadingFalse());
+                  })();
+                }}
               >
                 <FontAwesome5
                   name="globe-americas"

@@ -17,6 +17,8 @@ const UserInfoRow = (props) => {
       : ""
   );
 
+  // console.log("UserInfoRow === console.log == value = ", { value });
+
   const changeHandler = (value) => {
     if (props.onValueChange) {
       props.onValueChange(value);
