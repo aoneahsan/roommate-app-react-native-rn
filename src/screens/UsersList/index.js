@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView, Dimensions, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Carousel from "react-native-snap-carousel";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 
 // Custom Imports
 import * as CONFIG from "../../config";
@@ -38,6 +38,9 @@ const UsersList = (props) => {
 
   const [showFiltersModal, setShowFiltersModal] = useState(false);
   const usersList = useSelector((store) => store.userR.usersList);
+  const SCREEN_IS_FOUCED = useIsFocused();
+  const isLoggedIn = useSelector((store) => store.authR.isLoggedIn);
+
   const [carouselData, setCarouselData] = useState([
     {
       id: 1,
@@ -58,6 +61,14 @@ const UsersList = (props) => {
       image: AvatarLarge,
     },
   ]);
+
+  useEffect(() => {
+    if (SCREEN_IS_FOUCED) {
+      if (!isLoggedIn) {
+        props.navigation.navigate({ name: "app_landing_screen" });
+      }
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     (async function () {
