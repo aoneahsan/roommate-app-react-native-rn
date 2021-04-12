@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { StyleSheet, View, ImageBackground, ScrollView } from "react-native";
-import { NavigationActions, StackActions } from "react-navigation";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
@@ -17,21 +16,15 @@ const LandingScreen = (props) => {
   const isLoggedIn = useSelector((store) => store.authR.isLoggedIn);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      navigateToUsersListScreen();
-    }
-  });
-
-  useEffect(() => {
     dispatch(ACTIONS.setIsLoadingFalse());
+    navigateToUsersListScreen(); // just for testing, kindly comment before making build
     // navigateToAuthScreen(); // just for testing, kindly comment before making build
-    checkAutoLogin();
-    // logout();
-  }, [isLoggedIn]);
-
-  // useEffect(() => {
-  // checkLoginStatusAndNavigate();
-  // }, [isLoggedIn]);
+    // checkAutoLogin();
+    // // logout();
+    // if (isLoggedIn) {
+    //   navigateToUsersListScreen();
+    // }
+  });
 
   const checkAutoLogin = async () => {
     dispatch(ACTIONS.setIsLoadingTrue());
@@ -40,6 +33,8 @@ const LandingScreen = (props) => {
       dispatch(ACTIONS.setIsLoadingFalse());
       navigateToUsersListScreen();
       // checkLoginStatusAndNavigate();
+    } else {
+      dispatch(ACTIONS.setIsLoadingFalse());
     }
   };
 

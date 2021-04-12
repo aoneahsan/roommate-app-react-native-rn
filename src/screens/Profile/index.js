@@ -1,10 +1,19 @@
 // Core Imports
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector, useDispatch } from "react-redux";
+import { useFocusEffect } from "@react-navigation/native";
 
 // Custom Imports
 import * as CONFIG from "./../../config";
+import * as ACTIONS from "./../../store/actions";
 import BodyText from "./../../components/BodyText";
 import SmallButton from "./../../components/SmallButton";
 import ImageCard from "./../../components/ImageCard";
@@ -12,8 +21,19 @@ import ImagePicker from "./../../components/ImagePicker";
 import UserInfoRow from "./../../components/UserInfoRow";
 
 const Profile = (props) => {
+  const dispatch = useDispatch();
   const [uploadedPhotosCount, setUploadedPhotosCount] = useState(0);
   const [profileImage, setProfileImage] = useState(null);
+
+  const profileData = useSelector((store) => store.userR.profileData);
+
+  useFocusEffect(() => {
+    // this will run when screen gets focused
+    getProfileData();
+    return () => {
+      // Useful for cleanup functions
+    };
+  });
 
   const navigateToRoleSelectHandler = () => {
     props.navigation.navigate({ name: "role_select_screen" });
@@ -21,6 +41,24 @@ const Profile = (props) => {
 
   const profileImageChangeHandler = async (image) => {
     await setProfileImage(image);
+  };
+
+  const getProfileData = async () => {
+    dispatch(ACTIONS.setIsLoadingTrue());
+    const result = await dispatch(ACTIONS.fetchProfile());
+    console.log("Profile === getProfileData == result = ", { result });
+    if (!result.success) {
+      dispatch(ACTIONS.setIsLoadingFalse());
+      Alert.alert(
+        "Error",
+        "error occured while fetching profile data, try again!",
+        [{ text: "OKAY" }]
+      );
+      return;
+    } else {
+      dispatch(ACTIONS.setIsLoadingFalse());
+      return;
+    }
   };
 
   return (

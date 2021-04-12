@@ -1,6 +1,6 @@
 // Core Imports
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 // Custom Imports
@@ -69,7 +69,7 @@ const AuthScreen = (props) => {
 
   const formSubmitHandler = async () => {
     if (!phone || phone.length < 6 || !countryCode) {
-      alert("Enter valid data!");
+      Alert.alert("Inavlid Data", "Enter valid data!", [{ text: "OKAY" }]);
       return;
     }
     dispatch(ACTIONS.setIsLoadingTrue());
@@ -78,9 +78,13 @@ const AuthScreen = (props) => {
     );
     if (!result.success) {
       if (isLoginMode) {
-        alert("Error Occured while Login, try again!");
+        Alert.alert("Error", "Error Occured while Login, try again!", [
+          { text: "OKAY" },
+        ]);
       } else {
-        alert("Error Occured while Sign Up, try again!");
+        Alert.alert("Error", "Error Occured while Sign Up, try again!", [
+          { text: "OKAY" },
+        ]);
       }
       dispatch(ACTIONS.setIsLoadingFalse());
       return;

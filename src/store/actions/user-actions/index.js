@@ -10,10 +10,12 @@ export const fetchProfile = () => {
     try {
       const store = getStore();
       const token = store.authR.token;
+      const headers = {
+        [CONFIG.AXIOS_HEADER_AUTH_KEY]: token,
+      };
+      console.log("user-actions === fetchProfile == headers = ", headers);
       const response = await axios.get("/profile", {
-        headers: {
-          [CONFIG.AXIOS_HEADER_AUTH_KEY]: token,
-        },
+        headers: headers,
       });
       // console.log(response);
       const data = response.data;
@@ -26,9 +28,9 @@ export const fetchProfile = () => {
       return data;
     } catch (error) {
       const response = error.response;
-      console.log("user-actions === fetchProfile == catch error = ", {
-        response,
-      });
+      // console.log("user-actions === fetchProfile == catch error = ", {
+      //   response,
+      // });
       return response.data;
     }
   };
@@ -107,17 +109,8 @@ export const uploadFile = (file) => {
         },
       });
       const data = response.data;
-      const usersList = data.data;
-      await dispatch({
-        type: ACTION_TYPES.SET_USERS_LIST_DATA,
-        payload: {
-          usersList: usersList,
-        },
-      });
-      const response = await dispatch({
-        type: ACTION_TYPES.LOGOUT,
-      });
-      return result;
+      const responseData = data.data;
+      return responseData;
     } catch (error) {
       const response = error.response;
       console.log("user-actions === uploadFile == catch error = ", {

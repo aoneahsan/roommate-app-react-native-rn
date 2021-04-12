@@ -19,10 +19,11 @@ export const authAction = (authData, isLoginMode) => {
       return data;
     } catch (error) {
       const response = error.response;
+      const data = response.data;
       console.log("auth-actions === authAction == catch error = ", {
         response,
       });
-      return response.data;
+      return response;
     }
   };
 };
@@ -36,8 +37,8 @@ export const verifyCode = (phone, verifyCode) => {
       });
       // console.log(response);
       const data = response.data;
-      const result = await saveUserDataLocally(data);
       const responseData = data.data;
+      const result = await saveUserDataLocally(responseData);
       await dispatch({
         type: ACTION_TYPES.SET_AUTH_DATA,
         payload: {
@@ -47,10 +48,11 @@ export const verifyCode = (phone, verifyCode) => {
       return data;
     } catch (error) {
       const response = error.response;
+      const data = response.data;
       console.log("auth-actions === verifyCode == catch error = ", {
-        response,
+        data,
       });
-      return response.data;
+      return data;
     }
   };
 };
@@ -66,10 +68,11 @@ export const resendVerificationCode = (phone) => {
       return data;
     } catch (error) {
       const response = error.response;
+      const data = response.data;
       console.log("auth-actions === resendVerificationCode == catch error = ", {
-        response,
+        data,
       });
-      return response.data;
+      return data;
     }
   };
 };
@@ -84,10 +87,11 @@ export const logout = () => {
       return result;
     } catch (error) {
       const response = error.response;
+      const data = response.data;
       console.log("auth-actions === logout == catch error = ", {
-        response,
+        data,
       });
-      return response.data;
+      return data;
     }
   };
 };
@@ -99,6 +103,7 @@ export const autoLogin = () => {
       if (!authData) {
         return false;
       } else {
+        console.log("auth-actions === autoLogin == authData = ", { authData });
         await dispatch({
           type: ACTION_TYPES.SET_AUTH_DATA,
           payload: {
@@ -109,10 +114,11 @@ export const autoLogin = () => {
       }
     } catch (error) {
       const response = error.response;
+      const data = response.data;
       console.log("auth-actions === autoLogin == catch error = ", {
-        response,
+        data,
       });
-      return response.data;
+      return data;
     }
   };
 };
@@ -136,10 +142,11 @@ export const checkLoginStatus = () => {
       return data;
     } catch (error) {
       const response = error.response;
-      // console.log("auth-actions === checkLoginStatus == catch error = ", {
-      //   response,
-      // });
-      return response.data;
+      const data = response.data;
+      console.log("auth-actions === checkLoginStatus == catch error = ", {
+        data,
+      });
+      return data;
     }
   };
 };
