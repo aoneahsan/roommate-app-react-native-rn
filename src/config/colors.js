@@ -22,3 +22,4 @@ exports.CHIP_BG = "rgba(46, 53, 228,.3)";
 exports.BORDER_COLOR_LIGHT = "rgba(49, 34, 34, .05)";
 exports.CHIP_TEXT = "#2E476E";
 exports.BADGE_BG = "#7057A7";
+exports.LANDING_SCREEN_BG_COLOR = "#F8CBCD";

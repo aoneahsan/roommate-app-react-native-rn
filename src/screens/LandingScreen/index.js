@@ -80,7 +80,7 @@ const LandingScreen = (props) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={STYLES.bgWhite}>
+    <ScrollView contentContainerStyle={STYLES.bgPink}>
       <View style={STYLES.main}>
         <ImageBackground source={LandingScreenBgImage} style={STYLES.mainBgCon}>
           <View style={STYLES.contentCon}>
@@ -113,8 +113,8 @@ const LandingScreen = (props) => {
 };
 
 const STYLES = StyleSheet.create({
-  bgWhite: {
-    backgroundColor: CONFIG.WHITE,
+  bgPink: {
+    backgroundColor: CONFIG.LANDING_SCREEN_BG_COLOR,
     flexGrow: 1,
   },
   main: {

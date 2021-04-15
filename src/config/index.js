@@ -23,6 +23,7 @@ export {
   BORDER_COLOR_LIGHT,
   CHIP_TEXT,
   BADGE_BG,
+  LANDING_SCREEN_BG_COLOR,
 } from "./colors";
 
 export {
