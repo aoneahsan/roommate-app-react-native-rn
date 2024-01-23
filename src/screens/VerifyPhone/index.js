@@ -124,6 +124,7 @@ const VerifyPhone = (props) => {
 					<FlatButton
 						disabled={!canRequestNewCode}
 						style={STYLES.text4}
+						onPress={resendVerificationCode}
 					>
 						Send again
 					</FlatButton>
