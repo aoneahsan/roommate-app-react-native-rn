@@ -1,18 +1,10 @@
-// Core Imports
-import { StatusBar } from 'expo-status-bar';
-import React, { useCallback, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import AppLoading from 'expo-app-loading';
-import { Provider } from 'react-redux';
-
-// Custom Imports
-import Layout from './src/Layout';
-import AppStore from './src/store';
 import { useFonts } from 'expo-font';
-import { hideAsync } from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { useCallback } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
 
 export default function App() {
-	const [loadingData, setLoadingData] = useState(true);
 	const [fontsLoaded, fontError] = useFonts({
 		// Rubik Font
 		// "Rubik-Light": require("./assets/fonts/Rubik/Rubik-Light.ttf"),
@@ -51,7 +43,7 @@ export default function App() {
 
 	const onLayoutRootView = useCallback(async () => {
 		if (fontsLoaded || fontError) {
-			await hideAsync();
+			await SplashScreen.hideAsync();
 		}
 	}, [fontsLoaded, fontError]);
 
@@ -59,35 +51,33 @@ export default function App() {
 		return null;
 	}
 
-	// if (loadingData) {
-	// 	return (
-	// 		<AppLoading
-	// 			startAsync={onLayoutRootView}
-	// 			onFinish={() => {
-	// 				console.log('FONTS loaded!');
-	// 				setLoadingData(false);
-	// 			}}
-	// 			onError={() => {
-	// 				console.log('ERROR OCCURED WHILE LOADING FONTS');
-	// 			}}
-	// 		/>
-	// 	);
-	// }
 	return (
-		<Provider store={AppStore}>
-			<View
-				style={styles.container}
-				onLayout={onLayoutRootView}
-			>
-				<Layout />
-				<StatusBar style='auto' />
-			</View>
-		</Provider>
+		<View
+			style={styles.container}
+			onLayout={onLayoutRootView}
+		>
+			<Text style={styles.text}>
+				Open up App.js to start working on your app! Ahsan
+			</Text>
+			<Text style={styles.text2}>
+				Open up App.js to start working on your app! Ahsan
+			</Text>
+			<StatusBar style='auto' />
+		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	text: {
+		fontFamily: 'SFProText-Black',
+	},
+	text2: {
+		fontFamily: 'Gilroy-ExtraBold',
 	},
 });
