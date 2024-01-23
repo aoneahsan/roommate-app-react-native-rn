@@ -1,4 +1,3 @@
-// Core Imports
 import React, { useState, useEffect, useReducer } from 'react';
 import {
 	StyleSheet,
@@ -12,7 +11,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-// Custom Imports
 import * as CONFIG from './../../config';
 import * as ACTIONS from './../../store/actions';
 import BodyText from './../../components/BodyText';

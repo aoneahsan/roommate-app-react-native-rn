@@ -1,9 +1,7 @@
-// Core Imports
 import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-// Custom Imports
 import * as CONFIG from '../../../config';
 import Auth from '../../../screens/Auth';
 import VerifyPhone from '../../../screens/VerifyPhone';

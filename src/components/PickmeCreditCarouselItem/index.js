@@ -1,8 +1,6 @@
-// Core Imports
 import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 
-// Custom Imports
 import * as CONFIG from '../../config';
 import BodyText from '../BodyText';
 import Card from '../Card';

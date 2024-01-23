@@ -1,8 +1,6 @@
-// Core Imports
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-// Custom Imports
 import * as CONFIG from '../../config';
 
 const Card = (props) => {

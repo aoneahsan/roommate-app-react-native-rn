@@ -1,9 +1,7 @@
-// Core Imports
 import React from 'react';
 import { Platform } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-// Custom Imports
 import * as CONFIG from '../../../config';
 import LandingScreen from './../../../screens/LandingScreen';
 import * as StackNavigators from './../../StackNavigators';

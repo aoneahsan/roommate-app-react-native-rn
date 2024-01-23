@@ -1,10 +1,8 @@
-// Core Imports
 import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 
-// Custom Imports
 import * as CONFIG from './../../config';
 import MainHeading from './../../components/MainHeading';
 import BodyText from './../../components/BodyText';

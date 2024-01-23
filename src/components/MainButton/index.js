@@ -1,4 +1,3 @@
-// Core Imports
 import React from 'react';
 import {
 	StyleSheet,
@@ -8,7 +7,6 @@ import {
 	TouchableNativeFeedback,
 } from 'react-native';
 
-// Custom Imports
 import BodyText from '../BodyText';
 import * as CONFIG from '../../config';
 

@@ -1,4 +1,3 @@
-// Core Imports
 import React, { useEffect, useReducer, useState } from 'react';
 import {
 	StyleSheet,
@@ -11,7 +10,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-// Custom Imports
 import * as CONFIG from '../../../config';
 import BodyText from '../../../components/BodyText';
 import Input from '../../../components/Input';

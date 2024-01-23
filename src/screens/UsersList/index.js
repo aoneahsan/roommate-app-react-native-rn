@@ -1,15 +1,13 @@
-// Core Imports
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView, Dimensions, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
-// Custom Imports
 import * as CONFIG from '../../config';
 import * as ACTIONS from './../../store/actions';
 import UsersListPageHeader from '../../components/UsersListPageHeader';
-// import UserListItem from '../../components/UserListItem';
+import UserListItem from '../../components/UserListItem';
 import UserListFiltersModal from '../../components/UserListFiltersModal';
 
 // Image

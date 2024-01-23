@@ -1,48 +1,44 @@
-// Core Imports
 import { StatusBar } from 'expo-status-bar';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
-// import AppLoading from 'expo-app-loading';
 import { Provider } from 'react-redux';
 
-// Custom Imports
 import Layout from './src/Layout';
 import AppStore from './src/store';
 import { useFonts } from 'expo-font';
 import { hideAsync } from 'expo-splash-screen';
 
 export default function App() {
-	const [loadingData, setLoadingData] = useState(true);
 	const [fontsLoaded, fontError] = useFonts({
 		// Rubik Font
-		// "Rubik-Light": require("./assets/fonts/Rubik/Rubik-Light.ttf"),
+		'Rubik-Light': require('./assets/fonts/Rubik/Rubik-Light.ttf'),
 		'Rubik-Regular': require('./assets/fonts/Rubik/Rubik-Regular.ttf'),
 		'Rubik-Medium': require('./assets/fonts/Rubik/Rubik-Medium.ttf'),
 		'Rubik-SemiBold': require('./assets/fonts/Rubik/Rubik-SemiBold.ttf'),
 		'Rubik-Bold': require('./assets/fonts/Rubik/Rubik-Bold.ttf'),
 		'Rubik-ExtraBold': require('./assets/fonts/Rubik/Rubik-ExtraBold.ttf'),
-		// "Rubik-Black": require("./assets/fonts/Rubik/Rubik-Black.ttf"),
+		'Rubik-Black': require('./assets/fonts/Rubik/Rubik-Black.ttf'),
 
 		// Roboto Font
-		// "Roboto-Light": require("./assets/fonts/Roboto/Roboto-Light.ttf"),
+		'Roboto-Light': require('./assets/fonts/Roboto/Roboto-Light.ttf'),
 		'Roboto-Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
 		'Roboto-Medium': require('./assets/fonts/Roboto/Roboto-Medium.ttf'),
 		'Roboto-Bold': require('./assets/fonts/Roboto/Roboto-Bold.ttf'),
 		'Roboto-Black': require('./assets/fonts/Roboto/Roboto-Black.ttf'),
 
 		// Hanson Font
-		// "Hanson-Light": require("./assets/fonts/Hanson/Hanson-Light.ttf"),
+		'Hanson-Light': require('./assets/fonts/Hanson/Hanson-Light.ttf'),
 		'Hanson-Bold': require('./assets/fonts/Hanson/Hanson-Bold.ttf'),
 
 		// Gilroy Font
-		// "Gilroy-Light": require("./assets/fonts/Gilroy/Gilroy-Light.ttf"),
+		'Gilroy-Light': require('./assets/fonts/Gilroy/Gilroy-Light.ttf'),
 		'Gilroy-Regular': require('./assets/fonts/Gilroy/Gilroy-Regular.ttf'),
 		'Gilroy-Medium': require('./assets/fonts/Gilroy/Gilroy-Medium.ttf'),
 		'Gilroy-Bold': require('./assets/fonts/Gilroy/Gilroy-Bold.ttf'),
 		'Gilroy-ExtraBold': require('./assets/fonts/Gilroy/Gilroy-ExtraBold.ttf'),
 
 		// SFProText Font
-		// "SFProText-Light": require("./assets/fonts/SFProText/SFProText-Light.ttf"),
+		'SFProText-Light': require('./assets/fonts/SFProText/SFProText-Light.ttf'),
 		'SFProText-Regular': require('./assets/fonts/SFProText/SFProText-Regular.ttf'),
 		'SFProText-Medium': require('./assets/fonts/SFProText/SFProText-Medium.ttf'),
 		'SFProText-SemiBold': require('./assets/fonts/SFProText/SFProText-SemiBold.ttf'),
@@ -59,20 +55,6 @@ export default function App() {
 		return null;
 	}
 
-	// if (loadingData) {
-	// 	return (
-	// 		<AppLoading
-	// 			startAsync={onLayoutRootView}
-	// 			onFinish={() => {
-	// 				console.log('FONTS loaded!');
-	// 				setLoadingData(false);
-	// 			}}
-	// 			onError={() => {
-	// 				console.log('ERROR OCCURED WHILE LOADING FONTS');
-	// 			}}
-	// 		/>
-	// 	);
-	// }
 	return (
 		<Provider store={AppStore}>
 			<View

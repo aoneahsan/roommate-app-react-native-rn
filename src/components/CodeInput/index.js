@@ -1,6 +1,10 @@
-// Core Imports
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, SafeAreaView, Dimensions } from 'react-native';
+import {
+	StyleSheet,
+	SafeAreaView,
+	Dimensions,
+	useWindowDimensions,
+} from 'react-native';
 
 import {
 	CodeField,
@@ -9,7 +13,6 @@ import {
 	useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-// Custom Imports
 import * as CONFIG from './../../config';
 import BodyText from './../BodyText';
 
@@ -23,22 +26,23 @@ const CodeInput = (props) => {
 		setValue,
 	});
 
-	const [deviceWidth, setDeviceWidth] = useState(
-		Dimensions.get('window').width
-	);
+	// const [deviceWidth, setDeviceWidth] = useState(
+	// 	Dimensions?.get('window')?.width ?? 0
+	// );
+	const { width: deviceWidth } = useWindowDimensions();
 	const cellSize = deviceWidth / 4 - 20;
 
-	useEffect(() => {
-		const updateDeviceWidth = () => {
-			setDeviceWidth(Dimensions.get('window').width);
-		};
+	// useEffect(() => {
+	// 	const updateDeviceWidth = () => {
+	// 		setDeviceWidth(Dimensions?.get('window')?.width ?? 0);
+	// 	};
 
-		Dimensions.addEventListener('change', updateDeviceWidth);
+	// 	Dimensions?.addEventListener('change', updateDeviceWidth);
 
-		return () => {
-			Dimensions.removeEventListener('change', updateDeviceWidth);
-		};
-	});
+	// 	return () => {
+	// 		Dimensions?.removeEventListener('change', updateDeviceWidth);
+	// 	};
+	// });
 
 	useEffect(() => {
 		if (props.onChange) {
@@ -51,7 +55,6 @@ const CodeInput = (props) => {
 			<CodeField
 				ref={ref}
 				{...fieldProps}
-				// Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
 				value={value}
 				onChangeText={setValue}
 				cellCount={CELL_COUNT}
@@ -103,7 +106,6 @@ const CodeInput = (props) => {
 
 const STYLES = StyleSheet.create({
 	main: {
-		// flex: 1,
 		padding: 10,
 	},
 	codeFieldRoot: { marginTop: 20 },
@@ -111,10 +113,6 @@ const STYLES = StyleSheet.create({
 		textAlign: 'center',
 		backgroundColor: CONFIG.WHITE,
 		elevation: 8,
-		boxShadowColor: CONFIG.BLACK,
-		boxShadowOffset: { width: 0, height: 2 },
-		boxShadowOpacity: 0.6,
-		boxShadowRadius: 10,
 	},
 	focusCell: {
 		borderColor: '#000',

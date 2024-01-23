@@ -1,10 +1,8 @@
-// Core Imports
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import CountryPickerModal from 'react-native-country-picker-modal';
 
-// Custom Imports
 import * as CONFIG from './../../config';
 import BodyText from './../BodyText';
 

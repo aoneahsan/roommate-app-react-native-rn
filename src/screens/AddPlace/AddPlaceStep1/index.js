@@ -1,4 +1,3 @@
-// Core Imports
 import React, { useEffect, useReducer, useState } from 'react';
 import {
 	StyleSheet,
@@ -12,7 +11,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-// Custom Imports
 import * as CONFIG from '../../../config';
 import * as ACTIONS from './../../../store/actions';
 import BodyText from '../../../components/BodyText';

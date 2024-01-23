@@ -1,10 +1,8 @@
-// Core Imports
 import React, { useEffect, useReducer } from 'react';
 import { StyleSheet, View, ScrollView, Alert } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-// Custom Imports
 import * as CONFIG from '../../../config';
 import BodyText from '../../../components/BodyText';
 import Input from '../../../components/Input';

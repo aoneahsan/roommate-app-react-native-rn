@@ -1,4 +1,3 @@
-// Core Imports
 import React from 'react';
 import { TouchableOpacity, Alert } from 'react-native';
 import {
@@ -39,7 +38,6 @@ const ImagePicker = (props) => {
 			return false;
 		} else {
 			const imageData = await launchCameraAsync({
-				// allowsEditing: true,
 				aspect: [1, 1],
 				quality: 0.5,
 				base64: true,

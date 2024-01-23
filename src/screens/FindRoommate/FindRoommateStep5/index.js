@@ -1,11 +1,9 @@
-// Core Imports
 import React, { useEffect } from 'react';
 import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Carousel from 'react-native-snap-carousel';
 import ProgressCircle from 'react-native-progress-circle';
 
-// Custom Imports
 import * as CONFIG from '../../../config';
 import BodyText from '../../../components/BodyText';
 import StepFooter from '../../../components/StepFooter';
