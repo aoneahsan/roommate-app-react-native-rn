@@ -1,7 +1,7 @@
 // Core Imports
 import React, { useReducer, useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
-// import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 // Custom Imports
 import * as CONFIG from '../../../config';
@@ -134,14 +134,15 @@ const FindRoommateStep2 = (props) => {
 	useEffect(() => {
 		props.navigation.setOptions({
 			headerRight: () => {
-				return null;
-				// <HeaderButtons>
-				//   <Item
-				//     title="skip"
-				//     color={CONFIG.BLACK}
-				//     onPress={navigateToFindRoommateStep3Screen}
-				//   />
-				// </HeaderButtons>
+				return (
+					<HeaderButtons>
+						<Item
+							title='skip'
+							color={CONFIG.BLACK}
+							onPress={navigateToFindRoommateStep3Screen}
+						/>
+					</HeaderButtons>
+				);
 			},
 		});
 	}, []);

@@ -41,7 +41,7 @@ export const AppDrawerComponents = (navData) => {
 			></AppDrawer.Screen>
 			<AppDrawer.Screen
 				name='users_list_stack_screens'
-				component={BottomTabNavigators.appTabsNavigator}
+				component={BottomTabNavigators.AppTabsNavigator}
 			></AppDrawer.Screen>
 		</AppDrawer.Navigator>
 	);

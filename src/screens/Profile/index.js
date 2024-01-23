@@ -10,7 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-// import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 // Custom Imports
 import * as CONFIG from './../../config';
@@ -137,16 +137,17 @@ const Profile = (props) => {
 	useEffect(() => {
 		props.navigation.setOptions({
 			headerRight: () => {
-				return null;
-				// <HeaderButtons HeaderButtonComponent={HeaderButtonItem}>
-				//   <Item
-				//     title="Submit"
-				//     iconName="checkmark"
-				//     color={CONFIG.PRIMARY}
-				//     iconSize={23}
-				//     onPress={formSubmitHandler}
-				//   />
-				// </HeaderButtons>
+				return (
+					<HeaderButtons HeaderButtonComponent={HeaderButtonItem}>
+						<Item
+							title='Submit'
+							iconName='checkmark'
+							color={CONFIG.PRIMARY}
+							iconSize={23}
+							onPress={formSubmitHandler}
+						/>
+					</HeaderButtons>
+				);
 			},
 		});
 	}, []);

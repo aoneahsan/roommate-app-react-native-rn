@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-// import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 // Custom Imports
 import * as CONFIG from '../../../config';
@@ -152,14 +152,15 @@ const FindRoommateStep1 = (props) => {
 	useEffect(() => {
 		props.navigation.setOptions({
 			headerRight: () => {
-				return null;
-				// <HeaderButtons>
-				//   <Item
-				//     title="cancel"
-				//     color={CONFIG.BLACK}
-				//     onPress={navigateToUserListScreen}
-				//   />
-				// </HeaderButtons>
+				return (
+					<HeaderButtons>
+						<Item
+							title='cancel'
+							color={CONFIG.BLACK}
+							onPress={navigateToUserListScreen}
+						/>
+					</HeaderButtons>
+				);
 			},
 		});
 	}, []);

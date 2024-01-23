@@ -2,7 +2,7 @@
 import React, { useEffect, useReducer } from 'react';
 import { StyleSheet, View, ScrollView, Alert } from 'react-native';
 import Slider from '@react-native-community/slider';
-// import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 // Custom Imports
 import * as CONFIG from '../../../config';
@@ -138,14 +138,15 @@ const FindRoommateStep4 = (props) => {
 	useEffect(() => {
 		props.navigation.setOptions({
 			headerRight: () => {
-				return null;
-				// <HeaderButtons>
-				//   <Item
-				//     title="skip"
-				//     color={CONFIG.BLACK}
-				//     onPress={navigateToFindRoommateStep5Screen}
-				//   />
-				// </HeaderButtons>
+				return (
+					<HeaderButtons>
+						<Item
+							title='skip'
+							color={CONFIG.BLACK}
+							onPress={navigateToFindRoommateStep5Screen}
+						/>
+					</HeaderButtons>
+				);
 			},
 		});
 	}, []);

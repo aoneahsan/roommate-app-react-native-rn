@@ -7,7 +7,7 @@ import {
 	Alert,
 	TouchableOpacity,
 } from 'react-native';
-// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -115,21 +115,21 @@ const AddPlaceStep1 = (props) => {
 		});
 	};
 
-	// useEffect(() => {
-	//   props.navigation.setOptions({
-	//     headerRight: () => {
-	//       return (
-	//         <HeaderButtons>
-	//           <Item
-	//             title="cancel"
-	//             color={CONFIG.BLACK}
-	//             onPress={navigateToUserListScreen}
-	//           />
-	//         </HeaderButtons>
-	//       );
-	//     },
-	//   });
-	// }, []);
+	useEffect(() => {
+		props.navigation.setOptions({
+			headerRight: () => {
+				return (
+					<HeaderButtons>
+						<Item
+							title='cancel'
+							color={CONFIG.BLACK}
+							onPress={navigateToUserListScreen}
+						/>
+					</HeaderButtons>
+				);
+			},
+		});
+	}, []);
 
 	const changeLocationPickerVisibilityStatus = (status) => {
 		setShowLocationPicker(status);

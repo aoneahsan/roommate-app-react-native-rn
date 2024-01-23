@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-// import CountryPickerModal from "react-native-country-picker-modal";
+import CountryPickerModal from 'react-native-country-picker-modal';
 
 // Custom Imports
 import * as CONFIG from './../../config';
@@ -55,20 +55,20 @@ const CountryPicker = (props) => {
 			<View style={STYLES.textCon}>
 				<BodyText style={STYLES.label}>Country/Region</BodyText>
 				<View style={STYLES.input}>
-					{/* <CountryPickerModal
-            {...{
-              countryCode,
-              withFilter,
-              withFlag,
-              withCountryNameButton,
-              withAlphaFilter,
-              withCallingCode,
-              withEmoji,
-              onSelect: onCountrySelectHandler,
-            }}
-            visible={showModal}
-            onClose={hideCountrySelectHandler}
-          /> */}
+					<CountryPickerModal
+						{...{
+							countryCode,
+							withFilter,
+							withFlag,
+							withCountryNameButton,
+							withAlphaFilter,
+							withCallingCode,
+							withEmoji,
+							onSelect: onCountrySelectHandler,
+						}}
+						visible={showModal}
+						onClose={hideCountrySelectHandler}
+					/>
 					<BodyText style={STYLES.inputText}>
 						{country.name} ({country.callingCode[0]})
 					</BodyText>

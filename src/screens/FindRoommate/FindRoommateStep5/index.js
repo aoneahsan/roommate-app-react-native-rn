@@ -1,16 +1,16 @@
 // Core Imports
 import React, { useEffect } from 'react';
 import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
-// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-// import Carousel from 'react-native-snap-carousel';
-// import ProgressCircle from 'react-native-progress-circle';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import Carousel from 'react-native-snap-carousel';
+import ProgressCircle from 'react-native-progress-circle';
 
 // Custom Imports
 import * as CONFIG from '../../../config';
 import BodyText from '../../../components/BodyText';
 import StepFooter from '../../../components/StepFooter';
 import ProgressBar from '../../../components/ProgressBar';
-// import PickmeCreditCarouselItem from '../../../components/PickmeCreditCarouselItem';
+import PickmeCreditCarouselItem from '../../../components/PickmeCreditCarouselItem';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -26,14 +26,15 @@ const FindRoommateStep5 = (props) => {
 	useEffect(() => {
 		props.navigation.setOptions({
 			headerRight: () => {
-				return null;
-				// <HeaderButtons>
-				// 	<Item
-				// 		title='skip'
-				// 		color={CONFIG.BLACK}
-				// 		onPress={navigateToUserListScreen}
-				// 	/>
-				// </HeaderButtons>
+				return (
+					<HeaderButtons>
+						<Item
+							title='skip'
+							color={CONFIG.BLACK}
+							onPress={navigateToUserListScreen}
+						/>
+					</HeaderButtons>
+				);
 			},
 		});
 	}, []);
@@ -55,17 +56,15 @@ const FindRoommateStep5 = (props) => {
 					hideTopText
 				/>
 				<View style={STYLES.carouselCon}>
-					{/* <PickmeCreditCarouselItem /> */}
-					{/* <Carousel
+					<Carousel
 						data={carouselData}
 						renderItem={PickmeCreditCarouselItem}
 						sliderWidth={DEVICE_WIDTH}
 						itemWidth={270}
 						firstItem={1}
 						layout={'default'}
-						// containerCustomStyle={STYLES.carousel}
-						// style={{}}
-					/> */}
+						containerCustomStyle={STYLES.carousel}
+					/>
 				</View>
 				<View style={STYLES.detailsCon}>
 					<View style={STYLES.details_leftside}>
@@ -78,7 +77,7 @@ const FindRoommateStep5 = (props) => {
 					<View style={STYLES.details_rightside}>
 						<BodyText style={STYLES.details_title}>Proportion</BodyText>
 						<View style={STYLES.circleProgressCon}>
-							{/* <ProgressCircle
+							<ProgressCircle
 								percent={percentage}
 								radius={50}
 								borderWidth={8}
@@ -89,7 +88,7 @@ const FindRoommateStep5 = (props) => {
 								outerCircleStyle={{ transform: [{ rotate: '90deg' }] }}
 							>
 								<BodyText style={{ fontSize: 18 }}>{'30%'}</BodyText>
-							</ProgressCircle> */}
+							</ProgressCircle>
 						</View>
 					</View>
 				</View>

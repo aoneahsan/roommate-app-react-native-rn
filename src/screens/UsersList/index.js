@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView, Dimensions, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-// import Carousel from 'react-native-snap-carousel';
+import Carousel from 'react-native-snap-carousel';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
 // Custom Imports
@@ -169,7 +169,7 @@ const UsersList = (props) => {
 					style={STYLES.carouselCon}
 					onLayout={onCarouselConLayout}
 				>
-					{/* <Carousel
+					<Carousel
 						sliderWidth={DEVICE_WIDTH}
 						itemWidth={DEVICE_WIDTH - 80}
 						renderItem={(data) => (
@@ -182,9 +182,9 @@ const UsersList = (props) => {
 						// firstItem={0}
 						layout={'default'}
 						enableMomentum={true}
-						// containerCustomStyle={STYLES.carousel}
+						containerCustomStyle={STYLES.carousel}
 						// style={{}}
-					/> */}
+					/>
 				</View>
 			</View>
 			{showFiltersModal && (
