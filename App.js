@@ -8,7 +8,7 @@ import AppStore from './src/store';
 import { useFonts } from 'expo-font';
 import { hideAsync } from 'expo-splash-screen';
 
-export default function App() {
+const App = () => {
 	const [fontsLoaded, fontError] = useFonts({
 		// Rubik Font
 		'Rubik-Light': require('./assets/fonts/Rubik/Rubik-Light.ttf'),
@@ -66,10 +66,12 @@ export default function App() {
 			</View>
 		</Provider>
 	);
-}
+};
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
 });
+
+export default App;

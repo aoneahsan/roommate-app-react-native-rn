@@ -72,11 +72,11 @@ const AuthScreen = (props) => {
 		);
 		if (!result.success) {
 			if (isLoginMode) {
-				Alert.alert('Error', 'Error Occured while Login, try again!', [
+				Alert.alert('Error', 'Error Occurred while Login, try again!', [
 					{ text: 'OKAY' },
 				]);
 			} else {
-				Alert.alert('Error', 'Error Occured while Sign Up, try again!', [
+				Alert.alert('Error', 'Error Occurred while Sign Up, try again!', [
 					{ text: 'OKAY' },
 				]);
 			}
