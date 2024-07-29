@@ -1,0 +1,139 @@
+import {
+	LoginFormFieldsEnum,
+	RegisterFormFieldsEnum,
+	SearchArticlesFiltersFormFieldsEnum,
+	UserAccountDataFormFieldsEnum,
+	UserFormFieldsEnum,
+} from '@/enums/formData';
+import { FormFieldsEnum } from '@/utils/enums/formFieldsEnum';
+import dayjs from 'dayjs';
+import { z as ZOD } from 'zod';
+
+
+export const userUpdateValidationSchema = ZOD.object({
+	[UserFormFieldsEnum.name]: ZOD.string()
+		.trim()
+		.min(1, { message: 'Name is Required.' })
+		.max(255),
+	[UserFormFieldsEnum.phoneNumber]: ZOD.string()
+		.trim()
+		.min(13, { message: 'Phone number mush be minimum 13 digits' })
+		.startsWith('+923'),
+	[UserFormFieldsEnum.withdrawOptions]: ZOD.string().array().nonempty('Select minimum one option'),
+});
+
+export const registerFormValidationSchema = ZOD.object({
+	[RegisterFormFieldsEnum.name]: ZOD.string()
+		.trim()
+		.min(1, { message: 'Name is Required.' })
+		.max(255),
+	[RegisterFormFieldsEnum.phoneNumber]: ZOD.string()
+		.trim()
+		.min(13, { message: 'Phone number mush be minimum 13 digits' })
+		.startsWith('+923'),
+	[RegisterFormFieldsEnum.email]: ZOD.string().email().max(255),
+	[RegisterFormFieldsEnum.referralCode]: ZOD.optional(ZOD.string().min(6, { message: 'Referral code mush be minimum 6 digits' })),
+	[RegisterFormFieldsEnum.withdrawOptions]: ZOD.string().array().nonempty('Select minimum one option'),
+	[RegisterFormFieldsEnum.password]: ZOD.string().min(6).max(30),
+	[RegisterFormFieldsEnum.passwordConfirmation]: ZOD.string().min(6).max(30),
+}).superRefine((values, ctx) => {
+	if (
+		values[RegisterFormFieldsEnum.passwordConfirmation] !==
+		values[RegisterFormFieldsEnum.password]
+	) {
+		ctx.addIssue({
+			code: 'custom',
+			message: 'The passwords did not match',
+			path: [RegisterFormFieldsEnum.passwordConfirmation],
+		});
+	}
+});
+
+export const loginFormValidationSchema = ZOD.object({
+	[LoginFormFieldsEnum.email]: ZOD.string().email().max(255),
+	[LoginFormFieldsEnum.password]: ZOD.string().min(6).max(30),
+});
+
+export const userAccountFormValidationSchema = ZOD.object({
+	[UserAccountDataFormFieldsEnum.name]: ZOD.string()
+		.trim()
+		.min(1, { message: 'Name is Required.' })
+		.max(255),
+});
+
+export const searchArticlesFormValidationSchema = ZOD.object({
+	[SearchArticlesFiltersFormFieldsEnum.keyword]: ZOD.string().trim().max(255),
+	[SearchArticlesFiltersFormFieldsEnum.startDate]: ZOD.string(),
+	[SearchArticlesFiltersFormFieldsEnum.endDate]: ZOD.string(),
+	[SearchArticlesFiltersFormFieldsEnum.category]: ZOD.string().trim().max(255),
+	[SearchArticlesFiltersFormFieldsEnum.source]: ZOD.string().trim().max(255),
+}).superRefine((values, ctx) => {
+	const startDateStr = values[SearchArticlesFiltersFormFieldsEnum.startDate];
+	const endDateStr = values[SearchArticlesFiltersFormFieldsEnum.endDate];
+
+	if (startDateStr.trim().length > 0 && endDateStr.trim().length > 0) {
+		if (startDateStr === endDateStr) {
+			ctx.addIssue({
+				code: 'custom',
+				message: 'Start Date can not be equal to end date.',
+				path: [SearchArticlesFiltersFormFieldsEnum.startDate],
+			});
+		} else {
+			let startDate;
+			try {
+				startDate = dayjs(startDateStr);
+			} catch (error) {
+				ctx.addIssue({
+					code: 'custom',
+					message: 'Invalid Start Date value.',
+					path: [SearchArticlesFiltersFormFieldsEnum.startDate],
+				});
+			}
+
+			let endDate;
+			try {
+				endDate = dayjs(endDateStr);
+			} catch (error) {
+				ctx.addIssue({
+					code: 'custom',
+					message: 'Invalid End Date value.',
+					path: [SearchArticlesFiltersFormFieldsEnum.endDate],
+				});
+			}
+
+			if (startDate && endDate) {
+				const endDateIsBeforeStartDate = dayjs(endDate).isBefore(startDate);
+				if (endDateIsBeforeStartDate) {
+					ctx.addIssue({
+						code: 'custom',
+						message: 'End Date can not be before Start Date.',
+						path: [SearchArticlesFiltersFormFieldsEnum.endDate],
+					});
+				}
+			}
+		}
+	}
+});
+
+export const gameFormValidationSchema = ZOD.object({
+	[FormFieldsEnum.title]: ZOD.string()
+		.trim()
+		.min(1, { message: 'Title is Required.' })
+		.max(255),
+	[FormFieldsEnum.description]: ZOD.string().min(50).max(1000),
+	[FormFieldsEnum.personsAllowed]: ZOD.number().min(2).max(10),
+	[FormFieldsEnum.feePerPerson]: ZOD.number().min(1),
+	[FormFieldsEnum.serviceCharges]: ZOD.number().min(1),
+	// [FormFieldsEnum.engagerServiceCharges]: ZOD.number().min(1),
+	// [FormFieldsEnum.image]: ZOD.string().url(),
+});
+
+export const gameRoomDataValidationSchema = ZOD.object({
+	[FormFieldsEnum.title]: ZOD.string()
+		.trim()
+		.min(1, { message: 'Title is Required.' })
+		.max(100),
+	[FormFieldsEnum.description]: ZOD.string().min(30).max(250),
+	[FormFieldsEnum.isPrivate]: ZOD.boolean().default(false),
+	[FormFieldsEnum.gameId]: ZOD.string().min(1),
+});

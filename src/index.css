@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body,
+html {
+  margin: 0;
+}
+
+.pointer {
+  cursor: pointer;
+}
+.d-flex {
+  display: flex;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.h-full {
+  height: 100%;
+}
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+.input-width {
+  width: 200px;
+}
+.w-full {
+  width: 100%;
+}
+.object-cover {
+  object-fit: cover;
+}
+
+.z-text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+  max-width: 90%;
+  min-width: 4rem;
+}

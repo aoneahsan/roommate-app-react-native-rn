@@ -1,0 +1,38 @@
+{
+	"id": "/",
+	"short_name": "NewsPaper",
+	"name": "NewsPaper",
+	"icons": [
+		{
+			"src": "icon.png",
+			"type": "image/png",
+			"sizes": "144x144",
+			"purpose": "any"
+		},
+		{
+			"src": "icon.png",
+			"type": "image/png",
+			"sizes": "512x512",
+			"purpose": "maskable"
+		}
+	],
+	"start_url": ".",
+	"display": "standalone",
+	"theme_color": "#ffffff",
+	"background_color": "#ffffff",
+	"screenshots": [
+		{
+			"src": "desktop.png",
+			"sizes": "1920x1080",
+			"type": "image/png",
+			"form_factor": "wide",
+			"label": "Application"
+		},
+		{
+			"src": "mobile.png",
+			"sizes": "886x1920",
+			"type": "image/png",
+			"label": "Application"
+		}
+	]
+}
