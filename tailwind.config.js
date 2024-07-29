@@ -12,7 +12,6 @@ import {
   blue,
   sky,
   jade,
-  gray,
   slate,
   indigoDarkA,
 } from "@radix-ui/colors";

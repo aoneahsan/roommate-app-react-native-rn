@@ -12,13 +12,10 @@ import {
   ZCard,
   ZContainer,
   ZFlex,
-  ZHeading,
   ZInput,
   ZPage,
   ZRUAlignE,
-  ZRUColorE,
   ZRUDirectionE,
-  ZRUJustifyE,
   ZRURadiusE,
   ZSelect,
   ZText,
@@ -46,11 +43,13 @@ import NavigationHeader from "@/components/private/NavigationHeader";
 
 // #region ---- Images Imports ----
 import { ZAddIcon, ZArrowRightLongIcon, ZAvatarImage } from "@/assets";
+import ZRCSelect from "@/components/ZRCSelect";
 
 // #endregion
 
 const Profile: React.FC = () => {
   const initialValues = useMemo(() => ({}), []);
+
   return (
     <ZPage>
       <NavigationHeader title="My Profile" />
@@ -71,6 +70,8 @@ const Profile: React.FC = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
+
+                    <ZRCSelect />
 
                     <ZSelect
                       label="Age"
