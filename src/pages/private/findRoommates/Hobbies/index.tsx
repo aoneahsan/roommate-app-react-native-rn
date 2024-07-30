@@ -5,12 +5,11 @@ import React, { useMemo, useState } from "react";
 
 // #region ---- Packages Imports ----
 import {
+  ZBox,
   ZButton,
-  ZCard,
   ZContainer,
   ZPage,
   ZRUVariantE,
-  ZSelect,
   ZTextArea,
 } from "zaions-react-ui-kit";
 import { Form, Formik } from "formik";
@@ -26,8 +25,9 @@ import ZBooksData from "@/data/books";
 import ZGymData from "@/data/Gym";
 import ZFoodsData from "@/data/Foods";
 import { ZArrowRightLongIcon } from "@/assets";
-import { EHobbyType } from "@/types/Hobby";
+import { EHobbyType } from "@/types/hobbies";
 import CustomHobbyModal from "@/components/Hobbies/CustomHobbyModal";
+import ZRCSelect from "@/components/ZRCSelect";
 
 // #endregion
 
@@ -125,7 +125,7 @@ const Hobbies: React.FC = () => {
           return (
             <Form>
               <ZContainer size="4" className="my-6 maxLg:mx-3">
-                <ZCard className="*:w-full space-y-4 p-5">
+                <ZBox className="*:w-full space-y-4 py-5">
                   <ZTextArea
                     label="About Me"
                     placeholder="Maximum 250 words"
@@ -134,12 +134,13 @@ const Hobbies: React.FC = () => {
 
                   {hobbies?.map((el, index) => {
                     return (
-                      <ZSelect
+                      <ZRCSelect
+                        showLabelBtn
+                        isMulti
                         key={index}
                         label={el?.label}
                         options={el?.options}
-                        showLabelBtn
-                        trigger={{ placeholder: el?.placeholder }}
+                        placeholder={el?.placeholder}
                         labelBtnProps={{
                           children: el?.labelBtnText,
                           variant: ZRUVariantE.ghost,
@@ -148,7 +149,7 @@ const Hobbies: React.FC = () => {
                       />
                     );
                   })}
-                </ZCard>
+                </ZBox>
                 <ZButton className="mt-6 max900px:w-full">
                   Save & Continue <ZArrowRightLongIcon className="mt-px" />
                 </ZButton>

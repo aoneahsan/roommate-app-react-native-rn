@@ -1,3 +1,4 @@
+import { ZRUSelectValueI } from 'zaions-react-ui-kit';
 import {
 	LoginFormFieldsEnum,
 	RegisterFormFieldsEnum,
@@ -9,6 +10,21 @@ import { FormFieldsEnum } from '@/utils/enums/formFieldsEnum';
 import dayjs from 'dayjs';
 import { z as ZOD } from 'zod';
 
+const isValidRUSelectValue = (label: string) => ZOD.object({
+	value: ZOD.string()
+		.trim()
+		.min(1, { message: `Not a Valid ${label}.` })
+		.max(100),
+	label: ZOD.string()
+		.trim()
+		.min(1, { message: `Not a Valid ${label}.` })
+		.max(100),
+}, { message: `${label} is Required.` })
+
+const isValidStringValue = (label: string) => ZOD.string()
+	.trim()
+	.min(1, { message: `${label} is Required.` })
+	.max(100)
 
 export const userUpdateValidationSchema = ZOD.object({
 	[UserFormFieldsEnum.name]: ZOD.string()
@@ -137,3 +153,23 @@ export const gameRoomDataValidationSchema = ZOD.object({
 	[FormFieldsEnum.isPrivate]: ZOD.boolean().default(false),
 	[FormFieldsEnum.gameId]: ZOD.string().min(1),
 });
+
+
+export const profileFormValidationSchema = ZOD.object({
+	[FormFieldsEnum.name]: isValidStringValue('Name'),
+	[FormFieldsEnum.age]: isValidRUSelectValue('Age'),
+	[FormFieldsEnum.gender]: isValidRUSelectValue('Gender'),
+	[FormFieldsEnum.constellations]: isValidRUSelectValue('Constellations'),
+	[FormFieldsEnum.hometown]: isValidRUSelectValue('Hometown'),
+	[FormFieldsEnum.language]: isValidRUSelectValue('Language'),
+});
+
+export const roomPreferenceFormValidationSchema = ZOD.object({
+	[FormFieldsEnum.desiredPlace]: isValidRUSelectValue('Desired place'),
+	[FormFieldsEnum.placePreference]: isValidStringValue('Place preference'),
+	[FormFieldsEnum.moveInDate]: isValidStringValue('Move in date'),
+	[FormFieldsEnum.buildingType]: isValidStringValue('Building type'),
+	[FormFieldsEnum.minBudget]: ZOD.number({ message: 'Min budget is Required.' }).nonnegative({ message: 'Min budget mush be a non-negative number.' }),
+	[FormFieldsEnum.maxBudget]: ZOD.number({ message: 'Max budget is Required.' }).positive({ message: 'Max budget mush be a positive number.' })
+});
+

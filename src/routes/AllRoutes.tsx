@@ -129,7 +129,7 @@ export const RoomPreferenceRoute = createRoute({
   path: AppRoutes.roomPreference,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import("@/pages/private/RoomPreference")
+      await import("@/pages/private/findRoommates/RoomPreference")
   ),
 });
 
@@ -138,7 +138,7 @@ export const HobbiesRoute = createRoute({
   path: AppRoutes.hobbies,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import("@/pages/private/Hobbies")
+      await import("@/pages/private/findRoommates/Hobbies")
   ),
 });
 
@@ -147,7 +147,7 @@ export const MyLifeStyleRoute = createRoute({
   path: AppRoutes.myLifeStyle,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import("@/pages/private/MyLifeStyle")
+      await import("@/pages/private/findRoommates/MyLifeStyle")
   ),
 });
 
@@ -156,7 +156,7 @@ export const RoommatesPreferenceRoute = createRoute({
   path: AppRoutes.roommatesPreference,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import("@/pages/private/RoommatesPreference")
+      await import("@/pages/private/findRoommates/RoommatesPreference")
   ),
 });
 // #endregion

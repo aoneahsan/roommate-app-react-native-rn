@@ -1,5 +1,5 @@
 // #region ---- Core Imports ----
-import { EHobbyType } from "@/types/Hobby";
+import { EHobbyType } from "@/types/hobbies";
 import { Form } from "formik";
 import React, { useMemo } from "react";
 import { ZFormik } from "zaions-react-tool-kit";

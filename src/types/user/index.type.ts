@@ -1,5 +1,6 @@
 import { FormFieldsEnum } from '@/utils/enums/formFieldsEnum';
 import { IUser as IUserZRTK } from 'zaions-react-tool-kit';
+import { ZRUSelectValueI } from 'zaions-react-ui-kit';
 
 // Enums
 export enum ZWithdrawOptionE {
@@ -40,11 +41,11 @@ export interface IUser extends Partial<IUserZRTK> {
     [FormFieldsEnum.phoneNumber]?: string
     [FormFieldsEnum.isBlocked]?: boolean
     [FormFieldsEnum.blockedAt]?: string
-    [FormFieldsEnum.age]?: string
-    [FormFieldsEnum.gender]?: string
-    [FormFieldsEnum.constellations]?: string
-    [FormFieldsEnum.hometown]?: string
-    [FormFieldsEnum.language]?: string
+    [FormFieldsEnum.age]?: Partial<ZRUSelectValueI> | null
+    [FormFieldsEnum.gender]?: Partial<ZRUSelectValueI> | null
+    [FormFieldsEnum.constellations]?: Partial<ZRUSelectValueI> | null
+    [FormFieldsEnum.hometown]?: Partial<ZRUSelectValueI> | null
+    [FormFieldsEnum.language]?: Partial<ZRUSelectValueI> | null
     // For frontend 
     [FormFieldsEnum.actions]?: string
 }

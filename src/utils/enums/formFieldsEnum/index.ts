@@ -56,4 +56,21 @@ export enum FormFieldsEnum {
 	agentRemarks = 'agentRemarks',
 	transferMethod = 'transferMethod',
 	receptScreenshot = 'receptScreenshot',
+
+	// room preference
+	moveInDate = 'moveInDate',
+	placePreference = 'placePreference',
+	buildingType = 'buildingType',
+	minBudget = 'minBudget',
+	maxBudget = 'maxBudget',
+	desiredPlace = 'desiredPlace',
+
+	// Hobbies
+	music = 'music',
+	movie = 'movie',
+	travel = 'travel',
+	book = 'book',
+	gym = 'gym',
+	food = 'food',
+	aboutMe = 'aboutMe'
 }

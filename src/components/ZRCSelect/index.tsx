@@ -98,14 +98,16 @@ const ZRCSelect: React.FC<ZRSelectI> = (props) => {
       ...styles,
       backgroundColor: isDarkMode ? slateDarkA.slateA10 : slateA.slateA10,
     }),
-    menu: (styles) => ({
-      ...styles,
-      backgroundColor: isDarkMode ? slateDark.slate4 : slate.slate4,
-      borderRadius: ".5rem",
-      overflow: "hidden",
-      padding: ".3rem 0",
-      border: `1px solid ${isDarkMode ? slateDark.slate7 : slate.slate7}`,
-    }),
+    menu: (styles) => {
+      return {
+        ...styles,
+        backgroundColor: isDarkMode ? slateDark.slate4 : slate.slate4,
+        borderRadius: ".5rem",
+        overflow: "hidden",
+        padding: ".3rem 0",
+        border: `1px solid ${isDarkMode ? slateDark.slate7 : slate.slate7}`,
+      };
+    },
     menuList: (styles) => ({
       ...styles,
       backgroundColor: isDarkMode ? slateDark.slate4 : slate.slate4,
