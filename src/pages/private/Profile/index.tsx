@@ -71,38 +71,39 @@ const Profile: React.FC = () => {
                       onBlur={handleBlur}
                     />
 
-                    <ZRCSelect />
-
-                    <ZSelect
+                    <ZRCSelect
                       label="Age"
                       name="age"
                       options={ZAgesData}
-                      trigger={{ placeholder: "Select Your Age" }}
-                      onValueChange={() => {}}
+                      placeholder="Select Your Age"
                     />
 
-                    <ZSelect
+                    <ZRCSelect
                       label="Gender"
+                      name="gender"
                       options={ZGenderData}
-                      trigger={{ placeholder: "Select Your Gender" }}
+                      placeholder="Select Your Gender"
                     />
 
-                    <ZSelect
+                    <ZRCSelect
                       label="Constellations"
+                      name="constellations"
                       options={ZConstellationsData}
-                      trigger={{ placeholder: "Select Your Constellations" }}
+                      placeholder="Select Your Constellations"
                     />
 
-                    <ZSelect
+                    <ZRCSelect
                       label="Hometown"
-                      options={ZCitiesData}
-                      trigger={{ placeholder: "Select Your Hometown" }}
+                      name="hometown"
+                      options={ZConstellationsData}
+                      placeholder="Select Your Hometown"
                     />
 
-                    <ZSelect
+                    <ZRCSelect
                       label="Language"
-                      options={ZLanguagesData}
-                      trigger={{ placeholder: "Select Your Language" }}
+                      name="language"
+                      options={ZConstellationsData}
+                      placeholder="Select Your Language"
                     />
                   </ZCard>
 

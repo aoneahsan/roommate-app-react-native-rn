@@ -21,7 +21,7 @@ import {
   slateDark,
   slateDarkA,
 } from "@radix-ui/colors";
-import { ZRSelect } from "zaions-react-ui-kit";
+import { ZRSelect, ZRSelectI } from "zaions-react-ui-kit";
 
 // #endregion
 
@@ -45,7 +45,7 @@ import { ZRSelect } from "zaions-react-ui-kit";
 /**
  * Select component made by using react select and Radix UI
  */
-const ZRCSelect: React.FC = () => {
+const ZRCSelect: React.FC<ZRSelectI> = (props) => {
   const radixThemeContext = useThemeContext();
   const isDarkMode = useMemo(
     () => radixThemeContext.appearance === "dark",
@@ -152,20 +152,7 @@ const ZRCSelect: React.FC = () => {
     }),
   };
 
-  return (
-    <ZRSelect
-      isMulti
-      options={[
-        { label: "name", value: "name" },
-        { label: "name2", value: "name2" },
-        { label: "name3", value: "name3" },
-      ]}
-      styles={styles}
-      errorMessage="testing"
-      label="eeee"
-      isTouched
-    />
-  );
+  return <ZRSelect styles={styles} {...props} />;
 };
 
 export default ZRCSelect;
