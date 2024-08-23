@@ -159,4 +159,13 @@ export const RoommatesPreferenceRoute = createRoute({
       await import("@/pages/private/findRoommates/RoommatesPreference")
   ),
 });
+
+export const postingListRoute = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.postingListSub.stepOne,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/postNewPlace/PostingList")
+  ),
+});
 // #endregion

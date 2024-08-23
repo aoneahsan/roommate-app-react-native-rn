@@ -10,9 +10,11 @@ import {
   ZBox,
   ZButton,
   ZContainer,
+  ZFileDropUploader,
   ZFlex,
   ZInput,
   ZPage,
+  ZRCSelect,
   ZRUAlignE,
   ZRUDirectionE,
   ZRURadiusE,
@@ -28,7 +30,6 @@ import ZAgesData from "@/data/ages";
 import ZGenderData from "@/data/gender";
 import ZConstellationsData from "@/data/constellations";
 import NavigationHeader from "@/components/private/NavigationHeader";
-import ZRCSelect from "@/components/ZRCSelect";
 import { formValidationRStateAtom } from "@/state/formState";
 import { profileFormValidationSchema } from "@/validationSchema";
 
@@ -93,6 +94,7 @@ const Profile: React.FC = () => {
           handleChange,
           handleBlur,
           setFieldValue,
+          setFieldTouched,
         }) => {
           return (
             <Form>
@@ -124,7 +126,11 @@ const Profile: React.FC = () => {
                       isMulti={false}
                       options={ZAgesData}
                       errorMessage={errors?.age}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (!touched?.age) {
+                          setFieldTouched("age", true);
+                        }
+                      }}
                       onChange={(value) => {
                         setFieldValue("age", value);
                       }}
@@ -140,7 +146,11 @@ const Profile: React.FC = () => {
                       options={ZGenderData}
                       placeholder="Select Your Gender"
                       isMulti={false}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (!touched?.gender) {
+                          setFieldTouched("gender", true);
+                        }
+                      }}
                       onChange={(value) => {
                         setFieldValue("gender", value);
                       }}
@@ -156,7 +166,11 @@ const Profile: React.FC = () => {
                       errorMessage={errors?.constellations}
                       placeholder="Select Your Constellations"
                       isMulti={false}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (!touched?.constellations) {
+                          setFieldTouched("constellations", true);
+                        }
+                      }}
                       onChange={(value) => {
                         setFieldValue("constellations", value);
                       }}
@@ -172,7 +186,11 @@ const Profile: React.FC = () => {
                       errorMessage={errors?.hometown}
                       placeholder="Select Your Hometown"
                       isMulti={false}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (!touched?.hometown) {
+                          setFieldTouched("hometown", true);
+                        }
+                      }}
                       onChange={(value) => {
                         setFieldValue("hometown", value);
                       }}
@@ -188,7 +206,11 @@ const Profile: React.FC = () => {
                       errorMessage={errors?.language}
                       placeholder="Select Your Language"
                       isMulti={false}
-                      onBlur={handleBlur}
+                      onBlur={() => {
+                        if (!touched?.language) {
+                          setFieldTouched("language", true);
+                        }
+                      }}
                       onChange={(value) => {
                         setFieldValue("language", value);
                       }}
@@ -200,6 +222,7 @@ const Profile: React.FC = () => {
                     direction={ZRUDirectionE.column}
                     className="maxLg:w-[40%] max900px:!w-full lg:w-1/2"
                   >
+                    <ZFileDropUploader />
                     <ZFlex
                       align={ZRUAlignE.center}
                       direction={ZRUDirectionE.column}

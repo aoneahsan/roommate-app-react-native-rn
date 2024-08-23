@@ -7,6 +7,7 @@ export const routeParams = {
 const AppRoutesCommonPath = {
 	app: '/app',
 	testPages: '/test',
+	postingList: '/posting-list'
 } as const;
 
 const AppRoutesE = {
@@ -17,6 +18,9 @@ const AppRoutesE = {
 	hobbies: '/hobbies',
 	myLifeStyle: '/my-life-style',
 	roommatesPreference: '/roommates-preference',
+	postingListSub: {
+		stepOne: `${AppRoutesCommonPath.postingList}/step-one`
+	},
 
 	appSub: {
 		dashboard: {

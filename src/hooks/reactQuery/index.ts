@@ -2,12 +2,8 @@ import { useRecoilValue } from 'recoil';
 import axiosInstance from '@/axiosInstance';
 import {
 	clearAuthDataFromLocalStorage,
-	getAuthTokenFromLocalStorage,
 	IApiResponse,
 	reactQueryOptions,
-	showErrorNotification,
-	showZAlert,
-	STORAGE,
 } from 'zaions-react-tool-kit';
 import { MESSAGES } from '@/utils/messages';
 import {
@@ -29,6 +25,7 @@ import { userDataRStateAtom, userTokenRStateAtom } from '@/state/user';
 import { ApiPathEnum, ApiVersionsEnum } from '@/enums/backendApi';
 import { getFullApiUrl } from '@/utils/helpers/apiHelpers';
 import { AxiosResponse } from 'axios';
+import { showErrorNotification } from 'zaions-react-ui-kit';
 
 const useMutationRequest = <T>(
 	method: RequestTypeEnum = RequestTypeEnum.post,

@@ -14,12 +14,10 @@ import {
   ZInput,
   ZPage,
   ZRadioCardList,
-  ZRadioCardsGroup,
-  ZRadioCardsItem,
+  ZRCSelect,
   ZRUAlignE,
   ZRUColorE,
   ZRUInputTypeE,
-  ZSelect,
   ZText,
 } from "zaions-react-ui-kit";
 import { useRecoilValue } from "recoil";
@@ -32,7 +30,6 @@ import ZCitiesData from "@/data/cities";
 import NavigationHeader from "@/components/private/NavigationHeader";
 import { formValidationRStateAtom } from "@/state/formState";
 import { roomPreferenceFormValidationSchema } from "@/validationSchema";
-import ZRCSelect from "@/components/ZRCSelect";
 
 // #endregion
 
@@ -51,6 +48,8 @@ import {
 
 // #region ---- Images Imports ----
 import { ZArrowRightLongIcon } from "@/assets";
+import ZBuildingTypeData from "@/data/buildingType";
+import ZPlacePreferenceData from "@/data/placePreference";
 
 // #endregion
 
@@ -65,50 +64,6 @@ const RoomPreference: React.FC = () => {
       minBudget: 0,
       maxBudget: 0,
     }),
-    []
-  );
-
-  const placePreference = useMemo(
-    () => [
-      {
-        value: EPlacePreference.entirePlace,
-        label: "Entire Place",
-      },
-      {
-        value: EPlacePreference.sharedPlace,
-        label: "Shared Place",
-      },
-    ],
-    []
-  );
-
-  const buildingType = useMemo(
-    () => [
-      {
-        value: EBuildingType.noPreference,
-        label: "No Preference",
-      },
-      {
-        value: EBuildingType.condo,
-        label: "Condo",
-      },
-      {
-        value: EBuildingType.apartment,
-        label: "Apartment",
-      },
-      {
-        value: EBuildingType.twonHouse,
-        label: "TwonHouse",
-      },
-      {
-        value: EBuildingType.house,
-        label: "House",
-      },
-      {
-        value: EBuildingType.basement,
-        label: "Basement",
-      },
-    ],
     []
   );
 
@@ -214,7 +169,7 @@ const RoomPreference: React.FC = () => {
                     isTouched={touched.placePreference}
                     errorMessage={errors?.placePreference}
                     value={values.placePreference}
-                    items={placePreference}
+                    items={ZPlacePreferenceData}
                     color={ZRUColorE.purple}
                     onValueChange={(value) => {
                       setFieldValue("placePreference", value);
@@ -226,7 +181,7 @@ const RoomPreference: React.FC = () => {
                     isTouched={touched.buildingType}
                     errorMessage={errors?.buildingType}
                     value={values.buildingType}
-                    items={buildingType}
+                    items={ZBuildingTypeData}
                     color={ZRUColorE.purple}
                     onValueChange={(value) => {
                       setFieldValue("buildingType", value);

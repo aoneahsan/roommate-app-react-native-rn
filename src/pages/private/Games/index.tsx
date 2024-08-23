@@ -24,10 +24,11 @@ import {
   ZRUJustifyE,
   ZText,
   ZTextArea,
+  showErrorNotification,
+  showSuccessNotification,
 } from "zaions-react-ui-kit";
 import {
   createColumnHelper,
-  flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
@@ -35,11 +36,7 @@ import {
 import { useRecoilValue } from "recoil";
 import { Formik, Form, FormikHelpers } from "formik";
 import { ZodError } from "zod";
-import {
-  IApiResponse,
-  showErrorNotification,
-  showSuccessNotification,
-} from "zaions-react-tool-kit";
+import { IApiResponse } from "zaions-react-tool-kit";
 import {
   isZNonEmptyString,
   ResponseCodeEnum,
@@ -65,6 +62,7 @@ import { gameFormValidationSchema } from "@/validationSchema";
 import { formValidationRStateAtom } from "@/state/formState";
 import { MESSAGES } from "@/utils/messages";
 import ZSearch from "@/components/private/Search";
+import ZTable from "@/components/private/Table";
 
 // #endregion
 
@@ -79,7 +77,6 @@ import { IGame, ZGameTableColumnsIds } from "@/types/game";
 
 // #region ---- Images Imports ----
 import { ZAddIcon, ZWarningOutlineIcon } from "@/assets";
-import ZTable from "@/components/private/Table";
 
 // #endregion
 

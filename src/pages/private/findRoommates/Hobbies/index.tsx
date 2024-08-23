@@ -9,6 +9,7 @@ import {
   ZButton,
   ZContainer,
   ZPage,
+  ZRCSelect,
   ZRUVariantE,
   ZTextArea,
 } from "zaions-react-ui-kit";
@@ -25,9 +26,8 @@ import ZBooksData from "@/data/books";
 import ZGymData from "@/data/Gym";
 import ZFoodsData from "@/data/Foods";
 import { ZArrowRightLongIcon } from "@/assets";
-import { EHobbyType } from "@/types/hobbies";
+import { EHobbyType } from "@/types/hobby";
 import CustomHobbyModal from "@/components/Hobbies/CustomHobbyModal";
-import ZRCSelect from "@/components/ZRCSelect";
 
 // #endregion
 

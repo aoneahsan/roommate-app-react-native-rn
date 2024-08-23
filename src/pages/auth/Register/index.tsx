@@ -28,13 +28,10 @@ import {
   ZRUJustifyE,
   ZRUTextAsE,
   ZText,
-} from "zaions-react-ui-kit";
-import {
-  IApiResponse,
-  IUser,
   showErrorNotification,
   showSuccessNotification,
-} from "zaions-react-tool-kit";
+} from "zaions-react-ui-kit";
+import { IApiResponse, IUser } from "zaions-react-tool-kit";
 import { ZodError } from "zod";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useNavigate } from "@tanstack/react-router";
@@ -49,22 +46,22 @@ import { reactQueryKeys } from "@/utils/constants/reactQuery";
 import { MESSAGES } from "@/utils/messages";
 import { registerFormValidationSchema } from "@/validationSchema";
 import ZPubNavigation from "@/components/public/Navigation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import FormActionButtons from "@/components/form/FormActionButtons";
+import { getFrbAuthInstance } from "@/firebaseInstance";
 
 // #endregion
 
 // #region ---- Types Imports ----
 import { RegisterFormFieldsEnum } from "@/enums/formData";
 import { ZRegisterI } from "@/types/auth";
+import { ApiPathEnum } from "@/enums/backendApi";
+import { ZWithdrawOptionE } from "@/types/user/index.type";
 
 // #endregion
 
 // #region ---- Store Imports ----
 import { formValidationRStateAtom } from "@/state/formState";
-import FormActionButtons from "@/components/form/FormActionButtons";
-import { ApiPathEnum } from "@/enums/backendApi";
-import { ZWithdrawOptionE } from "@/types/user/index.type";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { getFrbAuthInstance } from "@/firebaseInstance";
 
 // #endregion
 
