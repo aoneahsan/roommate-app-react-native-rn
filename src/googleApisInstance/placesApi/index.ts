@@ -1,7 +1,7 @@
 import ENVS from '@/utils/envKeys';
 import { Loader } from '@googlemaps/js-api-loader';
 
-const googleMapsApiLoader = new Loader({
+const googleApisLoader = new Loader({
 	apiKey: ENVS.firebase.apiKey,
 	version: 'weekly',
 	id: 'zaions-google-maps-script',
@@ -14,21 +14,10 @@ let googleMapsPlacesApiInstance: google.maps.PlacesLibrary | null = null;
 export const getGMPlacesLApiInstance = async () => {
 	if (!googleMapsPlacesApiInstance) {
 		googleMapsPlacesApiInstance =
-			await googleMapsApiLoader.importLibrary('places');
+			await googleApisLoader.importLibrary('places');
 	}
 
 	return googleMapsPlacesApiInstance;
-};
-
-let gmGeoEncodingApiInstance: google.maps.GeocodingLibrary | null = null;
-
-export const getGMGeoEncodingLApiInstance = async () => {
-	if (!gmGeoEncodingApiInstance) {
-		gmGeoEncodingApiInstance =
-			await googleMapsApiLoader.importLibrary('geocoding');
-	}
-
-	return gmGeoEncodingApiInstance;
 };
 
 export const autoCompleteTest = async () => {
@@ -130,7 +119,3 @@ export const autoCompleteTest = async () => {
 
 	init();
 };
-
-export const getPlaceDataFromLatLong = async () => {
-	
-}

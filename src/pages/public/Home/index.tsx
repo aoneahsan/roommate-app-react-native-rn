@@ -24,7 +24,6 @@ import {
 } from 'firebase/auth';
 import { getFrbAuthInstance } from '@/firebaseInstance';
 import ENVS from '@/utils/envKeys';
-import CapGoogleMapsTestComponent from '@/capacitorApis/googleMaps/CapGoogleMapsTestComponent';
 
 const frbAuth = getFrbAuthInstance();
 
@@ -91,13 +90,6 @@ const Home: React.FC = () => {
 					<ZButton onClick={reloadUserData}>reload User</ZButton>
 					<ZButton onClick={signOut}>signout User</ZButton>
 				</ZFlex>
-
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<CapGoogleMapsTestComponent />
 			</ZBox>
 		</ZPage>
 	);

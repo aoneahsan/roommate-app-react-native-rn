@@ -1,4 +1,4 @@
-import { Theme, ThemePanel, useThemeContext } from '@radix-ui/themes';
+import { Theme, ThemePanel } from '@radix-ui/themes';
 
 // Tanstack React Router
 import { RouterProvider } from '@tanstack/react-router';
@@ -22,19 +22,12 @@ import '@/utils/envKeys';
 
 import { configureZTK } from 'zaions-tool-kit';
 import ENVS from '@/utils/envKeys';
-import { useEffect } from 'react';
-import { getCapGeoLocationApiData } from './capacitorApis/geoLocation';
 
 configureZTK({ cryptoSecret: ENVS.cryptoSecret });
 
 const queryClient = new QueryClient();
 
 const AppEntryPoint: React.FC = () => {
-	useEffect(() => {
-		getCapGeoLocationApiData().then((res) => {
-			console.log({ res });
-		});
-	}, []);
 	return (
 		<>
 			<Theme appearance='dark' radius='full'>
