@@ -22,8 +22,8 @@ import '@/utils/envKeys';
 
 import { configureZTK } from 'zaions-tool-kit';
 import ENVS from '@/utils/envKeys';
-import { getUserLocationData } from './capacitorApis/geoLocation';
 import { useEffect } from 'react';
+import { getCapGeoLocationApiData } from './capacitorApis/geoLocation';
 
 configureZTK({ cryptoSecret: ENVS.cryptoSecret });
 
@@ -31,7 +31,7 @@ const queryClient = new QueryClient();
 
 const AppEntryPoint: React.FC = () => {
 	useEffect(() => {
-		getUserLocationData().then((res) => {
+		getCapGeoLocationApiData().then((res) => {
 			console.log({ res });
 		});
 	}, []);
