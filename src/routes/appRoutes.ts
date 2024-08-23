@@ -19,7 +19,8 @@ const AppRoutesE = {
 	myLifeStyle: '/my-life-style',
 	roommatesPreference: '/roommates-preference',
 	postingListSub: {
-		stepOne: `${AppRoutesCommonPath.postingList}/step-one`
+		stepOne: `${AppRoutesCommonPath.postingList}/step-one`,
+		selectLocation: `${AppRoutesCommonPath.postingList}/select-location`
 	},
 
 	appSub: {

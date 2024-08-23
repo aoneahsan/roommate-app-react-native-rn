@@ -168,4 +168,13 @@ export const postingListRoute = createRoute({
       await import("@/pages/private/postNewPlace/PostingList")
   ),
 });
+
+export const selectLocationRoute = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.postingListSub.selectLocation,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/postNewPlace/SelectLocation")
+  ),
+});
 // #endregion
