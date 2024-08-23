@@ -22,13 +22,19 @@ import '@/utils/envKeys';
 
 import { configureZTK } from 'zaions-tool-kit';
 import ENVS from '@/utils/envKeys';
-import './googleMapsInstance';
+import { getUserLocationData } from './capacitorApis/geoLocation';
+import { useEffect } from 'react';
 
 configureZTK({ cryptoSecret: ENVS.cryptoSecret });
 
 const queryClient = new QueryClient();
 
 const AppEntryPoint: React.FC = () => {
+	useEffect(() => {
+		getUserLocationData().then((res) => {
+			console.log({ res });
+		});
+	}, []);
 	return (
 		<>
 			<Theme appearance='dark' radius='full'>

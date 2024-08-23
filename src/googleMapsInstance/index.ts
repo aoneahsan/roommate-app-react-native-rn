@@ -18,39 +18,18 @@ export const getGMPlacesLApiInstance = async () => {
 	}
 
 	return googleMapsPlacesApiInstance;
-	// .load().then(async () => {
-	// 	const { Map } = (await google.maps.importLibrary(
-	// 		'maps'
-	// 	)) as google.maps.MapsLibrary;
-	// 	map = new Map(document.getElementById('map') as HTMLElement, {
-	// 		center: { lat: -34.397, lng: 150.644 },
-	// 		zoom: 8,
-	// 	});
-	// });
 };
 
-let _called = false;
+let gmGeoEncodingApiInstance: google.maps.GeocodingLibrary | null = null;
 
-export const getGoogleMapsInstance_Old = async () => {
-	if (!_called) {
-		const { Place } = (await google.maps.importLibrary(
-			'places'
-		)) as google.maps.PlacesLibrary;
-
-		console.log({ Place, google });
-
-		_called = true;
-
-		const searchByTextResult = await Place.searchByText({
-			textQuery: 'zaions lahore',
-			fields: ['*'],
-		});
-
-		console.log({ searchByTextResult });
+export const getGMGeoEncodingLApiInstance = async () => {
+	if (!gmGeoEncodingApiInstance) {
+		gmGeoEncodingApiInstance =
+			await googleMapsApiLoader.importLibrary('geocoding');
 	}
-};
 
-// getGoogleMapsInstance();
+	return gmGeoEncodingApiInstance;
+};
 
 export const autoCompleteTest = async () => {
 	/**
@@ -152,4 +131,6 @@ export const autoCompleteTest = async () => {
 	init();
 };
 
-autoCompleteTest();
+export const getPlaceDataFromLatLong = async () => {
+	
+}
