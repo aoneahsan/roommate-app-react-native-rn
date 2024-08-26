@@ -131,29 +131,6 @@ export const searchArticlesFormValidationSchema = ZOD.object({
 	}
 });
 
-export const gameFormValidationSchema = ZOD.object({
-	[FormFieldsEnum.title]: ZOD.string()
-		.trim()
-		.min(1, { message: 'Title is Required.' })
-		.max(255),
-	[FormFieldsEnum.description]: ZOD.string().min(50).max(1000),
-	[FormFieldsEnum.personsAllowed]: ZOD.number().min(2).max(10),
-	[FormFieldsEnum.feePerPerson]: ZOD.number().min(1),
-	[FormFieldsEnum.serviceCharges]: ZOD.number().min(1),
-	// [FormFieldsEnum.engagerServiceCharges]: ZOD.number().min(1),
-	// [FormFieldsEnum.image]: ZOD.string().url(),
-});
-
-export const gameRoomDataValidationSchema = ZOD.object({
-	[FormFieldsEnum.title]: ZOD.string()
-		.trim()
-		.min(1, { message: 'Title is Required.' })
-		.max(100),
-	[FormFieldsEnum.description]: ZOD.string().min(30).max(250),
-	[FormFieldsEnum.isPrivate]: ZOD.boolean().default(false),
-	[FormFieldsEnum.gameId]: ZOD.string().min(1),
-});
-
 
 export const profileFormValidationSchema = ZOD.object({
 	[FormFieldsEnum.name]: isValidStringValue('Name'),
@@ -173,3 +150,11 @@ export const roomPreferenceFormValidationSchema = ZOD.object({
 	[FormFieldsEnum.maxBudget]: ZOD.number({ message: 'Max budget is Required.' }).positive({ message: 'Max budget mush be a positive number.' })
 });
 
+export const locationValidationSchema = ZOD.object({
+	[FormFieldsEnum.country]: isValidStringValue('Country'),
+	[FormFieldsEnum.city]: isValidStringValue('City'),
+	[FormFieldsEnum.aptSuit]: isValidStringValue('Apt suit'),
+	[FormFieldsEnum.postCode]: isValidStringValue('Post code'),
+	[FormFieldsEnum.province]: isValidStringValue('Province'),
+	[FormFieldsEnum.streetAddress]: isValidStringValue('Street address'),
+})

@@ -58,9 +58,6 @@
     "react-select": "^5.8.0",
     "react-toastify": "^10.0.5",
     "recoil": "^0.7.7",
-    "zaions-react-tool-kit": "^0.0.8",
-    "zaions-react-ui-kit": "^0.0.9",
-    "zaions-tool-kit": "^0.0.12",
     "zod": "^3.23.8"
   },
   "devDependencies": {

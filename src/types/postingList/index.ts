@@ -19,6 +19,7 @@ export interface IPostingList {
 }
 
 export interface ISearchLocation extends ILocation {
+    // Just for frontend
     locationOption?: locationOptionEnum,
     searchPlace?: string,
 }

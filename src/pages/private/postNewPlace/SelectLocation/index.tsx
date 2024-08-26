@@ -11,20 +11,32 @@ import {
   ZCallout,
   ZCard,
   ZContainer,
-  ZFlex,
   ZHeading,
   ZInput,
   ZPage,
   ZRadioCardList,
-  ZRUAlignE,
   ZRUColorE,
   ZRUHeadingAsE,
 } from "zaions-react-ui-kit";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { ZodError } from "zod";
+import { useNavigate } from "@tanstack/react-router";
 
 // #endregion
 
 // #region ---- Custom Imports ----
 import NavigationHeader from "@/components/private/NavigationHeader";
+import ZSearchPlace from "@/components/ZSearchPlace";
+import ZGetCurrentLocation from "@/components/ZGetCurrentLocation";
+import FormActionButtons from "@/components/form/FormActionButtons";
+import { formValidationRStateAtom } from "@/state/formState";
+import { locationValidationSchema } from "@/validationSchema";
+import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
+import { AppRoutes } from "@/routes/appRoutes";
+import {
+  extractAddressDetails,
+  extractAddressDetailsFromGeocoding,
+} from "@/utils/helpers/apiHelpers";
 
 // #endregion
 
@@ -34,27 +46,53 @@ import { ISearchLocation, locationOptionEnum } from "@/types/postingList";
 // #endregion
 
 // #region ---- Store Imports ----
+import { locationRStateAtom } from "@/state/location";
 
 // #endregion
 
 // #region ---- Images Imports ----
-import {
-  ZAddLocationOutlineIcon,
-  ZLocationOutlineIcon,
-  ZSearchLocationOutlineIcon,
-} from "@/assets";
-import { reportCustomError } from "zaions-tool-kit";
-import { zGetCurrentPosition } from "zaions-react-tool-kit";
+import { ZAddLocationOutlineIcon, ZArrowLeftLongIcon } from "@/assets";
 
 // #endregion
 
 const SelectLocation: React.FC = () => {
+  const navigate = useNavigate();
   const [compState, setCompState] = useState<{
     processing: boolean;
   }>({
     processing: false,
   });
-  const initialValues = useMemo<ISearchLocation>(() => ({}), []);
+  const formValidationRState = useRecoilValue(formValidationRStateAtom);
+  const [locationRState, setLocationRState] =
+    useRecoilState(locationRStateAtom);
+
+  const initialValues = useMemo<ISearchLocation>(
+    () => ({
+      searchPlace: "",
+      locationOption: locationOptionEnum.selectCurrentLocation,
+      [FormFieldsEnum.country]: "",
+      [FormFieldsEnum.aptSuit]: "",
+      [FormFieldsEnum.city]: "",
+      [FormFieldsEnum.postCode]: "",
+      [FormFieldsEnum.province]: "",
+      [FormFieldsEnum.streetAddress]: "",
+      [FormFieldsEnum.formattedAddress]: "",
+    }),
+    []
+  );
+  const _locationOptions = useMemo(
+    () => [
+      {
+        value: locationOptionEnum.searchPlace,
+        label: "Search place",
+      },
+      {
+        value: locationOptionEnum.selectCurrentLocation,
+        label: "Select current location",
+      },
+    ],
+    []
+  );
 
   // #region Functions
   const processing = useCallback(
@@ -67,39 +105,61 @@ const SelectLocation: React.FC = () => {
     []
   );
 
-  const getCurrentLocationHandler = useCallback(async () => {
+  const validationHandler = useCallback((values: ISearchLocation) => {
+    if (formValidationRState.frontendFormValidationIsEnabled) {
+      try {
+        locationValidationSchema.parse(values);
+      } catch (error) {
+        if (error instanceof ZodError) {
+          return error.formErrors.fieldErrors;
+        }
+      }
+    }
+  }, []);
+
+  const submitHandler = useCallback((values: ISearchLocation) => {
     try {
       processing();
-      const coordinates = await zGetCurrentPosition();
-      if (coordinates?.coords) {
-        console.log({ c: coordinates?.coords });
-        doneProcessing();
-      }
 
-      if (compState?.processing) {
-        doneProcessing();
-      }
-    } catch (error) {
+      setLocationRState(() => ({ ...values }));
+
       doneProcessing();
-      reportCustomError(error);
-    }
+
+      navigate({
+        to: AppRoutes.postingListSub.stepOne,
+      });
+    } catch (error) {}
   }, []);
   // #endregion
 
   return (
     <ZPage>
-      <NavigationHeader title="Select Location" />
+      <NavigationHeader
+        title="Select Location"
+        beforeBoxContent={
+          <>
+            <ZButton
+              onClick={() => {
+                navigate({
+                  to: AppRoutes.postingListSub.stepOne,
+                });
+              }}
+            >
+              <ZArrowLeftLongIcon /> Go Back
+            </ZButton>
+          </>
+        }
+      />
 
       <Formik
         initialValues={initialValues}
-        validate={() => {}}
-        onSubmit={() => {}}
+        validate={validationHandler}
+        onSubmit={submitHandler}
       >
         {({
           values,
           errors,
           touched,
-          isValid,
           setFieldValue,
           handleChange,
           handleBlur,
@@ -108,66 +168,127 @@ const SelectLocation: React.FC = () => {
             <Form>
               <ZContainer size="4" className="my-6 maxLg:mx-3">
                 <ZBox className="space-y-4">
-                  <ZCallout content="You can either search for a location or get your current location. Only one option can be enabled at a time." />
+                  <ZCallout
+                    className="font-medium"
+                    content="You can either search for a location or get your current location. Only one option can be enabled at a time."
+                  />
                   <ZRadioCardList
                     color={ZRUColorE.purple}
                     value={values?.locationOption}
                     onValueChange={(value) => {
                       setFieldValue("locationOption", value);
                     }}
-                    items={[
-                      {
-                        value: "searchPlace",
-                        label: "Search place",
-                      },
-                      {
-                        value: "selectCurrentLocation",
-                        label: "Select current location",
-                      },
-                    ]}
+                    items={_locationOptions}
                   />
-                  <ZCard className="space-y-4">
-                    <ZHeading as={ZRUHeadingAsE.h5}>Search Place</ZHeading>
-                    <ZFlex align={ZRUAlignE.center} className="gap-2">
-                      <ZInput
-                        className="w-full"
-                        placeholder="Enter place name"
-                        disabled={
-                          values?.locationOption ===
-                          locationOptionEnum.selectCurrentLocation
-                        }
-                      />
-                      <ZButton
-                        type="button"
-                        disabled={
-                          values?.locationOption ===
-                            locationOptionEnum.selectCurrentLocation ||
-                          compState?.processing
-                        }
-                      >
-                        <ZSearchLocationOutlineIcon className="w-5 h-5" />
-                        Search
-                      </ZButton>
-                    </ZFlex>
-                  </ZCard>
+                  <ZSearchPlace
+                    disabled={
+                      values?.locationOption ===
+                        locationOptionEnum.selectCurrentLocation ||
+                      compState?.processing
+                    }
+                    loading={
+                      values?.locationOption ===
+                        locationOptionEnum.searchPlace && compState?.processing
+                    }
+                    onSelect={async (place) => {
+                      const _place = extractAddressDetails(place);
+
+                      setFieldValue(
+                        FormFieldsEnum.country,
+                        _place?.[FormFieldsEnum.country] ?? "",
+                        true
+                      );
+                      setFieldValue(
+                        FormFieldsEnum.aptSuit,
+                        _place?.[FormFieldsEnum.aptSuit] ?? "",
+                        true
+                      );
+                      setFieldValue(
+                        FormFieldsEnum.city,
+                        _place?.[FormFieldsEnum.city] ?? "",
+                        true
+                      );
+                      setFieldValue(
+                        FormFieldsEnum.postCode,
+                        _place?.[FormFieldsEnum.postCode] ?? "",
+                        true
+                      );
+                      setFieldValue(
+                        FormFieldsEnum.province,
+                        _place?.[FormFieldsEnum.province] ?? "",
+                        true
+                      );
+                      setFieldValue(
+                        FormFieldsEnum.streetAddress,
+                        _place?.[FormFieldsEnum.streetAddress] ?? "",
+                        true
+                      );
+                      setFieldValue(
+                        FormFieldsEnum.formattedAddress,
+                        place?.[FormFieldsEnum.formattedAddress] ?? "",
+                        true
+                      );
+                    }}
+                  />
 
                   <ZCard className="space-y-4">
                     <ZHeading as={ZRUHeadingAsE.h5}>
                       Select Current Location
                     </ZHeading>
 
-                    <ZButton
-                      type="button"
-                      onClick={() => getCurrentLocationHandler()}
+                    <ZGetCurrentLocation
                       disabled={
                         values?.locationOption ===
                           locationOptionEnum.searchPlace ||
                         compState?.processing
                       }
-                    >
-                      <ZLocationOutlineIcon className="w-5 h-5" /> Get Current
-                      Location
-                    </ZButton>
+                      loading={
+                        values?.locationOption ===
+                          locationOptionEnum.selectCurrentLocation &&
+                        compState?.processing
+                      }
+                      onClick={(currentLocation) => {
+                        const _place =
+                          extractAddressDetailsFromGeocoding(currentLocation);
+
+                        setFieldValue(
+                          FormFieldsEnum.country,
+                          _place?.[FormFieldsEnum.country] ?? "",
+                          true
+                        );
+                        setFieldValue(
+                          FormFieldsEnum.aptSuit,
+                          _place?.[FormFieldsEnum.aptSuit] ?? "",
+                          true
+                        );
+                        setFieldValue(
+                          FormFieldsEnum.city,
+                          _place?.[FormFieldsEnum.city] ?? "",
+                          true
+                        );
+                        setFieldValue(
+                          FormFieldsEnum.postCode,
+                          _place?.[FormFieldsEnum.postCode] ?? "",
+                          true
+                        );
+                        setFieldValue(
+                          FormFieldsEnum.province,
+                          _place?.[FormFieldsEnum.province] ?? "",
+                          true
+                        );
+                        setFieldValue(
+                          "streetAddress",
+                          _place?.[FormFieldsEnum.streetAddress] ?? "",
+                          true
+                        );
+                        setFieldValue(
+                          FormFieldsEnum.formattedAddress,
+                          currentLocation?.[FormFieldsEnum.formattedAddress] ??
+                            "",
+                          true
+                        );
+                      }}
+                    />
                   </ZCard>
 
                   <ZCard className="space-y-4">
@@ -180,10 +301,10 @@ const SelectLocation: React.FC = () => {
                       required
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      name="country"
-                      value={values?.country}
-                      isTouched={touched?.country}
-                      errorMessage={errors?.country}
+                      name={FormFieldsEnum.country}
+                      value={values?.[FormFieldsEnum.country]}
+                      isTouched={touched?.[FormFieldsEnum.country]}
+                      errorMessage={errors?.[FormFieldsEnum.country]}
                     />
 
                     <ZInput
@@ -191,20 +312,20 @@ const SelectLocation: React.FC = () => {
                       required
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      name="city"
-                      value={values?.streetAddress}
-                      isTouched={touched?.streetAddress}
-                      errorMessage={errors?.streetAddress}
+                      name={FormFieldsEnum.streetAddress}
+                      value={values?.[FormFieldsEnum.streetAddress]}
+                      isTouched={touched?.[FormFieldsEnum.streetAddress]}
+                      errorMessage={errors?.[FormFieldsEnum.streetAddress]}
                     />
 
                     <ZInput
                       label="Apt, Suit, etc (optional)"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      name="aptSuit"
-                      value={values?.aptSuit}
-                      isTouched={touched?.aptSuit}
-                      errorMessage={errors?.aptSuit}
+                      name={FormFieldsEnum.aptSuit}
+                      value={values?.[FormFieldsEnum.aptSuit]}
+                      isTouched={touched?.[FormFieldsEnum.aptSuit]}
+                      errorMessage={errors?.[FormFieldsEnum.aptSuit]}
                     />
 
                     <ZInput
@@ -212,10 +333,10 @@ const SelectLocation: React.FC = () => {
                       required
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      name="city"
-                      value={values?.city}
-                      isTouched={touched?.city}
-                      errorMessage={errors?.city}
+                      name={FormFieldsEnum.city}
+                      value={values?.[FormFieldsEnum.city]}
+                      isTouched={touched?.[FormFieldsEnum.city]}
+                      errorMessage={errors?.[FormFieldsEnum.city]}
                     />
 
                     <ZInput
@@ -223,10 +344,10 @@ const SelectLocation: React.FC = () => {
                       required
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      name="province"
-                      value={values?.province}
-                      isTouched={touched?.province}
-                      errorMessage={errors?.province}
+                      name={FormFieldsEnum.province}
+                      value={values?.[FormFieldsEnum.province]}
+                      isTouched={touched?.[FormFieldsEnum.province]}
+                      errorMessage={errors?.[FormFieldsEnum.province]}
                     />
 
                     <ZInput
@@ -234,16 +355,21 @@ const SelectLocation: React.FC = () => {
                       required
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      name="postCode"
-                      value={values?.postCode}
-                      isTouched={touched?.postCode}
-                      errorMessage={errors?.postCode}
+                      name={FormFieldsEnum.postCode}
+                      value={values?.[FormFieldsEnum.postCode]}
+                      isTouched={touched?.[FormFieldsEnum.postCode]}
+                      errorMessage={errors?.[FormFieldsEnum.postCode]}
                     />
 
-                    <ZButton disabled={compState?.processing} type="submit">
-                      <ZAddLocationOutlineIcon className="w-5 h-5" />
-                      Add
-                    </ZButton>
+                    <FormActionButtons
+                      processing={compState?.processing}
+                      submitButtonContent={
+                        <>
+                          <ZAddLocationOutlineIcon className="w-5 h-5" />
+                          Add
+                        </>
+                      }
+                    />
                   </ZCard>
                 </ZBox>
               </ZContainer>

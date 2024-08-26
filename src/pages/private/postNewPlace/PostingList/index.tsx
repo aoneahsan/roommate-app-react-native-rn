@@ -31,6 +31,8 @@ import { formValidationRStateAtom } from "@/state/formState";
 import ZBuildingTypeData from "@/data/buildingType";
 import { ZAddIcon, ZArrowRightLongIcon } from "@/assets";
 import ZPlacePreferenceData from "@/data/placePreference";
+import { useNavigate } from "@tanstack/react-router";
+import { AppRoutes } from "@/routes/appRoutes";
 
 // #endregion
 
@@ -49,6 +51,7 @@ import ZPlacePreferenceData from "@/data/placePreference";
 const PostingList: React.FC = () => {
   const formValidationRState = useRecoilValue(formValidationRStateAtom);
   const initialValues = useMemo(() => ({}), []);
+  const navigate = useNavigate();
 
   // #region Functions
   const formikValidation = useCallback(() => {
@@ -95,8 +98,15 @@ const PostingList: React.FC = () => {
                       <ZBadge size="3" color={ZRUColorE.lime}>
                         6 Huron St, Toronto ON, Canada
                       </ZBadge>
-                      <ZButton className="ms-auto">
-                        <ZAddIcon /> Add
+                      <ZButton
+                        className="ms-auto"
+                        onClick={() =>
+                          navigate({
+                            to: AppRoutes.postingListSub.selectLocation,
+                          })
+                        }
+                      >
+                        <ZAddIcon className="w-5 h-5" /> Add
                       </ZButton>
                     </ZFlex>
                   </ZCard>

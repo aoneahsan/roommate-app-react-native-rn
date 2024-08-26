@@ -12,7 +12,7 @@ interface IFormActionButtonsProps {
   showResetButton?: boolean;
   showSubmitButton?: boolean;
   resetButtonText?: string;
-  submitButtonText?: string;
+  submitButtonContent?: React.ReactNode;
   onResetClicked?: () => void;
   processing?: boolean;
   mode?: ZFormModeE;
@@ -21,7 +21,7 @@ const FormActionButtons: React.FC<IFormActionButtonsProps> = ({
   resetButtonText,
   showResetButton = true,
   showSubmitButton = true,
-  submitButtonText,
+  submitButtonContent = "Submit",
   onResetClicked,
   processing,
   mode = ZFormModeE.add,
@@ -29,13 +29,12 @@ const FormActionButtons: React.FC<IFormActionButtonsProps> = ({
   const { dirty, isValid } = useFormikContext();
   return (
     <ZBox className="mb-3">
-      <ZFlex justify={ZRUJustifyE.between}>
+      <ZFlex justify={ZRUJustifyE.between} className="gap-3 maxSm:flex-col">
         {showResetButton ? (
           <ZButton
             type={!!onResetClicked ? "button" : "reset"}
             color={ZRUColorE.red}
-            disabled={processing || (onResetClicked ? false : !dirty)}
-            mr="4"
+            disabled={processing || !dirty}
             onClick={onResetClicked}
           >
             {resetButtonText ?? "Reset"}
@@ -49,7 +48,7 @@ const FormActionButtons: React.FC<IFormActionButtonsProps> = ({
             }
             loading={processing}
           >
-            {submitButtonText ?? "Submit"}
+            {submitButtonContent}
           </ZButton>
         ) : null}
       </ZFlex>

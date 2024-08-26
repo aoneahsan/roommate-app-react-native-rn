@@ -89,17 +89,7 @@ export const dashboardRoute = createRoute({
   ),
 });
 
-// --- Games
-export const gamesRoute = createRoute({
-  getParentRoute: () => appRoute,
-  path: AppRoutes.appSub.games.path,
-  component: lazyRouteComponent(
-    async (): Promise<Record<string, unknown>> =>
-      await import("@/pages/private/Games")
-  ),
-});
-
-export const appRouteTree = appRoute.addChildren([dashboardRoute, gamesRoute]);
+export const appRouteTree = appRoute.addChildren([dashboardRoute]);
 
 // Reset password
 // export const forgotRoute = createRoute({

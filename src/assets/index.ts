@@ -23,6 +23,7 @@ import { MdOutlineMeetingRoom as ZRoomOutlineIcon } from "react-icons/md";
 import { TbArrowUpSquare as ZArrowUpSquareIcon } from "react-icons/tb";
 import { CgProfile as ZProfileIcon } from "react-icons/cg";
 import { FaArrowRightLong as ZArrowRightLongIcon } from "react-icons/fa6";
+import { FaArrowLeftLong as ZArrowLeftLongIcon } from "react-icons/fa6";
 import { IoLocationOutline as ZLocationOutlineIcon } from "react-icons/io5";
 import { LiaSearchLocationSolid as ZSearchLocationOutlineIcon } from "react-icons/lia";
 import { MdOutlineAddLocationAlt as ZAddLocationOutlineIcon } from "react-icons/md";
@@ -53,6 +54,7 @@ export {
     ZArrowUpSquareIcon,
     ZProfileIcon,
     ZArrowRightLongIcon,
+    ZArrowLeftLongIcon,
     ZLocationOutlineIcon,
     ZSearchLocationOutlineIcon,
     ZAddLocationOutlineIcon
