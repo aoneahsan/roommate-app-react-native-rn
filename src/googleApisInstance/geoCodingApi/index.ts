@@ -25,7 +25,6 @@ export const getPlaceDataFromLatLong = async ({
 
 export const getMyCurrentLocationFormattedPlaceData = async () => {
 	const geolocationData = await getCapGeoLocationApiData();
-	console.log({ geolocationData })
 	if (geolocationData.coords?.latitude && geolocationData.coords?.longitude) {
 		return getPlaceDataFromLatLong({
 			coords: {

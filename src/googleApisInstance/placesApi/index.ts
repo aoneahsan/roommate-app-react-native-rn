@@ -236,7 +236,6 @@ export const autoCompleteTest = async () => {
 		// 	);
 		// 	resultsElement.appendChild(listItem);
 		// }
-		// 	console.log({ placePrediction });
 		// }
 
 		const _firstSuggestion =
@@ -251,8 +250,6 @@ export const autoCompleteTest = async () => {
 			await place.fetchFields({
 				fields: ['location', 'formattedAddress', 'displayName', 'addressComponents'],
 			});
-
-			console.log({ place });
 			// const placeInfo = document.getElementById('prediction') as HTMLElement;
 			// placeInfo.textContent =
 			// 	'First predicted place: ' +

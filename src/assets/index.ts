@@ -19,6 +19,7 @@ import { IoWarningOutline as ZWarningOutlineIcon } from "react-icons/io5";
 import { BsInboxes as ZInboxesOutlineIcon } from "react-icons/bs";
 import { GrGamepad as ZGamepadOutlineIcon } from "react-icons/gr";
 import { IoMdAdd as ZAddIcon } from "react-icons/io";
+import { IoIosRemove as ZRemoveIcon } from "react-icons/io";
 import { MdOutlineMeetingRoom as ZRoomOutlineIcon } from "react-icons/md";
 import { TbArrowUpSquare as ZArrowUpSquareIcon } from "react-icons/tb";
 import { CgProfile as ZProfileIcon } from "react-icons/cg";
@@ -27,6 +28,8 @@ import { FaArrowLeftLong as ZArrowLeftLongIcon } from "react-icons/fa6";
 import { IoLocationOutline as ZLocationOutlineIcon } from "react-icons/io5";
 import { LiaSearchLocationSolid as ZSearchLocationOutlineIcon } from "react-icons/lia";
 import { MdOutlineAddLocationAlt as ZAddLocationOutlineIcon } from "react-icons/md";
+import { TbEdit as ZEditOutlineIcon } from "react-icons/tb";
+import { IoTrashOutline as ZTrashOutlineIcon } from "react-icons/io5";
 
 export {
     // Images
@@ -50,6 +53,7 @@ export {
     ZInboxesOutlineIcon,
     ZGamepadOutlineIcon,
     ZAddIcon,
+    ZRemoveIcon,
     ZRoomOutlineIcon,
     ZArrowUpSquareIcon,
     ZProfileIcon,
@@ -57,5 +61,7 @@ export {
     ZArrowLeftLongIcon,
     ZLocationOutlineIcon,
     ZSearchLocationOutlineIcon,
-    ZAddLocationOutlineIcon
+    ZAddLocationOutlineIcon,
+    ZEditOutlineIcon,
+    ZTrashOutlineIcon
 }

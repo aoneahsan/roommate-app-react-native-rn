@@ -30,7 +30,7 @@ import { reportCustomError } from "zaions-tool-kit";
 const ZGetCurrentLocation: React.FC<{
   loading?: boolean;
   disabled?: boolean;
-  onClick?: (place: google.maps.places.Place) => void;
+  onClick?: (place: any) => void;
 }> = ({ loading, disabled, onClick }) => {
   const [processing, setProcessing] = useState<boolean>(false);
 

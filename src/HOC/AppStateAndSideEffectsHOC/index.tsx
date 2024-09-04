@@ -32,9 +32,7 @@ const AppStateAndSideEffectsHOC: React.FC = () => {
     } catch (error) {}
 
     try {
-      onIdTokenChanged(frbAuth, (idToken) => {
-        // console.log({ ml: "onIdTokenChanged", idToken });
-      });
+      onIdTokenChanged(frbAuth, (idToken) => {});
     } catch (error) {}
   }, []);
 

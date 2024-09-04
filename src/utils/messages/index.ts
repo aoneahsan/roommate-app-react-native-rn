@@ -15,6 +15,10 @@ export const MESSAGES = {
 		updatedSuccessfully: 'Game updated successfully.',
 		deletedSuccessfully: 'Game delete successfully.',
 		notFount: 'Game not found'
+	},
+
+	file: {
+		maxSize: (maxSize: string) => `File size is larger than ${maxSize}, file size should be ${maxSize} or less.`
 	}
 
 } as const;

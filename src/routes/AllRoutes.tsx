@@ -150,12 +150,40 @@ export const RoommatesPreferenceRoute = createRoute({
   ),
 });
 
-export const postingListRoute = createRoute({
+// posting List
+export const plStepOne = createRoute({
   getParentRoute: () => tanstackRootRoute,
   path: AppRoutes.postingListSub.stepOne,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import("@/pages/private/postNewPlace/PostingList")
+      await import("@/pages/private/postNewPlace/PostingList/StepOne")
+  ),
+});
+
+export const plStepTwo = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.postingListSub.stepTwo,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/postNewPlace/PostingList/StepTwo")
+  ),
+});
+
+export const plStepThree = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.postingListSub.stepThree,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/postNewPlace/PostingList/StepThree")
+  ),
+});
+
+export const plStepFour = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.postingListSub.stepFour,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/postNewPlace/PostingList/StepFour")
   ),
 });
 

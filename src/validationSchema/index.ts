@@ -21,10 +21,17 @@ const isValidRUSelectValue = (label: string) => ZOD.object({
 		.max(100),
 }, { message: `${label} is Required.` })
 
-const isValidStringValue = (label: string) => ZOD.string()
+const isValidStringValue = (label: string) => ZOD.string({ message: `${label} is Required.` })
 	.trim()
 	.min(1, { message: `${label} is Required.` })
 	.max(100)
+
+const currencySchema = ZOD.object({
+	label: isValidStringValue('Currency Label'),
+	value: isValidStringValue('Currency Value'),
+	symbol: ZOD.string()
+		.trim().optional(),
+});
 
 export const userUpdateValidationSchema = ZOD.object({
 	[UserFormFieldsEnum.name]: ZOD.string()
@@ -153,8 +160,21 @@ export const roomPreferenceFormValidationSchema = ZOD.object({
 export const locationValidationSchema = ZOD.object({
 	[FormFieldsEnum.country]: isValidStringValue('Country'),
 	[FormFieldsEnum.city]: isValidStringValue('City'),
-	[FormFieldsEnum.aptSuit]: isValidStringValue('Apt suit'),
+	[FormFieldsEnum.aptSuit]: ZOD.string().trim().optional(),
 	[FormFieldsEnum.postCode]: isValidStringValue('Post code'),
 	[FormFieldsEnum.province]: isValidStringValue('Province'),
 	[FormFieldsEnum.streetAddress]: isValidStringValue('Street address'),
+})
+
+// Schema for the rentFee object validation
+const rentFeeSchema = ZOD.object({
+	[FormFieldsEnum.currency]: currencySchema.optional(),
+	[FormFieldsEnum.prize]: isValidStringValue('Prize'),
+});
+
+export const postingListStepOneValidationSchema = ZOD.object({
+	[FormFieldsEnum.title]: isValidStringValue('Title'),
+	[FormFieldsEnum.buildingType]: isValidStringValue('Building type'),
+	[FormFieldsEnum.placePreference]: isValidStringValue('Place'),
+	[FormFieldsEnum.rentFee]: rentFeeSchema,
 })

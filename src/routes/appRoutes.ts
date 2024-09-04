@@ -20,6 +20,9 @@ const AppRoutesE = {
 	roommatesPreference: '/roommates-preference',
 	postingListSub: {
 		stepOne: `${AppRoutesCommonPath.postingList}/step-one`,
+		stepTwo: `${AppRoutesCommonPath.postingList}/step-two`,
+		stepThree: `${AppRoutesCommonPath.postingList}/step-three`,
+		stepFour: `${AppRoutesCommonPath.postingList}/step-four`,
 		selectLocation: `${AppRoutesCommonPath.postingList}/select-location`
 	},
 

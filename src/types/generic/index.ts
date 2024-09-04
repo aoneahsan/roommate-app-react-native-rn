@@ -11,6 +11,27 @@ export interface ILocationLatLng {
     lng: number;
 }
 
+export enum fileErrorEnum {
+    sizeTooLarge = 'size-too-large'
+}
+
+export enum frequencyEnum {
+    monthly = 'monthly',
+    yearly = 'yearly',
+    weekly = 'weekly',
+}
+
+export enum agreementStatusEnum {
+    yes = 'yes',
+    no = 'no',
+    negotiated = 'negotiated',
+}
+
+export enum privateShareEnum {
+    private = 'private',
+    share = 'share',
+}
+
 // Interfaces
 export interface ILocation {
     [FormFieldsEnum.country]?: string

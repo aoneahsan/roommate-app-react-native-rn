@@ -46,7 +46,7 @@ import { ISearchLocation, locationOptionEnum } from "@/types/postingList";
 // #endregion
 
 // #region ---- Store Imports ----
-import { locationRStateAtom } from "@/state/location";
+import { plStepOneRStateAtom } from "@/state/postingList";
 
 // #endregion
 
@@ -63,22 +63,31 @@ const SelectLocation: React.FC = () => {
     processing: false,
   });
   const formValidationRState = useRecoilValue(formValidationRStateAtom);
-  const [locationRState, setLocationRState] =
-    useRecoilState(locationRStateAtom);
+  const [plStepOneRState, setPlStepOneRState] =
+    useRecoilState(plStepOneRStateAtom);
 
   const initialValues = useMemo<ISearchLocation>(
     () => ({
-      searchPlace: "",
-      locationOption: locationOptionEnum.selectCurrentLocation,
-      [FormFieldsEnum.country]: "",
-      [FormFieldsEnum.aptSuit]: "",
-      [FormFieldsEnum.city]: "",
-      [FormFieldsEnum.postCode]: "",
-      [FormFieldsEnum.province]: "",
-      [FormFieldsEnum.streetAddress]: "",
-      [FormFieldsEnum.formattedAddress]: "",
+      searchPlace: plStepOneRState?.location?.searchPlace ?? "",
+      locationOption:
+        plStepOneRState?.location?.locationOption ??
+        locationOptionEnum.selectCurrentLocation,
+      [FormFieldsEnum.country]:
+        plStepOneRState?.location?.[FormFieldsEnum.country] ?? "",
+      [FormFieldsEnum.aptSuit]:
+        plStepOneRState?.location?.[FormFieldsEnum.aptSuit] ?? "",
+      [FormFieldsEnum.city]:
+        plStepOneRState?.location?.[FormFieldsEnum.city] ?? "",
+      [FormFieldsEnum.postCode]:
+        plStepOneRState?.location?.[FormFieldsEnum.postCode] ?? "",
+      [FormFieldsEnum.province]:
+        plStepOneRState?.location?.[FormFieldsEnum.province] ?? "",
+      [FormFieldsEnum.streetAddress]:
+        plStepOneRState?.location?.[FormFieldsEnum.streetAddress] ?? "",
+      [FormFieldsEnum.formattedAddress]:
+        plStepOneRState?.location?.[FormFieldsEnum.formattedAddress] ?? "",
     }),
-    []
+    [plStepOneRState]
   );
   const _locationOptions = useMemo(
     () => [
@@ -121,7 +130,7 @@ const SelectLocation: React.FC = () => {
     try {
       processing();
 
-      setLocationRState(() => ({ ...values }));
+      setPlStepOneRState((prev) => ({ ...prev, location: { ...values } }));
 
       doneProcessing();
 
@@ -180,76 +189,16 @@ const SelectLocation: React.FC = () => {
                     }}
                     items={_locationOptions}
                   />
-                  <ZSearchPlace
-                    disabled={
-                      values?.locationOption ===
-                        locationOptionEnum.selectCurrentLocation ||
-                      compState?.processing
-                    }
-                    loading={
-                      values?.locationOption ===
-                        locationOptionEnum.searchPlace && compState?.processing
-                    }
-                    onSelect={async (place) => {
-                      const _place = extractAddressDetails(place);
-
-                      setFieldValue(
-                        FormFieldsEnum.country,
-                        _place?.[FormFieldsEnum.country] ?? "",
-                        true
-                      );
-                      setFieldValue(
-                        FormFieldsEnum.aptSuit,
-                        _place?.[FormFieldsEnum.aptSuit] ?? "",
-                        true
-                      );
-                      setFieldValue(
-                        FormFieldsEnum.city,
-                        _place?.[FormFieldsEnum.city] ?? "",
-                        true
-                      );
-                      setFieldValue(
-                        FormFieldsEnum.postCode,
-                        _place?.[FormFieldsEnum.postCode] ?? "",
-                        true
-                      );
-                      setFieldValue(
-                        FormFieldsEnum.province,
-                        _place?.[FormFieldsEnum.province] ?? "",
-                        true
-                      );
-                      setFieldValue(
-                        FormFieldsEnum.streetAddress,
-                        _place?.[FormFieldsEnum.streetAddress] ?? "",
-                        true
-                      );
-                      setFieldValue(
-                        FormFieldsEnum.formattedAddress,
-                        place?.[FormFieldsEnum.formattedAddress] ?? "",
-                        true
-                      );
-                    }}
-                  />
-
-                  <ZCard className="space-y-4">
-                    <ZHeading as={ZRUHeadingAsE.h5}>
-                      Select Current Location
-                    </ZHeading>
-
-                    <ZGetCurrentLocation
-                      disabled={
-                        values?.locationOption ===
-                          locationOptionEnum.searchPlace ||
-                        compState?.processing
-                      }
+                  {values?.locationOption === locationOptionEnum.searchPlace ? (
+                    <ZSearchPlace
+                      disabled={compState?.processing}
                       loading={
                         values?.locationOption ===
-                          locationOptionEnum.selectCurrentLocation &&
+                          locationOptionEnum.searchPlace &&
                         compState?.processing
                       }
-                      onClick={(currentLocation) => {
-                        const _place =
-                          extractAddressDetailsFromGeocoding(currentLocation);
+                      onSelect={async (place) => {
+                        const _place = extractAddressDetails(place);
 
                         setFieldValue(
                           FormFieldsEnum.country,
@@ -277,19 +226,76 @@ const SelectLocation: React.FC = () => {
                           true
                         );
                         setFieldValue(
-                          "streetAddress",
-                          _place?.[FormFieldsEnum.streetAddress] ?? "",
+                          FormFieldsEnum.streetAddress,
+                          place?.[FormFieldsEnum.formattedAddress] ?? "",
                           true
                         );
                         setFieldValue(
                           FormFieldsEnum.formattedAddress,
-                          currentLocation?.[FormFieldsEnum.formattedAddress] ??
-                            "",
+                          place?.[FormFieldsEnum.formattedAddress] ?? "",
                           true
                         );
                       }}
                     />
-                  </ZCard>
+                  ) : null}
+
+                  {values?.locationOption ===
+                  locationOptionEnum.selectCurrentLocation ? (
+                    <ZCard className="space-y-4">
+                      <ZHeading as={ZRUHeadingAsE.h5}>
+                        Select Current Location
+                      </ZHeading>
+
+                      <ZGetCurrentLocation
+                        disabled={compState?.processing}
+                        loading={
+                          values?.locationOption ===
+                            locationOptionEnum.selectCurrentLocation &&
+                          compState?.processing
+                        }
+                        onClick={(currentLocation) => {
+                          const _place =
+                            extractAddressDetailsFromGeocoding(currentLocation);
+
+                          setFieldValue(
+                            FormFieldsEnum.country,
+                            _place?.[FormFieldsEnum.country] ?? "",
+                            true
+                          );
+                          setFieldValue(
+                            FormFieldsEnum.aptSuit,
+                            _place?.[FormFieldsEnum.aptSuit] ?? "",
+                            true
+                          );
+                          setFieldValue(
+                            FormFieldsEnum.city,
+                            _place?.[FormFieldsEnum.city] ?? "",
+                            true
+                          );
+                          setFieldValue(
+                            FormFieldsEnum.postCode,
+                            _place?.[FormFieldsEnum.postCode] ?? "",
+                            true
+                          );
+                          setFieldValue(
+                            FormFieldsEnum.province,
+                            _place?.[FormFieldsEnum.province] ?? "",
+                            true
+                          );
+                          setFieldValue(
+                            "streetAddress",
+                            currentLocation?.formatted_address ?? "",
+                            true
+                          );
+                          setFieldValue(
+                            FormFieldsEnum.formattedAddress,
+                            currentLocation?.formatted_address ?? "",
+                            true
+                          );
+                        }}
+                      />
+                    </ZCard>
+                  ) : null}
 
                   <ZCard className="space-y-4">
                     <ZHeading as={ZRUHeadingAsE.h5}>

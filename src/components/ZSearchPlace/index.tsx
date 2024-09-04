@@ -158,7 +158,7 @@ const ZSearchPlace: React.FC<{
                             className="text-sm text-left"
                             showIcon={false}
                           >
-                            {el?.formattedAddress}
+                            {el?.displayName}
                           </ZAccordionTrigger>
                         </ZBox>
 
@@ -208,9 +208,8 @@ const ZSearchPlace: React.FC<{
                               {
                                 label: "Street address",
                                 value:
-                                  extractAddressDetails(el)?.[
-                                    FormFieldsEnum.streetAddress
-                                  ] ?? constants?.defaultValue?.fallbackValue,
+                                  el?.formattedAddress ??
+                                  constants?.defaultValue?.fallbackValue,
                               },
                             ]}
                           />

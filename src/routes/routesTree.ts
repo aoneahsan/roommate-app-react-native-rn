@@ -8,7 +8,10 @@ import {
 	HobbiesRoute,
 	MyLifeStyleRoute,
 	RoommatesPreferenceRoute,
-	postingListRoute,
+	plStepOne,
+	plStepTwo,
+	plStepThree,
+	plStepFour,
 	selectLocationRoute
 } from './AllRoutes';
 import tanstackRootRoute from './RootRoute';
@@ -23,7 +26,10 @@ const routeTree = tanstackRootRoute.addChildren([
 	HobbiesRoute,
 	MyLifeStyleRoute,
 	RoommatesPreferenceRoute,
-	postingListRoute,
+	plStepOne,
+	plStepTwo,
+	plStepThree,
+	plStepFour,
 	selectLocationRoute,
 
 	appRouteTree,

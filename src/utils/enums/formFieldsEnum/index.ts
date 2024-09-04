@@ -17,6 +17,8 @@ export enum FormFieldsEnum {
 
 	title = 'title',
 	description = 'description',
+	currency = 'currency',
+	prize = 'prize',
 
 	// User related Forms Fields Enum
 	name = 'name',
@@ -121,13 +123,27 @@ export enum FormFieldsEnum {
 	roleIdentifier = 'roleIdentifier',
 	isDefault = 'isDefault',
 
-	// Room 
+	// Posting list 
 	desiredPlace = 'desiredPlace',
 	placePreference = 'placePreference',
 	moveInDate = 'moveInDate',
+	moveOutDate = 'moveOutDate',
 	buildingType = 'buildingType',
 	minBudget = 'minBudget',
 	maxBudget = 'maxBudget',
+	rentFee = 'rentFee',
+	location = 'location',
+	bedroomImages = 'bedroomImages',
+	washroomImages = 'washroomImages',
+	kitchenImages = 'kitchenImages',
+	otherImages = 'otherImages',
+	frequency = 'frequency',
+	numOfBedroom = 'numOfBedroom',
+	numOfWashroom = 'numOfWashroom',
+	numOfParking = 'numOfParking',
+	pets = 'pets',
+	smoke = 'smoke',
+	furnished = 'furnished',
 
 	// location
 	aptSuit = 'aptSuit',
