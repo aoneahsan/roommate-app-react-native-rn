@@ -4,6 +4,7 @@ import {
 	clearAuthDataFromLocalStorage,
 	IApiResponse,
 	reactQueryOptions,
+	showZAlert,
 } from 'zaions-react-tool-kit';
 import { MESSAGES } from '@/utils/messages';
 import {
@@ -19,6 +20,8 @@ import {
 	ResponseCodeEnum,
 	ResponseStatusEnum,
 	apiHeaderKeys,
+	emptyVoidReturnFunction,
+	reportCustomError,
 	zJsonParse,
 } from 'zaions-tool-kit';
 import { userDataRStateAtom, userTokenRStateAtom } from '@/state/user';
@@ -26,6 +29,7 @@ import { ApiPathEnum, ApiVersionsEnum } from '@/enums/backendApi';
 import { getFullApiUrl } from '@/utils/helpers/apiHelpers';
 import { AxiosResponse } from 'axios';
 import { showErrorNotification } from 'zaions-react-ui-kit';
+import { ZRQGetRequestExtractEnum, ZRQUpdaterAction } from '@/types/generic';
 
 const useMutationRequest = <T>(
 	method: RequestTypeEnum = RequestTypeEnum.post,
@@ -263,4 +267,345 @@ const clearAuthDataAndAuthState = async (
 	await clearAuthDataFromLocalStorage();
 
 	setUserDataRState(null);
+};
+
+/**
+ * Custom hook for updating records of react-query package.
+ *
+ * @returns An object with the `updateRQCDataHandler` function for updating records.
+ */
+export const useZUpdateRQCacheData = (): {
+	updateRQCDataHandler: <T>({
+		key,
+		data,
+		id,
+		updaterAction,
+		extractType,
+	}: {
+		key: string | Array<string>;
+		id?: string;
+		data?: T;
+		extractType?: ZRQGetRequestExtractEnum;
+		updaterAction?: ZRQUpdaterAction;
+	}) => unknown;
+} => {
+	const userDataRState = useRecoilValue(userDataRStateAtom);
+	try {
+		const queryClient = useQueryClient();
+
+		/**
+		 * Function to update React Query cache data.
+		 *
+		 * @template T - The type of the data being updated.
+		 *
+		 * @param {Object} params - Parameters for updating the cache.
+		 * @param {string | Array<string>} params.key - The query key to identify the cache.
+		 * @param {T} [params.data] - The new data to be updated in the cache.
+		 * @param {string} [params.id] - The ID of the item to be updated.
+		 * @param {ZRQGetRequestExtractEnum} [params.extractType=ZRQGetRequestExtractEnum.extractItems] - The extraction type for the data.
+		 * @param {ZRQUpdaterAction} [params.updaterAction=ZRQUpdaterAction.replace] - The action to perform (replace, add, delete, update).
+		 *
+		 * @returns {unknown} - The updated data.
+		 */
+		const updateRQCDataHandler = <T>({
+			key,
+			data,
+			id,
+			extractType = ZRQGetRequestExtractEnum.extractData,
+			updaterAction = ZRQUpdaterAction.replace,
+		}: {
+			key: string | Array<string>;
+			id?: string;
+			data?: T;
+			updateHoleData?: boolean;
+			extractType?: ZRQGetRequestExtractEnum;
+			updaterAction?: ZRQUpdaterAction;
+		}): unknown => {
+			const fullKey = [userDataRState?.id, ...key];
+
+			switch (updaterAction) {
+				case ZRQUpdaterAction.updateWhole:
+					return queryClient.setQueryData(fullKey, (oldData: unknown) => {
+						const updatedData = structuredClone(oldData);
+
+						switch (extractType) {
+							case ZRQGetRequestExtractEnum.extractItem:
+								(
+									updatedData as { result: { data: { item: T } } }
+								).result.data.item = data as T;
+								break;
+
+							case ZRQGetRequestExtractEnum.extractItems:
+								(
+									updatedData as { result: { data: { items: T } } }
+								).result.data.items = data as T;
+								break;
+
+							case ZRQGetRequestExtractEnum.extractData:
+								(updatedData as { result: { data: T } }).result.data =
+									data as T;
+								break;
+
+							default:
+								break;
+						}
+
+						return updatedData;
+					});
+
+				case ZRQUpdaterAction.replace:
+					return queryClient.setQueryData(fullKey, (oldData: unknown) => {
+						if (oldData) {
+							if (Array.isArray(oldData)) {
+								const updatedData = [...oldData];
+								const index = updatedData.findIndex((el) => el?.id === id);
+								if (index !== -1) updatedData[index] = data;
+								return updatedData;
+							}
+
+							if (typeof oldData === 'object') {
+								const updatedData = structuredClone(oldData);
+
+								let actualData: any = [];
+
+								switch (extractType) {
+									case ZRQGetRequestExtractEnum.extractItem:
+										actualData =
+											(updatedData as { result: { data: { item: T } } }).result
+												.data.item ?? [];
+										break;
+
+									case ZRQGetRequestExtractEnum.extractItems:
+										actualData =
+											(updatedData as { result: { data: { items: T } } }).result
+												.data.items ?? [];
+										break;
+
+									case ZRQGetRequestExtractEnum.extractData:
+										actualData =
+											(updatedData as { result: { data: T } }).result.data ??
+											[];
+										break;
+
+									case ZRQGetRequestExtractEnum.extractUsers:
+										actualData =
+											(updatedData as { result: { data: { users: T } } }).result
+												.data.users ?? [];
+										break;
+
+									default:
+										break;
+								}
+
+								if (
+									actualData &&
+									Array.isArray(actualData) &&
+									actualData.length > 0
+								) {
+									const updatedDataItems = [...actualData];
+									const index = updatedDataItems.findIndex(
+										(el: unknown) => (el as { id: string })?.id === id
+									);
+									if (index !== -1) updatedDataItems[index] = data;
+									(updatedData as { result: { data: unknown[] } }).result.data =
+										updatedDataItems;
+
+									switch (extractType) {
+										case ZRQGetRequestExtractEnum.extractItem:
+											(
+												updatedData as { result: { data: { item: T } } }
+											).result.data.item = updatedDataItems as T;
+											break;
+
+										case ZRQGetRequestExtractEnum.extractItems:
+											(
+												updatedData as { result: { data: { items: T } } }
+											).result.data.items = updatedDataItems as T;
+											break;
+
+										case ZRQGetRequestExtractEnum.extractData:
+											(updatedData as { result: { data: T } }).result.data =
+												updatedDataItems as T;
+											break;
+
+										case ZRQGetRequestExtractEnum.extractUsers:
+											(
+												updatedData as { result: { data: { users: T } } }
+											).result.data.users = updatedDataItems as T;
+											break;
+
+										default:
+											break;
+									}
+								}
+
+								return updatedData;
+							}
+						}
+
+						return oldData;
+					});
+
+				case ZRQUpdaterAction.add:
+					return queryClient.setQueryData(fullKey, (oldData: unknown) => {
+						if (Array.isArray(oldData)) {
+							return [data, ...oldData];
+						} else if (typeof oldData === 'object') {
+							const updatedData = structuredClone(oldData);
+
+							let actualDataItems: any = [];
+
+							switch (extractType) {
+								case ZRQGetRequestExtractEnum.extractItem:
+									actualDataItems =
+										(updatedData as { result: { data: { item: T } } })?.result
+											?.data?.item ?? [];
+									break;
+
+								case ZRQGetRequestExtractEnum.extractItems:
+									actualDataItems =
+										(updatedData as { result: { data: { items: T } } })?.result
+											?.data?.items ?? [];
+									break;
+
+								case ZRQGetRequestExtractEnum.extractData:
+									actualDataItems =
+										(updatedData as { result: { data: T } })?.result?.data ??
+										[];
+									break;
+
+								case ZRQGetRequestExtractEnum.extractUsers:
+									actualDataItems =
+										(updatedData as { result: { data: { users: T } } }).result
+											.data.users ?? [];
+									break;
+
+								default:
+									break;
+							}
+
+							switch (extractType) {
+								case ZRQGetRequestExtractEnum.extractItem:
+									(
+										updatedData as { result: { data: { item: unknown[] } } }
+									).result.data.item = [data, ...actualDataItems];
+									break;
+
+								case ZRQGetRequestExtractEnum.extractItems:
+									(
+										updatedData as { result: { data: { items: unknown[] } } }
+									).result.data.items = [data, ...actualDataItems];
+									break;
+
+								case ZRQGetRequestExtractEnum.extractData:
+									(updatedData as { result: { data: unknown[] } }).result.data =
+										[data, ...actualDataItems];
+									break;
+
+								case ZRQGetRequestExtractEnum.extractUsers:
+									(
+										updatedData as { result: { data: { users: unknown[] } } }
+									).result.data.users = [data, ...actualDataItems];
+									break;
+
+								default:
+									break;
+							}
+							return updatedData;
+						} else {
+							return oldData;
+						}
+					});
+
+				case ZRQUpdaterAction.delete:
+					return queryClient.setQueryData(fullKey, (oldData: unknown) => {
+						if (Array.isArray(oldData)) {
+							return oldData.filter((el) => el.id !== id);
+						}
+
+						if (typeof oldData === 'object') {
+							const updatedData = structuredClone(oldData);
+
+							let actualDataItems: any = [];
+
+							switch (extractType) {
+								case ZRQGetRequestExtractEnum.extractItem:
+									actualDataItems =
+										(updatedData as { result: { data: { item: T } } }).result
+											.data.item ?? [];
+									break;
+
+								case ZRQGetRequestExtractEnum.extractItems:
+									actualDataItems =
+										(updatedData as { result: { data: { items: T } } }).result
+											.data.items ?? [];
+									break;
+
+								case ZRQGetRequestExtractEnum.extractData:
+									actualDataItems =
+										(updatedData as { result: { data: T } }).result.data ?? [];
+									break;
+
+								case ZRQGetRequestExtractEnum.extractUsers:
+									actualDataItems =
+										(updatedData as { result: { data: { users: T } } }).result
+											.data.users ?? [];
+									break;
+
+								default:
+									break;
+							}
+
+							if (Array.isArray(actualDataItems)) {
+								const updatedItems = actualDataItems.filter(
+									(el: unknown) => (el as { id?: string })?.id !== id
+								) as T;
+								switch (extractType) {
+									case ZRQGetRequestExtractEnum.extractItem:
+										(
+											updatedData as { result: { data: { item: T } } }
+										).result.data.item = updatedItems;
+										break;
+
+									case ZRQGetRequestExtractEnum.extractItems:
+										(
+											updatedData as { result: { data: { items: T } } }
+										).result.data.items = updatedItems;
+										break;
+
+									case ZRQGetRequestExtractEnum.extractData:
+										(updatedData as { result: { data: T } }).result.data =
+											updatedItems;
+										break;
+
+									case ZRQGetRequestExtractEnum.extractUsers:
+										(
+											updatedData as { result: { data: { users: T } } }
+										).result.data.users = updatedItems;
+										break;
+
+									default:
+										break;
+								}
+							}
+
+							return updatedData;
+						}
+
+						return oldData;
+					});
+
+				default:
+					showZAlert({
+						title: 'Invalid updaterAction type passed to useZUpdateRQCacheData',
+					});
+					return;
+			}
+		};
+
+		return { updateRQCDataHandler };
+	} catch (error) {
+		reportCustomError(error);
+		return { updateRQCDataHandler: emptyVoidReturnFunction };
+	}
 };

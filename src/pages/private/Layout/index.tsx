@@ -36,15 +36,13 @@ const Layout: React.FC = () => {
         <ZPrivNavigation />
         <ZBox className="flex w-full h-[calc(100vh-3.3125rem)]">
           {is900pxScale ? (
-            <aside className="h-full text-sm justify-between flex flex-col border-e shadow-sm xl:min-w-80 min-w-48 xl:p-3.5 ">
+            <ZBox className="h-full text-sm justify-between flex flex-col border-e shadow-sm 2xl:min-w-80 min-w-48 2xl:p-3.5">
               <ZPrivSidebarContent />
-            </aside>
+            </ZBox>
           ) : null}
 
-          <ZBox className="w-full h-full px-2 py-4 xl:px-5">
-            <ZScrollArea scrollbars={ZRUScrollbarsE.vertical}>
-              <Outlet />
-            </ZScrollArea>
+          <ZBox className="flex-1 h-full px-2 py-4 overflow-x-hidden overflow-y-auto 2xl:px-5 z_pretty_scrollbar">
+            <Outlet />
           </ZBox>
         </ZBox>
       </ZPage>

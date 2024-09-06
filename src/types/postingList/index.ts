@@ -1,7 +1,7 @@
 import { ZPrizeInputStateI } from "zaions-react-ui-kit";
 import { EBuildingType } from "../roomPreference"
 import { EPlacePreference } from "@/types/roomPreference";
-import { frequencyEnum, ILocation } from "../generic";
+import { agreementStatusEnum, frequencyEnum, ILocation, rentInclusionsEnum } from "../generic";
 import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
 
 // Enums
@@ -34,6 +34,7 @@ export interface IPLStepOne {
     [FormFieldsEnum.placePreference]?: EPlacePreference | null
     [FormFieldsEnum.rentFee]?: ZPrizeInputStateI | null
     [FormFieldsEnum.location]?: ISearchLocation | null
+    [FormFieldsEnum.frequency]?: frequencyEnum
 }
 
 export interface IPLStepTwo {
@@ -56,12 +57,27 @@ export interface IPLStepThree {
     [FormFieldsEnum.numOfBedroom]?: number
     [FormFieldsEnum.numOfParking]?: number
     [FormFieldsEnum.numOfWashroom]?: number
-    [FormFieldsEnum.pets]?: boolean
-    [FormFieldsEnum.smoke]?: boolean
-    [FormFieldsEnum.furnished]?: boolean
+    [FormFieldsEnum.pets]?: agreementStatusEnum
+    [FormFieldsEnum.smoke]?: agreementStatusEnum
+    [FormFieldsEnum.furnished]?: agreementStatusEnum
     // For Frontend
     term?: termEnum | null
 }
 
-export interface IPostingList extends IPLStepOne, IPLStepTwo, IPLStepThree { }
+export interface IPLStepFour {
+    [FormFieldsEnum.bedroom]?: string
+    [FormFieldsEnum.livingRoom]?: string
+    [FormFieldsEnum.kitchen]?: string
+    [FormFieldsEnum.washroom]?: string
+    [FormFieldsEnum.livingWithLandlord]?: agreementStatusEnum | null
+}
+
+export interface IPLStepFive {
+    [FormFieldsEnum.rentInclude]?: Array<rentInclusionsEnum>,
+    [FormFieldsEnum.otherInclude]?: string,
+}
+
+export interface IPlace extends IPLStepOne, IPLStepTwo, IPLStepThree, IPLStepFour, IPLStepFive {
+    [FormFieldsEnum.id]?: string
+}
 

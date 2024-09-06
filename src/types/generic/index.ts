@@ -32,6 +32,37 @@ export enum privateShareEnum {
     share = 'share',
 }
 
+export enum rentInclusionsEnum {
+    wifi = 'wifi',
+    dishWash = 'dishWash',
+    tv = 'tv',
+    heater = 'heater',
+    closet = 'closet',
+    water = 'water',
+    balcony = 'balcony',
+    personalEnter = 'personalEnter',
+    electric = 'electric',
+    laundry = 'laundry',
+    security = 'security',
+    parking = 'parking',
+}
+
+export enum ZRQGetRequestExtractEnum {
+    extractPage = 'extractPage',
+    extractData = 'extractData',
+    extractItems = 'extractItems',
+    extractItem = 'extractItem',
+    extractUsers = 'extractUsers',
+}
+
+export enum ZRQUpdaterAction {
+    add = 'add',
+    replace = 'replace',
+    updateWhole = 'updateWhole',
+    delete = 'delete'
+}
+
+
 // Interfaces
 export interface ILocation {
     [FormFieldsEnum.country]?: string

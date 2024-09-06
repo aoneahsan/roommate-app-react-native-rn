@@ -52,6 +52,7 @@ import { formValidationRStateAtom } from "@/state/formState";
 
 // #region ---- Images Imports ----
 import { ZArrowLeftLongIcon, ZArrowRightLongIcon } from "@/assets";
+import ZFrequenciesData from "@/data/frequencies";
 
 // #endregion
 
@@ -77,24 +78,6 @@ const StepThree: React.FC = () => {
       {
         value: termEnum.longTerm,
         label: "Long Term",
-      },
-    ],
-    []
-  );
-
-  const frequencyOptions = useMemo(
-    () => [
-      {
-        value: frequencyEnum.monthly,
-        label: "Monthly",
-      },
-      {
-        value: frequencyEnum.yearly,
-        label: "Yearly",
-      },
-      {
-        value: frequencyEnum.weekly,
-        label: "Weekly",
       },
     ],
     []
@@ -137,20 +120,21 @@ const StepThree: React.FC = () => {
   );
 
   const otherRequirements = useMemo(
-    () => [
-      {
-        label: "Pets",
-        name: FormFieldsEnum.pets,
-      },
-      {
-        label: "Smoke",
-        name: FormFieldsEnum.smoke,
-      },
-      {
-        label: "Furnished",
-        name: FormFieldsEnum.furnished,
-      },
-    ],
+    () =>
+      [
+        {
+          label: "Pets",
+          name: FormFieldsEnum.pets,
+        },
+        {
+          label: "Smoke",
+          name: FormFieldsEnum.smoke,
+        },
+        {
+          label: "Furnished",
+          name: FormFieldsEnum.furnished,
+        },
+      ] as const,
     []
   );
 
@@ -175,7 +159,7 @@ const StepThree: React.FC = () => {
             <ZButton
               onClick={() => {
                 navigate({
-                  to: AppRoutes.postingListSub.stepThree,
+                  to: AppRoutes.postingListSub.stepTwo,
                 });
               }}
             >
@@ -260,7 +244,7 @@ const StepThree: React.FC = () => {
                       <ZSelect
                         required
                         label="Frequency"
-                        options={frequencyOptions}
+                        options={ZFrequenciesData}
                         name={FormFieldsEnum.frequency}
                         value={values?.[FormFieldsEnum.frequency]}
                         isTouched={touched?.[FormFieldsEnum.frequency]}

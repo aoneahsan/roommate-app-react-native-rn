@@ -11,10 +11,16 @@ import {
   ZButton,
   ZCard,
   ZContainer,
+  ZFlex,
   ZHeading,
   ZPage,
+  ZRadioCardList,
+  ZRUAlignE,
+  ZRUColorE,
   ZRUHeadingAsE,
+  ZRUJustifyE,
   ZSelect,
+  ZText,
 } from "zaions-react-ui-kit";
 import { ZodError } from "zod";
 import { useNavigate } from "@tanstack/react-router";
@@ -24,10 +30,14 @@ import { AppRoutes } from "@/routes/appRoutes";
 
 // #region ---- Custom Imports ----
 import NavigationHeader from "@/components/private/NavigationHeader";
+import FormActionButtons from "@/components/form/FormActionButtons";
+import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
 
 // #endregion
 
 // #region ---- Types Imports ----
+import { IPLStepFour, privateSharedRoomEnum } from "@/types/postingList";
+import { agreementStatusEnum, privateShareEnum } from "@/types/generic";
 
 // #endregion
 
@@ -37,16 +47,23 @@ import { formValidationRStateAtom } from "@/state/formState";
 // #endregion
 
 // #region ---- Images Imports ----
-import { ZArrowLeftLongIcon } from "@/assets";
-import { privateSharedRoomEnum } from "@/types/postingList";
-import { privateShareEnum } from "@/types/generic";
+import { ZArrowLeftLongIcon, ZArrowRightLongIcon } from "@/assets";
 
 // #endregion
 
 const PLStepFour: React.FC = () => {
   const navigate = useNavigate();
   const formValidationRState = useRecoilValue(formValidationRStateAtom);
-  const initialValues = useMemo(() => ({}), []);
+  const initialValues = useMemo<IPLStepFour>(
+    () => ({
+      [FormFieldsEnum.bedroom]: "",
+      [FormFieldsEnum.livingRoom]: "",
+      [FormFieldsEnum.kitchen]: "",
+      [FormFieldsEnum.washroom]: "",
+      [FormFieldsEnum.livingWithLandlord]: null,
+    }),
+    []
+  );
   const privateShareRoom = useMemo(
     () => [
       {
@@ -82,8 +99,22 @@ const PLStepFour: React.FC = () => {
     []
   );
 
+  const agreementOptions = useMemo(
+    () => [
+      {
+        label: "Yes",
+        value: agreementStatusEnum.yes,
+      },
+      {
+        label: "No",
+        value: agreementStatusEnum.no,
+      },
+    ],
+    []
+  );
+
   // #region Functions
-  const formikValidation = useCallback((values) => {
+  const formikValidation = useCallback((values: IPLStepFour) => {
     if (formValidationRState.frontendFormValidationIsEnabled) {
       try {
       } catch (error) {
@@ -103,7 +134,7 @@ const PLStepFour: React.FC = () => {
             <ZButton
               onClick={() => {
                 navigate({
-                  to: AppRoutes.postingListSub.stepTwo,
+                  to: AppRoutes.postingListSub.stepThree,
                 });
               }}
             >
@@ -164,6 +195,42 @@ const PLStepFour: React.FC = () => {
                       );
                     })}
                   </ZCard>
+
+                  <ZCard>
+                    <ZFlex
+                      align={ZRUAlignE.center}
+                      className="gap-3"
+                      justify={ZRUJustifyE.between}
+                    >
+                      <ZText className="text-lg">Living With Landlord</ZText>
+
+                      <ZRadioCardList
+                        items={agreementOptions}
+                        color={ZRUColorE.purple}
+                        isTouched={touched?.[FormFieldsEnum.livingWithLandlord]}
+                        value={values?.[FormFieldsEnum.livingWithLandlord]}
+                        errorMessage={
+                          errors?.[FormFieldsEnum.livingWithLandlord]
+                        }
+                        onValueChange={(value) => {
+                          setFieldValue(
+                            FormFieldsEnum.livingWithLandlord,
+                            value
+                          );
+                        }}
+                      />
+                    </ZFlex>
+                  </ZCard>
+
+                  <FormActionButtons
+                    showResetButton={false}
+                    submitButtonContent={
+                      <>
+                        Save & Continue{" "}
+                        <ZArrowRightLongIcon className="mt-px" />
+                      </>
+                    }
+                  />
                 </ZBox>
               </ZContainer>
             </Form>

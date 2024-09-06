@@ -76,20 +76,42 @@ export const appRoute = createRoute({
     async (): Promise<Record<string, unknown>> =>
       await import("@/pages/private/Layout")
   ),
-  beforeLoad: privateRouteHandler,
+  // beforeLoad: privateRouteHandler,
 });
 
 // --- Dashboard
-export const dashboardRoute = createRoute({
+export const placesListRoute = createRoute({
   getParentRoute: () => appRoute,
-  path: AppRoutes.appSub.dashboard.path,
+  path: AppRoutes.appSub.placesList.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import("@/pages/private/Dashboard")
+      await import("@/pages/private/PlacesList")
   ),
 });
 
-export const appRouteTree = appRoute.addChildren([dashboardRoute]);
+export const usersRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: AppRoutes.appSub.users.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/Users")
+  ),
+});
+
+export const messagesRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: AppRoutes.appSub.messages.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/Messages")
+  ),
+});
+
+export const appRouteTree = appRoute.addChildren([
+  placesListRoute,
+  usersRoute,
+  messagesRoute,
+]);
 
 // Reset password
 // export const forgotRoute = createRoute({
@@ -105,7 +127,7 @@ export const appRouteTree = appRoute.addChildren([dashboardRoute]);
 // #endregion
 
 // #region  ----- Private routes -----
-export const ProfileRoute = createRoute({
+export const profileRoute = createRoute({
   getParentRoute: () => tanstackRootRoute,
   path: AppRoutes.profile,
   component: lazyRouteComponent(
@@ -114,7 +136,16 @@ export const ProfileRoute = createRoute({
   ),
 });
 
-export const RoomPreferenceRoute = createRoute({
+export const iWentToRoute = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.iWentTo,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/IWantTo")
+  ),
+});
+
+export const roomPreferenceRoute = createRoute({
   getParentRoute: () => tanstackRootRoute,
   path: AppRoutes.roomPreference,
   component: lazyRouteComponent(
@@ -123,7 +154,7 @@ export const RoomPreferenceRoute = createRoute({
   ),
 });
 
-export const HobbiesRoute = createRoute({
+export const hobbiesRoute = createRoute({
   getParentRoute: () => tanstackRootRoute,
   path: AppRoutes.hobbies,
   component: lazyRouteComponent(
@@ -132,7 +163,7 @@ export const HobbiesRoute = createRoute({
   ),
 });
 
-export const MyLifeStyleRoute = createRoute({
+export const myLifeStyleRoute = createRoute({
   getParentRoute: () => tanstackRootRoute,
   path: AppRoutes.myLifeStyle,
   component: lazyRouteComponent(
@@ -141,12 +172,21 @@ export const MyLifeStyleRoute = createRoute({
   ),
 });
 
-export const RoommatesPreferenceRoute = createRoute({
+export const roommatesPreferenceRoute = createRoute({
   getParentRoute: () => tanstackRootRoute,
   path: AppRoutes.roommatesPreference,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
       await import("@/pages/private/findRoommates/RoommatesPreference")
+  ),
+});
+
+export const creditRoute = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.credit,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/findRoommates/Credit")
   ),
 });
 
@@ -184,6 +224,15 @@ export const plStepFour = createRoute({
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
       await import("@/pages/private/postNewPlace/PostingList/StepFour")
+  ),
+});
+
+export const plStepFive = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.postingListSub.stepFive,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/postNewPlace/PostingList/StepFive")
   ),
 });
 

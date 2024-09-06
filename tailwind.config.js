@@ -12,8 +12,11 @@ import {
   blue,
   sky,
   jade,
-  slate,
   indigoDarkA,
+  grass,
+  grassDark,
+  slateDark,
+  slate,
 } from "@radix-ui/colors";
 
 /** @type {import('tailwindcss').Config} */
@@ -23,18 +26,36 @@ export default {
     screens: {
       xs: "350px",
       maxXs: { max: "350px" },
+
       min380px: "380px",
       max380px: { max: "380px" },
+
       sm: { min: "500px" },
       maxSm: { max: "499px" },
+
       md: { min: "668px" },
       maxMd: { max: "667px" },
+
+      min768px: { min: "768px" },
+      max768px: { max: "768px" },
+
+      min900px: { min: "900px" },
+      max900px: { max: "899px" },
+
+      min950px: { min: "950px" },
+      max950px: { max: "949px" },
+
       lg: { min: "1100px" },
       maxLg: { max: "1099px" },
-      min900px: { min: "900px" },
-      max900px: { max: "900px" },
-      xl: { min: "1440px" },
-      maxXl: { max: "1439px" },
+
+      xl: { min: "1220px" },
+      maxXl: { max: "1219px" },
+
+      min1336px: { min: "1336px" },
+      max1336px: { max: "1335px" },
+
+      "2xl": { min: "1440px" },
+      max2Xl: { max: "1439px" },
     },
     extend: {
       colors: {
@@ -64,6 +85,58 @@ export default {
         indigoDarkA10: indigoDarkA.indigoA10,
         indigoDarkA11: indigoDarkA.indigoA11,
         indigoDarkA12: indigoDarkA.indigoA12,
+
+        grass1: grass.grass1,
+        grass2: grass.grass2,
+        grass3: grass.grass3,
+        grass4: grass.grass4,
+        grass5: grass.grass5,
+        grass6: grass.grass6,
+        grass7: grass.grass7,
+        grass8: grass.grass8,
+        grass9: grass.grass9,
+        grass10: grass.grass10,
+        grass11: grass.grass11,
+        grass12: grass.grass12,
+
+        grassDark1: grassDark.grass1,
+        grassDark2: grassDark.grass2,
+        grassDark3: grassDark.grass3,
+        grassDark4: grassDark.grass4,
+        grassDark5: grassDark.grass5,
+        grassDark6: grassDark.grass6,
+        grassDark7: grassDark.grass7,
+        grassDark8: grassDark.grass8,
+        grassDark9: grassDark.grass9,
+        grassDark10: grassDark.grass10,
+        grassDark11: grassDark.grass11,
+        grassDark12: grassDark.grass12,
+
+        slateDark1: slateDark.slate1,
+        slateDark2: slateDark.slate2,
+        slateDark3: slateDark.slate3,
+        slateDark4: slateDark.slate4,
+        slateDark5: slateDark.slate5,
+        slateDark6: slateDark.slate6,
+        slateDark7: slateDark.slate7,
+        slateDark8: slateDark.slate8,
+        slateDark9: slateDark.slate9,
+        slateDark10: slateDark.slate10,
+        slateDark11: slateDark.slate11,
+        slateDark12: slateDark.slate12,
+
+        slate1: slate.slate1,
+        slate2: slate.slate2,
+        slate3: slate.slate3,
+        slate4: slate.slate4,
+        slate5: slate.slate5,
+        slate6: slate.slate6,
+        slate7: slate.slate7,
+        slate8: slate.slate8,
+        slate9: slate.slate9,
+        slate10: slate.slate10,
+        slate11: slate.slate11,
+        slate12: slate.slate12,
 
         gold1: gold.gold1,
         gold2: gold.gold2,

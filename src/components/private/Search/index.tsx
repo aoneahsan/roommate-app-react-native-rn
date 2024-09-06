@@ -27,9 +27,10 @@ import { ZMagnifyingGlassOutlineIcon } from "@/assets";
 
 const ZSearch: React.FC<{
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-}> = ({ onChange }) => {
+  disabled?: boolean;
+}> = ({ onChange, disabled }) => {
   return (
-    <ZInput placeholder="Search..." onChange={onChange}>
+    <ZInput disabled={disabled} placeholder="Search..." onChange={onChange}>
       <ZInputSlot>
         <ZMagnifyingGlassOutlineIcon className="w-6 h-6" />
       </ZInputSlot>

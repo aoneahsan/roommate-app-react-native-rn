@@ -5,23 +5,30 @@ import React, { useCallback, useMemo } from "react";
 
 // #region ---- Packages Imports ----
 import {
+  showSuccessNotification,
   ZBadge,
   ZBox,
   ZButton,
   ZCard,
   ZContainer,
+  ZErrorText,
   ZFlex,
   ZPage,
   ZPrizeInput,
   ZRCSelect,
   ZRUAlignE,
   ZRUColorE,
+  ZSelect,
   ZText,
   ZTextArea,
 } from "zaions-react-ui-kit";
 import { ZodError } from "zod";
-import { Form, Formik } from "formik";
-import { isZNonEmptyString } from "zaions-tool-kit";
+import { Form, Formik, FormikHelpers } from "formik";
+import {
+  isZNonEmptyString,
+  ResponseCodeEnum,
+  zStringify,
+} from "zaions-tool-kit";
 import { useNavigate } from "@tanstack/react-router";
 import { useRecoilValue, useRecoilState } from "recoil";
 
@@ -32,13 +39,21 @@ import NavigationHeader from "@/components/private/NavigationHeader";
 import { AppRoutes } from "@/routes/appRoutes";
 import constants from "@/utils/constants";
 import { postingListStepOneValidationSchema } from "@/validationSchema";
+import FormActionButtons from "@/components/form/FormActionButtons";
 import ZBuildingTypeData from "@/data/buildingType";
 import ZPlacePreferenceData from "@/data/placePreference";
+import ZFrequenciesData from "@/data/frequencies";
 
 // #endregion
 
 // #region ---- Types Imports ----
 import type { IPLStepOne } from "@/types/postingList";
+import {
+  frequencyEnum,
+  ZRQGetRequestExtractEnum,
+  ZRQUpdaterAction,
+} from "@/types/generic";
+import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
 
 // #endregion
 
@@ -50,8 +65,9 @@ import { plStepOneRStateAtom } from "@/state/postingList";
 
 // #region ---- Images Imports ----
 import { ZAddIcon, ZArrowRightLongIcon, ZEditOutlineIcon } from "@/assets";
-import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
-import FormActionButtons from "@/components/form/FormActionButtons";
+import { IApiResponse } from "zaions-react-tool-kit";
+import { usePostRequest, useZUpdateRQCacheData } from "@/hooks/reactQuery";
+import { MESSAGES } from "@/utils/messages";
 
 // #endregion
 
@@ -60,6 +76,7 @@ const PLStepOne: React.FC = () => {
   const formValidationRState = useRecoilValue(formValidationRStateAtom);
   const [plStepOneRState, setPlStepOneRState] =
     useRecoilState(plStepOneRStateAtom);
+  const { updateRQCDataHandler } = useZUpdateRQCacheData();
 
   const initialValues = useMemo<IPLStepOne>(
     () => ({
@@ -71,10 +88,16 @@ const PLStepOne: React.FC = () => {
       [FormFieldsEnum.placePreference]:
         plStepOneRState?.[FormFieldsEnum.placePreference] ?? null,
       [FormFieldsEnum.rentFee]:
-        plStepOneRState?.[FormFieldsEnum.rentFee] ?? null,
+        plStepOneRState?.[FormFieldsEnum.rentFee] ?? undefined,
+      [FormFieldsEnum.frequency]: frequencyEnum.monthly,
     }),
     [plStepOneRState]
   );
+
+  // #region Apis Queries
+  const { mutateAsync: postMutateAsync, isPending: isPostPending } =
+    usePostRequest<IPLStepOne>({});
+  // #endregion
 
   // #region Functions
   const formikValidation = useCallback((values: IPLStepOne) => {
@@ -88,11 +111,62 @@ const PLStepOne: React.FC = () => {
       }
     }
   }, []);
+
+  const handleSubmit = useCallback(
+    async (
+      values: IPLStepOne,
+      { setErrors, resetForm }: FormikHelpers<IPLStepOne>
+    ) => {
+      const _data = {
+        [FormFieldsEnum.title]: values?.[FormFieldsEnum.title],
+        [FormFieldsEnum.buildingType]: values?.[FormFieldsEnum.buildingType],
+        [FormFieldsEnum.placePreference]:
+          values?.[FormFieldsEnum.placePreference],
+        [FormFieldsEnum.rentFee]: values?.[FormFieldsEnum.rentFee],
+        [FormFieldsEnum.location]: values?.[FormFieldsEnum.location],
+        [FormFieldsEnum.frequency]: values?.[FormFieldsEnum.frequency],
+      };
+
+      try {
+        // const _response = await postMutateAsync({
+        //   apiPath,
+        //   isAuthenticatedRequest: true,
+        //   data: _data,
+        //   itemId: selectedItem?.id,
+        // });
+
+        // if (_response?.status === ResponseStatusEnum.success) {
+        updateRQCDataHandler({
+          key: [],
+          data: _data,
+          extractType: ZRQGetRequestExtractEnum.extractData,
+          updaterAction: ZRQUpdaterAction.add,
+        });
+
+        showSuccessNotification(MESSAGES.place.created);
+
+        resetForm();
+        // }
+      } catch (error) {
+        const _error = error as IApiResponse<IPLStepOne>;
+        if (_error?.code === ResponseCodeEnum.badRequest) {
+          const _errors = _error?.errors;
+          if (_errors) {
+            setErrors(_errors);
+          }
+        }
+      }
+    },
+    []
+  );
   // #endregion
 
   return (
     <ZPage>
-      <NavigationHeader title="Posting List" />
+      <NavigationHeader
+        title="Posting List"
+        afterBoxContent={<ZButton>Cancel</ZButton>}
+      />
 
       <Formik
         initialValues={initialValues}
@@ -107,14 +181,15 @@ const PLStepOne: React.FC = () => {
           handleBlur,
           handleChange,
           setFieldValue,
+          setFieldTouched,
         }) => {
           return (
             <Form>
               <ZContainer size="4" className="my-6 maxLg:mx-3">
-                <ZBox className="space-y-4 mb-7">
+                <ZBox className="space-y-6 mb-7">
                   <ZTextArea
                     required
-                    rows={6}
+                    rows={4}
                     label="Title"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -147,11 +222,16 @@ const PLStepOne: React.FC = () => {
 
                   <ZCard>
                     <ZFlex className="gap-3 min900px:items-center max900px:flex-col">
-                      <ZText>Location</ZText>
+                      <ZText>
+                        Location
+                        <ZText className="ms-1" color={ZRUColorE.tomato}>
+                          *
+                        </ZText>
+                      </ZText>
                       <ZBadge
                         size="3"
                         color={ZRUColorE.lime}
-                        className="text-wrap"
+                        className="text-wrap min900px:max-w-[60%]"
                       >
                         {isZNonEmptyString(
                           plStepOneRState?.location?.formattedAddress
@@ -175,6 +255,8 @@ const PLStepOne: React.FC = () => {
                               values?.[FormFieldsEnum.rentFee],
                             [FormFieldsEnum.location]:
                               values?.[FormFieldsEnum.location],
+                            [FormFieldsEnum.frequency]:
+                              values?.[FormFieldsEnum.frequency],
                           }));
                           navigate({
                             to: AppRoutes.postingListSub.selectLocation,
@@ -195,6 +277,10 @@ const PLStepOne: React.FC = () => {
                       </ZButton>
                     </ZFlex>
                   </ZCard>
+                  <ZErrorText
+                    show={touched?.[FormFieldsEnum.location] ?? false}
+                    message={errors?.[FormFieldsEnum.location]}
+                  />
 
                   <ZRCSelect
                     label="Place"
@@ -218,22 +304,39 @@ const PLStepOne: React.FC = () => {
 
                   <ZFlex align={ZRUAlignE.start} className="gap-3">
                     <ZPrizeInput
+                      required
                       className="w-full"
                       label="Rent fee"
-                      // onBlur={handleBlur}
                       errorMessage={errors?.[FormFieldsEnum.rentFee]}
                       value={values?.[FormFieldsEnum.rentFee] ?? undefined}
+                      isTouched={touched?.[FormFieldsEnum.rentFee]}
+                      selectClassName="w-1/4"
+                      onBlur={() =>
+                        setFieldTouched(FormFieldsEnum.rentFee, true)
+                      }
                       onChange={(selectedOption) => {
                         setFieldValue(FormFieldsEnum.rentFee, selectedOption);
                       }}
                     />
-                    <ZBadge
-                      size="3"
-                      className="tracking-wide mt-7"
-                      color={ZRUColorE.lime}
-                    >
-                      /Mon
-                    </ZBadge>
+
+                    <ZSelect
+                      required
+                      label="Frequency"
+                      className="*:w-full"
+                      options={ZFrequenciesData}
+                      name={FormFieldsEnum.frequency}
+                      value={values?.[FormFieldsEnum.frequency]}
+                      isTouched={touched?.[FormFieldsEnum.frequency]}
+                      errorMessage={errors?.[FormFieldsEnum.frequency]}
+                      onOpenChange={(val) => {
+                        if (!touched[FormFieldsEnum.frequency]) {
+                          setFieldTouched(FormFieldsEnum.frequency, val);
+                        }
+                      }}
+                      onValueChange={(val) => {
+                        setFieldValue(FormFieldsEnum.frequency, val);
+                      }}
+                    />
                   </ZFlex>
                 </ZBox>
                 <FormActionButtons

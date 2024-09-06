@@ -19,6 +19,10 @@ export const MESSAGES = {
 
 	file: {
 		maxSize: (maxSize: string) => `File size is larger than ${maxSize}, file size should be ${maxSize} or less.`
+	},
+
+	place: {
+		created: 'Place created successfully.'
 	}
 
 } as const;

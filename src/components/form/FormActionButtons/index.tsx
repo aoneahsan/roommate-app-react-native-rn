@@ -43,9 +43,7 @@ const FormActionButtons: React.FC<IFormActionButtonsProps> = ({
         {showSubmitButton ? (
           <ZButton
             type="submit"
-            disabled={
-              !isValid || processing || (mode === ZFormModeE.edit && !dirty)
-            }
+            disabled={processing || (mode === ZFormModeE.edit && !dirty)}
             loading={processing}
           >
             {submitButtonContent}

@@ -1,7 +1,9 @@
 import NewsPaperAppIcon from './images/newspaper-app-icon.png';
 import NewYorkTimesLogo from './images/new-york-times-logo.png';
 import userDashboardImage from './images/userDashboard.jpg';
-import ZAvatarImage from './images/avatar.png';
+import ZAvatarImage from './images/avatar_159_114.png';
+import ZAvatarLgImage from './images/avatar_375_389.png';
+import idVerification from './images/pic_profile.svg';
 
 
 // Icons
@@ -30,6 +32,34 @@ import { LiaSearchLocationSolid as ZSearchLocationOutlineIcon } from "react-icon
 import { MdOutlineAddLocationAlt as ZAddLocationOutlineIcon } from "react-icons/md";
 import { TbEdit as ZEditOutlineIcon } from "react-icons/tb";
 import { IoTrashOutline as ZTrashOutlineIcon } from "react-icons/io5";
+import { FaWifi as ZWifiOutlineIcon } from "react-icons/fa6";
+import { TbWashTemperature3 as ZWashTemperatureOutlineIcon } from "react-icons/tb";
+import { HiOutlineTv as ZTvOutlineIcon } from "react-icons/hi2";
+import { BiCloset as ZClosetOutlineIcon } from "react-icons/bi";
+import { IoWaterOutline as ZWaterOutlineIcon } from "react-icons/io5";
+import { MdOutlineBalcony as ZBalconyOutlineIcon } from "react-icons/md";
+import { BsDoorOpen as ZDoorOpenOutlineIcon } from "react-icons/bs";
+import { MdOutlineElectricBolt as ZElectricBoltOutlineIcon } from "react-icons/md";
+import { MdOutlineLocalLaundryService as ZLaundryOutlineIcon } from "react-icons/md";
+import { MdSecurity as ZSecurityOutlineIcon } from "react-icons/md";
+import { LuParkingCircle as ZParkingCircleOutlineIcon } from "react-icons/lu";
+import { FiHome as ZHomeOutlineIcon } from "react-icons/fi";
+import { IoLogOutOutline as ZLogOutOutlineIcon } from "react-icons/io5";
+import { LuBed as ZBedOutlineIcon } from "react-icons/lu";
+import { PiBathtub as ZBathtubOutlineIcon } from "react-icons/pi";
+import { IoCarOutline as ZCarOutlineIcon } from "react-icons/io5";
+import { IoImageOutline as ZImageOutlineIcon } from "react-icons/io5";
+import { FiUserPlus as ZUserPlusOutlineIcon } from "react-icons/fi";
+import { IoFilterSharp as ZFilterSharpOutlineIcon } from "react-icons/io5";
+import { AiOutlineMessage as ZMessageOutlineIcon } from "react-icons/ai";
+
+// Custom svg's
+import ZHeaterSvg from './svgs/Heater';
+import ZPersonalInfoSvg from './svgs/PersonalInfo';
+import ZAuthenticationSvg from './svgs/Authentication';
+import ZMaleAvatarSvg from './svgs/MaleAvatar';
+import ZPlaceSvg from './svgs/Place';
+import ZPeopleSearchSvg from './svgs/PeopleSearch';
 
 export {
     // Images
@@ -37,6 +67,15 @@ export {
     NewYorkTimesLogo,
     userDashboardImage,
     ZAvatarImage,
+    ZAvatarLgImage,
+    idVerification,
+
+    ZHeaterSvg,
+    ZPersonalInfoSvg,
+    ZAuthenticationSvg,
+    ZMaleAvatarSvg,
+    ZPlaceSvg,
+    ZPeopleSearchSvg,
 
     // Icons
     ZPresentationChartOutlineIcon,
@@ -63,5 +102,25 @@ export {
     ZSearchLocationOutlineIcon,
     ZAddLocationOutlineIcon,
     ZEditOutlineIcon,
-    ZTrashOutlineIcon
+    ZTrashOutlineIcon,
+    ZWifiOutlineIcon,
+    ZWashTemperatureOutlineIcon,
+    ZTvOutlineIcon,
+    ZClosetOutlineIcon,
+    ZWaterOutlineIcon,
+    ZBalconyOutlineIcon,
+    ZDoorOpenOutlineIcon,
+    ZElectricBoltOutlineIcon,
+    ZLaundryOutlineIcon,
+    ZSecurityOutlineIcon,
+    ZParkingCircleOutlineIcon,
+    ZHomeOutlineIcon,
+    ZLogOutOutlineIcon,
+    ZBedOutlineIcon,
+    ZBathtubOutlineIcon,
+    ZCarOutlineIcon,
+    ZImageOutlineIcon,
+    ZUserPlusOutlineIcon,
+    ZFilterSharpOutlineIcon,
+    ZMessageOutlineIcon
 }

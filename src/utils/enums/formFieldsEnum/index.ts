@@ -144,6 +144,17 @@ export enum FormFieldsEnum {
 	pets = 'pets',
 	smoke = 'smoke',
 	furnished = 'furnished',
+	livingRoom = 'livingRoom',
+	kitchen = 'kitchen',
+	washroom = 'washroom',
+	livingWithLandlord = 'livingWithLandlord',
+	bedroom = 'bedroom',
+	rentInclude = 'rentInclude',
+	otherInclude = 'otherInclude',
+
+	// Offer
+	rate = 'rate',
+	tenantsRequirement = 'tenantsRequirement',
 
 	// location
 	aptSuit = 'aptSuit',
@@ -151,4 +162,34 @@ export enum FormFieldsEnum {
 	province = 'province',
 	streetAddress = 'streetAddress',
 	formattedAddress = 'formattedAddress'
+}
+
+export enum AppFeaturesVisibilityKeysEnum {
+	playerDashboard = 'playerDashboard',
+	engagerDashboard = 'engagerDashboard',
+	adminDashboard = 'adminDashboard',
+	users = 'users',
+	viewUser = 'viewUser',
+	games = 'games',
+	gameRooms = 'gameRooms',
+	viewGameRoom = 'viewGameRoom',
+	topupRequests = 'topupRequests',
+	withdrawRequests = 'withdrawRequests',
+	inAppNotifications = 'inAppNotifications',
+	joinedGameRooms = 'joinedGameRooms',
+	joinPrivateGameRoom = 'joinPrivateGameRoom',
+	topups = 'topups',
+	withdraws = 'withdraws',
+	transferCoins = 'transferCoins',
+	allTransferCoins = 'allTransferCoins',
+	notifications = 'notifications',
+	sendNotifications = 'sendNotifications',
+	editNotifications = 'editNotifications',
+	availableGameRoomsTableInPlayerDashboard = 'availableGameRoomsTableInPlayerDashboard',
+	adminDashboardCoinsAppLogs = 'adminDashboardCoinsAppLogs',
+
+	//
+	processing = 'processing',
+	error = 'error',
+	errorMessage = 'errorMessage',
 }
