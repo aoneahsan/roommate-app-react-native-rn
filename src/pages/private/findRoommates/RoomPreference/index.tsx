@@ -22,6 +22,7 @@ import {
 } from "zaions-react-ui-kit";
 import { useRecoilValue } from "recoil";
 import { ZodError } from "zod";
+import { useNavigate } from "@tanstack/react-router";
 
 // #endregion
 
@@ -30,6 +31,10 @@ import ZCitiesData from "@/data/cities";
 import NavigationHeader from "@/components/private/NavigationHeader";
 import { formValidationRStateAtom } from "@/state/formState";
 import { roomPreferenceFormValidationSchema } from "@/validationSchema";
+import ZBuildingTypeData from "@/data/buildingType";
+import ZPlacePreferenceData from "@/data/placePreference";
+import FormActionButtons from "@/components/form/FormActionButtons";
+import { AppRoutes } from "@/routes/appRoutes";
 
 // #endregion
 
@@ -48,13 +53,12 @@ import {
 
 // #region ---- Images Imports ----
 import { ZArrowRightLongIcon } from "@/assets";
-import ZBuildingTypeData from "@/data/buildingType";
-import ZPlacePreferenceData from "@/data/placePreference";
 
 // #endregion
 
 const RoomPreference: React.FC = () => {
   const formValidationRState = useRecoilValue(formValidationRStateAtom);
+  const navigate = useNavigate();
   const initialValues = useMemo<IRoomPreference>(
     () => ({
       desiredPlace: null,
@@ -83,18 +87,34 @@ const RoomPreference: React.FC = () => {
 
   return (
     <ZPage>
-      <NavigationHeader title="Room Preference" />
+      <NavigationHeader
+        title="Room Preference"
+        afterBoxContent={
+          <ZButton
+            onClick={() => {
+              navigate({
+                to: AppRoutes.appSub.placesList.completePath,
+              });
+            }}
+          >
+            Cancel
+          </ZButton>
+        }
+      />
 
       <Formik
         initialValues={initialValues}
         validate={formikValidation}
-        onSubmit={() => {}}
+        onSubmit={() => {
+          navigate({
+            to: AppRoutes.hobbies,
+          });
+        }}
       >
         {({
           values,
           errors,
           touched,
-          isValid,
           handleChange,
           handleBlur,
           setFieldValue,
@@ -102,7 +122,7 @@ const RoomPreference: React.FC = () => {
           return (
             <Form>
               <ZContainer size="4" className="my-6 maxLg:mx-3">
-                <ZCard className="*:w-full space-y-3 p-5">
+                <ZCard className="*:w-full space-y-3 p-5 mb-4">
                   <ZRCSelect
                     name="desiredPlace"
                     required
@@ -134,13 +154,14 @@ const RoomPreference: React.FC = () => {
                   <ZBox>
                     <ZText className="inline-block mb-1">Budget</ZText>
                     <ZFlex
-                      align={ZRUAlignE.center}
+                      align={ZRUAlignE.start}
                       gap="2"
                       className="sm:*:w-1/2 *:w-full maxSm:flex-col"
                     >
                       <ZInput
                         required
                         name="minBudget"
+                        label="Min"
                         type={ZRUInputTypeE.number}
                         placeholder="min: $0"
                         onChange={handleChange}
@@ -153,6 +174,7 @@ const RoomPreference: React.FC = () => {
                       <ZInput
                         required
                         name="maxBudget"
+                        label="Max"
                         type={ZRUInputTypeE.number}
                         placeholder="max: $10,000"
                         onChange={handleChange}
@@ -188,13 +210,14 @@ const RoomPreference: React.FC = () => {
                     }}
                   />
                 </ZCard>
-                <ZButton
-                  className="mt-6 max900px:w-full"
-                  type="submit"
-                  disabled={!isValid}
-                >
-                  Save & Continue <ZArrowRightLongIcon className="mt-px" />
-                </ZButton>
+                <FormActionButtons
+                  showResetButton={false}
+                  submitButtonContent={
+                    <>
+                      Save & Continue <ZArrowRightLongIcon className="mt-px" />
+                    </>
+                  }
+                />
               </ZContainer>
             </Form>
           );

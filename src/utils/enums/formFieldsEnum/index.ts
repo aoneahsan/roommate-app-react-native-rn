@@ -14,6 +14,7 @@ export enum FormFieldsEnum {
 	playerData = 'playerData', // player user data return key (used in topup requests)
 	otherPlayerId = 'otherPlayerId',
 	otherPlayerData = 'otherPlayerData',
+	actions = 'actions',
 
 	title = 'title',
 	description = 'description',
@@ -46,7 +47,8 @@ export enum FormFieldsEnum {
 	hometown = 'hometown',
 	gender = 'gender',
 	language = 'language',
-
+	profileImage = 'profileImage',
+	photos = 'photos',
 
 	// Game related Forms Fields Enum
 	maxPlayersAllowed = 'maxPlayersAllowed',
@@ -151,6 +153,21 @@ export enum FormFieldsEnum {
 	bedroom = 'bedroom',
 	rentInclude = 'rentInclude',
 	otherInclude = 'otherInclude',
+	minimumLease = 'minimumLease',
+
+	// Find Roommate
+	aboutMe = 'aboutMe',
+	music = 'music',
+	movie = 'movie',
+	travel = 'travel',
+	book = 'book',
+	gym = 'gym',
+	food = 'food',
+	cleanliness = 'cleanliness',
+	guests = 'guests',
+	occupation = 'occupation',
+	foodPreference = 'foodPreference',
+	workSchedule = 'workSchedule',
 
 	// Offer
 	rate = 'rate',

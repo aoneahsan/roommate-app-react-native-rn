@@ -39,13 +39,15 @@ export interface IUser extends Partial<IUserZRTK> {
     [FormFieldsEnum.referralCode]?: string
     [FormFieldsEnum.withdrawOptions]?: Array<ZWithdrawOptionE>
     [FormFieldsEnum.phoneNumber]?: string
-    [FormFieldsEnum.isBlocked]?: boolean
     [FormFieldsEnum.blockedAt]?: string
     [FormFieldsEnum.age]?: Partial<ZRUSelectValueI> | null
     [FormFieldsEnum.gender]?: Partial<ZRUSelectValueI> | null
     [FormFieldsEnum.constellations]?: Partial<ZRUSelectValueI> | null
     [FormFieldsEnum.hometown]?: Partial<ZRUSelectValueI> | null
     [FormFieldsEnum.language]?: Partial<ZRUSelectValueI> | null
+    [FormFieldsEnum.profileImage]?: string
+    [FormFieldsEnum.photos]?: Array<string>
+
     // For frontend 
     [FormFieldsEnum.actions]?: string
 }

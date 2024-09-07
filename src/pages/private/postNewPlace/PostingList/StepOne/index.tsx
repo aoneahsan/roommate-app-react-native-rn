@@ -165,14 +165,28 @@ const PLStepOne: React.FC = () => {
     <ZPage>
       <NavigationHeader
         title="Posting List"
-        afterBoxContent={<ZButton>Cancel</ZButton>}
+        afterBoxContent={
+          <ZButton
+            onClick={() => {
+              navigate({
+                to: AppRoutes.appSub.placesList.completePath,
+              });
+            }}
+          >
+            Cancel
+          </ZButton>
+        }
       />
 
       <Formik
         initialValues={initialValues}
         validate={formikValidation}
         enableReinitialize
-        onSubmit={() => {}}
+        onSubmit={() => {
+          navigate({
+            to: AppRoutes?.postingListSub.stepTwo,
+          });
+        }}
       >
         {({
           values,
@@ -185,7 +199,7 @@ const PLStepOne: React.FC = () => {
         }) => {
           return (
             <Form>
-              <ZContainer size="4" className="my-6 maxLg:mx-3">
+              <ZContainer size="4" className="mx-3 my-6">
                 <ZBox className="space-y-6 mb-7">
                   <ZTextArea
                     required
@@ -234,9 +248,9 @@ const PLStepOne: React.FC = () => {
                         className="text-wrap min900px:max-w-[60%]"
                       >
                         {isZNonEmptyString(
-                          plStepOneRState?.location?.formattedAddress
+                          plStepOneRState?.location?.streetAddress
                         )
-                          ? plStepOneRState?.location?.formattedAddress
+                          ? plStepOneRState?.location?.streetAddress
                           : constants?.defaultValue?.fallbackValue}
                       </ZBadge>
                       <ZButton
@@ -302,7 +316,10 @@ const PLStepOne: React.FC = () => {
                     }}
                   />
 
-                  <ZFlex align={ZRUAlignE.start} className="gap-3">
+                  <ZFlex
+                    align={ZRUAlignE.start}
+                    className="gap-3 maxSm:flex-col"
+                  >
                     <ZPrizeInput
                       required
                       className="w-full"
@@ -310,7 +327,8 @@ const PLStepOne: React.FC = () => {
                       errorMessage={errors?.[FormFieldsEnum.rentFee]}
                       value={values?.[FormFieldsEnum.rentFee] ?? undefined}
                       isTouched={touched?.[FormFieldsEnum.rentFee]}
-                      selectClassName="w-1/4"
+                      selectClassName="sm:w-1/4 w-full"
+                      inputClassName="maxSm:w-full"
                       onBlur={() =>
                         setFieldTouched(FormFieldsEnum.rentFee, true)
                       }
@@ -322,7 +340,7 @@ const PLStepOne: React.FC = () => {
                     <ZSelect
                       required
                       label="Frequency"
-                      className="*:w-full"
+                      className="*:w-full maxSm:w-full"
                       options={ZFrequenciesData}
                       name={FormFieldsEnum.frequency}
                       value={values?.[FormFieldsEnum.frequency]}

@@ -57,7 +57,7 @@ const OtherUserInfoCard: React.FC<OtherUserInfoCardProps> = ({
   return (
     <>
       <ZCard
-        className="p-0 cursor-pointer w-max"
+        className="w-56 p-0 cursor-pointer min900px:w-max md:w-80"
         onClick={() => {
           setCompState((prev) => ({
             ...prev,
@@ -87,7 +87,7 @@ const OtherUserInfoCard: React.FC<OtherUserInfoCardProps> = ({
           className="flex w-full *:w-full py-1 px-2 rounded-none"
           color={ZRUColorE.jade}
           content={
-            <ZBox className="*:text-base flex items-center justify-between w-full">
+            <ZBox className="md:*:text-base text-xs flex items-center justify-between w-full">
               <ZText as={ZRUTextAsE.div} color={ZRUColorE.lime}>
                 Gigi
               </ZText>
@@ -115,7 +115,7 @@ const OtherUserInfoCard: React.FC<OtherUserInfoCardProps> = ({
             </ZBox>
           }
         />
-        <ZBox className="px-3 py-2 mt-5 mb-2">
+        <ZBox className="px-3 py-2 mt-3 mb-2 md:mt-5">
           <ZText className="block">Credit</ZText>
           <CreditScore scorePercentage={scorePercentage} />
         </ZBox>

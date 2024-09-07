@@ -19,7 +19,7 @@ const AppRoutesE = {
 	myLifeStyle: '/my-life-style',
 	roommatesPreference: '/roommates-preference',
 	credit: '/credit',
-	iWentTo: '/i-went-to',
+	iWantTo: '/i-want-to',
 	postingListSub: {
 		stepOne: `${AppRoutesCommonPath.postingList}/step-one`,
 		stepTwo: `${AppRoutesCommonPath.postingList}/step-two`,

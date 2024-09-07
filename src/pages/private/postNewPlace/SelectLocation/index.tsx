@@ -153,6 +153,7 @@ const SelectLocation: React.FC = () => {
                   to: AppRoutes.postingListSub.stepOne,
                 });
               }}
+              className="maxMd:w-full"
             >
               <ZArrowLeftLongIcon /> Go Back
             </ZButton>
@@ -200,37 +201,37 @@ const SelectLocation: React.FC = () => {
                       onSelect={async (place) => {
                         const _place = extractAddressDetails(place);
 
-                        setFieldValue(
+                        await setFieldValue(
                           FormFieldsEnum.country,
                           _place?.[FormFieldsEnum.country] ?? "",
                           true
                         );
-                        setFieldValue(
+                        await setFieldValue(
                           FormFieldsEnum.aptSuit,
                           _place?.[FormFieldsEnum.aptSuit] ?? "",
                           true
                         );
-                        setFieldValue(
+                        await setFieldValue(
                           FormFieldsEnum.city,
                           _place?.[FormFieldsEnum.city] ?? "",
                           true
                         );
-                        setFieldValue(
+                        await setFieldValue(
                           FormFieldsEnum.postCode,
                           _place?.[FormFieldsEnum.postCode] ?? "",
                           true
                         );
-                        setFieldValue(
+                        await setFieldValue(
                           FormFieldsEnum.province,
                           _place?.[FormFieldsEnum.province] ?? "",
                           true
                         );
-                        setFieldValue(
+                        await setFieldValue(
                           FormFieldsEnum.streetAddress,
                           place?.[FormFieldsEnum.formattedAddress] ?? "",
                           true
                         );
-                        setFieldValue(
+                        await setFieldValue(
                           FormFieldsEnum.formattedAddress,
                           place?.[FormFieldsEnum.formattedAddress] ?? "",
                           true
@@ -242,7 +243,10 @@ const SelectLocation: React.FC = () => {
                   {values?.locationOption ===
                   locationOptionEnum.selectCurrentLocation ? (
                     <ZCard className="space-y-4">
-                      <ZHeading as={ZRUHeadingAsE.h5}>
+                      <ZHeading
+                        as={ZRUHeadingAsE.h5}
+                        className="maxMd:text-center"
+                      >
                         Select Current Location
                       </ZHeading>
 
@@ -253,41 +257,41 @@ const SelectLocation: React.FC = () => {
                             locationOptionEnum.selectCurrentLocation &&
                           compState?.processing
                         }
-                        onClick={(currentLocation) => {
+                        onClick={async (currentLocation) => {
                           const _place =
                             extractAddressDetailsFromGeocoding(currentLocation);
 
-                          setFieldValue(
+                          await setFieldValue(
                             FormFieldsEnum.country,
                             _place?.[FormFieldsEnum.country] ?? "",
                             true
                           );
-                          setFieldValue(
+                          await setFieldValue(
                             FormFieldsEnum.aptSuit,
                             _place?.[FormFieldsEnum.aptSuit] ?? "",
                             true
                           );
-                          setFieldValue(
+                          await setFieldValue(
                             FormFieldsEnum.city,
                             _place?.[FormFieldsEnum.city] ?? "",
                             true
                           );
-                          setFieldValue(
+                          await setFieldValue(
                             FormFieldsEnum.postCode,
                             _place?.[FormFieldsEnum.postCode] ?? "",
                             true
                           );
-                          setFieldValue(
+                          await setFieldValue(
                             FormFieldsEnum.province,
                             _place?.[FormFieldsEnum.province] ?? "",
                             true
                           );
-                          setFieldValue(
+                          await setFieldValue(
                             "streetAddress",
                             currentLocation?.formatted_address ?? "",
                             true
                           );
-                          setFieldValue(
+                          await setFieldValue(
                             FormFieldsEnum.formattedAddress,
                             currentLocation?.formatted_address ?? "",
                             true
@@ -298,7 +302,10 @@ const SelectLocation: React.FC = () => {
                   ) : null}
 
                   <ZCard className="space-y-4">
-                    <ZHeading as={ZRUHeadingAsE.h5}>
+                    <ZHeading
+                      as={ZRUHeadingAsE.h5}
+                      className="maxMd:text-center"
+                    >
                       Enter Location Manually
                     </ZHeading>
 

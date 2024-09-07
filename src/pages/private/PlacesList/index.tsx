@@ -13,12 +13,16 @@ import {
   ZButton,
   ZRUColorE,
 } from "zaions-react-ui-kit";
+import { useNavigate } from "@tanstack/react-router";
 
 // #endregion
 
 // #region ---- Custom Imports ----
 import PlaceListingCard from "@/components/private/PlaceListingCard";
-import PlaceListingInProgressCard from "@/components/private/PlaceListingInProgressCard";
+import ZPlacesData from "@/data/places";
+import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
+import { calculateFullDuration } from "@/utils/helpers";
+import ZSearch from "@/components/private/Search";
 
 // #endregion
 
@@ -32,30 +36,33 @@ import PlaceListingInProgressCard from "@/components/private/PlaceListingInProgr
 
 // #region ---- Images Imports ----
 import { ZAddIcon } from "@/assets";
-import OtherUserInfoCard from "@/components/private/OtherUserInfoCard";
-import ZPlacesData from "@/data/places";
-import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
-import { calculateFullDuration } from "@/utils/helpers";
-import ZSearch from "@/components/private/Search";
+import { AppRoutes } from "@/routes/appRoutes";
 
 // #endregion
 
 const PlacesList: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <>
       <ZBox className="md:px-2 md:py-2">
         <ZFlex
           align={ZRUAlignE.center}
           justify={ZRUJustifyE.between}
-          className="maxSm:flex-col maxSm:gap-3 maxSm:*:w-full"
+          className="max768px:flex-col maxSm:gap-3 maxSm:*:w-full"
         >
-          <ZHeading className="text-2xl font-medium tracking-wider md:text-4xl maxSm:text-center">
+          <ZHeading className="text-2xl font-medium tracking-wider w-max md:text-3xl lg:text-4xl maxSm:text-center">
             Your List
           </ZHeading>
 
-          <ZFlex className="gap-3 sm:gap-2 maxSm:flex-col">
+          <ZFlex className="gap-3 sm:gap-2 max768px:flex-col max768px:*:w-full max768px:w-full">
             <ZSearch />
-            <ZButton>
+            <ZButton
+              onClick={() => {
+                navigate({
+                  to: AppRoutes.postingListSub.stepOne,
+                });
+              }}
+            >
               <ZAddIcon className="w-5 h-5" /> Add New Listing
             </ZButton>
 
@@ -64,7 +71,7 @@ const PlacesList: React.FC = () => {
         </ZFlex>
       </ZBox>
 
-      <ZFlex className="items-stretch gap-3 mt-3 mb-4 md:mt-5">
+      <ZFlex className="items-stretch gap-3 mt-3 mb-4 maxSm:flex-col md:mt-5">
         {ZPlacesData?.map((el, index) => {
           return (
             <PlaceListingCard

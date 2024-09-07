@@ -2,6 +2,8 @@
 import { ZFilterSharpOutlineIcon } from "@/assets";
 import OtherUserInfoCard from "@/components/private/OtherUserInfoCard";
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { useZMediaQueryScale } from "zaions-react-tool-kit";
 import {
   ZBox,
   ZButton,
@@ -34,6 +36,7 @@ import {
 // #endregion
 
 const Users: React.FC = () => {
+  const { is768Scale, isSmScale } = useZMediaQueryScale();
   return (
     <>
       <ZBox className="md:px-2 md:py-2">
@@ -51,9 +54,31 @@ const Users: React.FC = () => {
           </ZButton>
         </ZFlex>
 
-        <ZFlex className="items-stretch gap-3 mt-3 mb-4 md:mt-5">
+        <ZFlex
+          className="flex-wrap items-stretch gap-3 mt-3 mb-4 md:mt-5"
+          show={is768Scale}
+        >
+          <OtherUserInfoCard />
+          <OtherUserInfoCard />
           <OtherUserInfoCard />
         </ZFlex>
+        <ZBox show={!is768Scale} className="mt-3">
+          <Swiper
+            spaceBetween={10}
+            slidesPerView={!isSmScale ? 1 : 2}
+            className="*:items-stretch"
+          >
+            <SwiperSlide className="h-auto sm:flex sm:items-center sm:justify-center maxSm:*:w-full">
+              <OtherUserInfoCard />
+            </SwiperSlide>
+            <SwiperSlide className="h-auto sm:flex sm:items-center sm:justify-center maxSm:*:w-full">
+              <OtherUserInfoCard />
+            </SwiperSlide>
+            <SwiperSlide className="h-auto sm:flex sm:items-center sm:justify-center maxSm:*:w-full">
+              <OtherUserInfoCard />
+            </SwiperSlide>
+          </Swiper>
+        </ZBox>
       </ZBox>
     </>
   );

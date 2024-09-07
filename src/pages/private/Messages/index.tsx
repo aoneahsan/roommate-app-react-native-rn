@@ -55,7 +55,7 @@ const Messages: React.FC = () => {
         <ZFlex
           justify={ZRUJustifyE.between}
           align={ZRUAlignE.center}
-          className="cursor-pointer select-none"
+          className="cursor-pointer select-none gap-x-3"
         >
           <ZFlex gap="3" align={ZRUAlignE.center}>
             <ZAvatar
@@ -78,9 +78,11 @@ const Messages: React.FC = () => {
             </ZBox>
           </ZFlex>
 
-          <ZText size="2" color={ZRUColorE.gray}>
-            June 21, 11:34 am
-          </ZText>
+          <ZBox className="w-max">
+            <ZText size="2" color={ZRUColorE.gray}>
+              June 21, 11:34 am
+            </ZText>
+          </ZBox>
         </ZFlex>
         <ZBox>
           <ZSeparator size="4" />

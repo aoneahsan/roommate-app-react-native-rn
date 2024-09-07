@@ -102,8 +102,10 @@ const ZSearchPlace: React.FC<{
 
   return (
     <ZCard className="space-y-4">
-      <ZHeading as={ZRUHeadingAsE.h5}>Search Place</ZHeading>
-      <ZFlex align={ZRUAlignE.start} className="gap-2">
+      <ZHeading as={ZRUHeadingAsE.h5} className="maxMd:text-center">
+        Search Place
+      </ZHeading>
+      <ZFlex align={ZRUAlignE.start} className="gap-2 maxMd:flex-col">
         <ZInput
           name="searchPlace"
           value={input}
@@ -126,7 +128,7 @@ const ZSearchPlace: React.FC<{
             input?.length < filedLimits.searchPlace.min
           }
           onClick={() => getCurrentLocationHandler(input)}
-          className="mt-1"
+          className="mt-1 maxMd:w-full"
         >
           <ZSearchLocationOutlineIcon className="w-5 h-5" />
           Search

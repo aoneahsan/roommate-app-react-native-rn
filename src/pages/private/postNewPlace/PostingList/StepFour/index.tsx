@@ -32,6 +32,7 @@ import { AppRoutes } from "@/routes/appRoutes";
 import NavigationHeader from "@/components/private/NavigationHeader";
 import FormActionButtons from "@/components/form/FormActionButtons";
 import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
+import { postingListStepFourValidationSchema } from "@/validationSchema";
 
 // #endregion
 
@@ -60,7 +61,7 @@ const PLStepFour: React.FC = () => {
       [FormFieldsEnum.livingRoom]: "",
       [FormFieldsEnum.kitchen]: "",
       [FormFieldsEnum.washroom]: "",
-      [FormFieldsEnum.livingWithLandlord]: null,
+      [FormFieldsEnum.livingWithLandlord]: agreementStatusEnum.no,
     }),
     []
   );
@@ -117,6 +118,7 @@ const PLStepFour: React.FC = () => {
   const formikValidation = useCallback((values: IPLStepFour) => {
     if (formValidationRState.frontendFormValidationIsEnabled) {
       try {
+        postingListStepFourValidationSchema.parse(values);
       } catch (error) {
         if (error instanceof ZodError) {
           return error.formErrors.fieldErrors;
@@ -137,6 +139,7 @@ const PLStepFour: React.FC = () => {
                   to: AppRoutes.postingListSub.stepThree,
                 });
               }}
+              className="maxMd:w-full"
             >
               <ZArrowLeftLongIcon /> Go Back
             </ZButton>
@@ -148,22 +151,18 @@ const PLStepFour: React.FC = () => {
         initialValues={initialValues}
         validate={formikValidation}
         enableReinitialize
-        onSubmit={() => {}}
+        onSubmit={() => {
+          navigate({
+            to: AppRoutes.postingListSub.stepFive,
+          });
+        }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          setFieldValue,
-          setFieldTouched,
-          handleChange,
-          handleBlur,
-        }) => {
+        {({ values, errors, touched, setFieldValue, setFieldTouched }) => {
           return (
             <Form>
               <ZContainer size="4" className="mx-3 my-3 md:my-6 maxLg:mx-3">
                 <ZBox className="space-y-5">
-                  <ZCard className="space-y-3">
+                  <ZCard className="space-y-3 maxMd:text-center">
                     <ZHeading
                       as={ZRUHeadingAsE.h4}
                       className="text-xl font-normal"
@@ -199,10 +198,14 @@ const PLStepFour: React.FC = () => {
                   <ZCard>
                     <ZFlex
                       align={ZRUAlignE.center}
-                      className="gap-3"
-                      justify={ZRUJustifyE.between}
+                      className="gap-3 sm:justify-between maxSm:flex-col"
                     >
-                      <ZText className="text-lg">Living With Landlord</ZText>
+                      <ZText className="text-lg">
+                        Living With Landlord
+                        <ZText className="ms-1" color={ZRUColorE.tomato}>
+                          *
+                        </ZText>
+                      </ZText>
 
                       <ZRadioCardList
                         items={agreementOptions}
@@ -222,15 +225,30 @@ const PLStepFour: React.FC = () => {
                     </ZFlex>
                   </ZCard>
 
-                  <FormActionButtons
-                    showResetButton={false}
-                    submitButtonContent={
-                      <>
-                        Save & Continue{" "}
-                        <ZArrowRightLongIcon className="mt-px" />
-                      </>
-                    }
-                  />
+                  <ZFlex className="maxMd:flex-col md:justify-between md:items-center">
+                    <FormActionButtons
+                      showResetButton={false}
+                      submitButtonContent={
+                        <>
+                          Save & Continue{" "}
+                          <ZArrowRightLongIcon className="mt-px" />
+                        </>
+                      }
+                    />
+
+                    <ZButton
+                      color={ZRUColorE.iris}
+                      type="button"
+                      className="maxMd:w-full"
+                      onClick={() => {
+                        navigate({
+                          to: AppRoutes.postingListSub.stepFive,
+                        });
+                      }}
+                    >
+                      Skip
+                    </ZButton>
+                  </ZFlex>
                 </ZBox>
               </ZContainer>
             </Form>

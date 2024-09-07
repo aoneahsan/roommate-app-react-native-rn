@@ -83,6 +83,7 @@ const StepFive: React.FC = () => {
                   to: AppRoutes.postingListSub.stepFour,
                 });
               }}
+              className="maxMd:w-full"
             >
               <ZArrowLeftLongIcon /> Go Back
             </ZButton>
@@ -94,7 +95,11 @@ const StepFive: React.FC = () => {
         initialValues={initialValues}
         validate={formikValidation}
         enableReinitialize
-        onSubmit={() => {}}
+        onSubmit={() => {
+          navigate({
+            to: AppRoutes.appSub.placesList.completePath,
+          });
+        }}
       >
         {({
           values,

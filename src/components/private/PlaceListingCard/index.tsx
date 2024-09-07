@@ -83,7 +83,7 @@ const PlaceListingCard: React.FC<PlaceListingCardProps> = ({
   createTeamHandler,
 }) => {
   return (
-    <ZCard className="relative w-full p-0 overflow-hidden max-w-96">
+    <ZCard className="relative w-full p-0 overflow-hidden sm:max-w-96">
       <ZBox className="w-full h-36">
         {isZNonEmptyString(imageUrl) ? (
           <img
@@ -106,32 +106,32 @@ const PlaceListingCard: React.FC<PlaceListingCardProps> = ({
           {title || "No Title Available"}
         </ZText>
 
-        <ZFlex className="mt-4 maxXs:flex-col xs:justify-between xs:items-end">
-          <ZFlex align={ZRUAlignE.center} className="gap-2">
+        <ZFlex className="gap-1 mt-4 maxXs:flex-col md:justify-between maxMd:flex-col md:items-end">
+          <ZFlex align={ZRUAlignE.center} className="gap-1 md:gap-2">
             <ZFlex className="gap-1" align={ZRUAlignE.center}>
               <ZLogOutOutlineIcon className="w-5 h-5" />
-              <ZText className="text-xs sm:text-sm">
+              <ZText className="text-xs md:text-sm">
                 {availabilityDate || "Date Not Available"}
               </ZText>
             </ZFlex>
             <ZSeparator orientation={ZRUOrientationE.vertical} />
-            <ZText className="text-xs sm:text-sm">
+            <ZText className="text-xs md:text-sm">
               {duration || "Duration Not Specified"}
             </ZText>
           </ZFlex>
 
-          <ZBox className="text-end maxXs:flex maxXs:items-center maxXs:gap-3 maxXs:mt-2">
+          <ZBox className="text-end maxMd:flex maxMd:items-center maxMd:gap-3 maxMd:mt-1">
             <ZText className="block text-xs sm:text-sm">
               {type || "Type Not Specified"}
             </ZText>
-            <ZText className="font-medium maxSm:text-sm">
+            <ZText className="font-medium maxMd:text-xs">
               <ZText color={ZRUColorE.tomato}>${price ?? "0"}</ZText>/
               {frequency}
             </ZText>
           </ZBox>
         </ZFlex>
 
-        <ZFlex className="gap-2 mt-2 maxXs:flex-col xs:justify-between xs:items-end">
+        <ZFlex className="gap-2 mt-2 maxMd:flex-col md:justify-between md:items-end">
           <ZFlex align={ZRUAlignE.center} className="gap-2">
             <ZFlex align={ZRUAlignE.center} className="gap-1">
               <ZBedOutlineIcon className="w-5 h-5" />

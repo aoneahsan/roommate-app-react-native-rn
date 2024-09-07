@@ -10,10 +10,13 @@ import {
   ZBox,
   ZButton,
   ZContainer,
+  ZFlex,
   ZHeading,
   ZPage,
+  ZRUAlignE,
   ZRUColorE,
   ZRUHeadingAsE,
+  ZRUJustifyE,
 } from "zaions-react-ui-kit";
 import { ZodError } from "zod";
 import { useNavigate } from "@tanstack/react-router";
@@ -82,6 +85,7 @@ const PLStepTwo: React.FC = () => {
                   to: AppRoutes.postingListSub.stepOne,
                 });
               }}
+              className="maxMd:w-full"
             >
               <ZArrowLeftLongIcon /> Go Back
             </ZButton>
@@ -92,9 +96,13 @@ const PLStepTwo: React.FC = () => {
         initialValues={initialValues}
         validate={formikValidation}
         enableReinitialize
-        onSubmit={() => {}}
+        onSubmit={() => {
+          navigate({
+            to: AppRoutes.postingListSub.stepThree,
+          });
+        }}
       >
-        {() => {
+        {({ dirty }) => {
           return (
             <Form>
               <ZContainer size="4" className="mx-3 my-3 md:my-6 maxLg:mx-3">
@@ -129,14 +137,31 @@ const PLStepTwo: React.FC = () => {
                     fieldName={FormFieldsEnum.otherImages}
                   />
                 </ZBox>
-                <FormActionButtons
-                  showResetButton={false}
-                  submitButtonContent={
-                    <>
-                      Save & Continue <ZArrowRightLongIcon className="mt-px" />
-                    </>
-                  }
-                />
+                <ZFlex className="maxMd:flex-col md:justify-between md:items-center">
+                  <FormActionButtons
+                    showResetButton={false}
+                    disabledSubmitBtn={!dirty}
+                    submitButtonContent={
+                      <>
+                        Save & Continue{" "}
+                        <ZArrowRightLongIcon className="mt-px" />
+                      </>
+                    }
+                  />
+
+                  <ZButton
+                    color={ZRUColorE.iris}
+                    type="button"
+                    className="maxMd:w-full"
+                    onClick={() => {
+                      navigate({
+                        to: AppRoutes.postingListSub.stepThree,
+                      });
+                    }}
+                  >
+                    Skip
+                  </ZButton>
+                </ZFlex>
               </ZContainer>
             </Form>
           );

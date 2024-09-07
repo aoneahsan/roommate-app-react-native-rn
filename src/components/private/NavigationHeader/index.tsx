@@ -4,14 +4,7 @@ import React from "react";
 // #endregion
 
 // #region ---- Packages Imports ----
-import {
-  ZBox,
-  ZCard,
-  ZFlex,
-  ZHeading,
-  ZRUAlignE,
-  ZRUJustifyE,
-} from "zaions-react-ui-kit";
+import { ZBox, ZCard, ZFlex, ZHeading } from "zaions-react-ui-kit";
 
 // #endregion
 
@@ -38,7 +31,7 @@ const NavigationHeader: React.FC<{
 }> = ({ title, beforeBoxContent, afterBoxContent }) => {
   return (
     <ZCard className="mx-1 my-2">
-      <ZFlex align={ZRUAlignE.center} justify={ZRUJustifyE.between}>
+      <ZFlex className="items-center maxMd:flex-col md:justify-between maxMd:gap-y-3 maxMd:*:w-full maxMd:text-center">
         <ZBox>{beforeBoxContent}</ZBox>
 
         <ZBox>

@@ -6,6 +6,7 @@ import React, { useCallback, useMemo } from "react";
 // #region ---- Packages Imports ----
 import { Form, Formik } from "formik";
 import {
+  showErrorNotification,
   ZAvatar,
   ZBox,
   ZButton,
@@ -30,13 +31,19 @@ import ZAgesData from "@/data/ages";
 import ZGenderData from "@/data/gender";
 import ZConstellationsData from "@/data/constellations";
 import NavigationHeader from "@/components/private/NavigationHeader";
-import { formValidationRStateAtom } from "@/state/formState";
+import {
+  fileSettingRStateAtom,
+  formValidationRStateAtom,
+} from "@/state/formState";
 import { profileFormValidationSchema } from "@/validationSchema";
+import { fileValidation } from "@/utils/helpers";
+import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
 
 // #endregion
 
 // #region ---- Types Imports ----
 import { IUser } from "@/types/user/index.type";
+import { fileErrorEnum } from "@/types/generic";
 
 // #endregion
 
@@ -46,6 +53,10 @@ import { IUser } from "@/types/user/index.type";
 
 // #region ---- Images Imports ----
 import { ZAddIcon, ZArrowRightLongIcon, ZAvatarImage } from "@/assets";
+import { useNavigate } from "@tanstack/react-router";
+import { AppRoutes } from "@/routes/appRoutes";
+import ZCitiesData from "@/data/cities";
+import ZLanguagesData from "@/data/languages";
 
 // #endregion
 
@@ -53,15 +64,19 @@ const Profile: React.FC = () => {
   const formValidationRState = useRecoilValue(formValidationRStateAtom);
   const initialValues = useMemo<IUser>(
     () => ({
-      name: "",
-      age: null,
-      gender: null,
-      constellations: null,
-      hometown: null,
-      language: null,
+      [FormFieldsEnum.name]: "",
+      [FormFieldsEnum.age]: null,
+      [FormFieldsEnum.gender]: null,
+      [FormFieldsEnum.constellations]: null,
+      [FormFieldsEnum.hometown]: null,
+      [FormFieldsEnum.language]: null,
+      [FormFieldsEnum.profileImage]: "",
+      [FormFieldsEnum.photos]: Array(8).fill(null),
     }),
     []
   );
+  const fileSettingRState = useRecoilValue(fileSettingRStateAtom);
+  const navigate = useNavigate();
 
   // #region Functions
   const formikValidation = useCallback((values: IUser) => {
@@ -84,13 +99,16 @@ const Profile: React.FC = () => {
       <Formik
         initialValues={initialValues}
         validate={formikValidation}
-        onSubmit={() => {}}
+        onSubmit={() => {
+          navigate({
+            to: AppRoutes.iWantTo,
+          });
+        }}
       >
         {({
           values,
           errors,
           touched,
-          isValid,
           handleChange,
           handleBlur,
           setFieldValue,
@@ -180,7 +198,7 @@ const Profile: React.FC = () => {
                       label="Hometown"
                       name="hometown"
                       required
-                      options={ZConstellationsData}
+                      options={ZCitiesData}
                       value={values?.hometown}
                       isTouched={touched?.hometown}
                       errorMessage={errors?.hometown}
@@ -200,7 +218,7 @@ const Profile: React.FC = () => {
                       label="Language"
                       name="language"
                       required
-                      options={ZConstellationsData}
+                      options={ZLanguagesData}
                       value={values?.language}
                       isTouched={touched?.language}
                       errorMessage={errors?.language}
@@ -222,7 +240,6 @@ const Profile: React.FC = () => {
                     direction={ZRUDirectionE.column}
                     className="maxLg:w-[40%] max900px:!w-full lg:w-1/2"
                   >
-                    <ZFileDropUploader />
                     <ZFlex
                       align={ZRUAlignE.center}
                       direction={ZRUDirectionE.column}
@@ -230,6 +247,7 @@ const Profile: React.FC = () => {
                       <ZAvatar
                         className="*:items-end *:overflow-hidden text-center"
                         size="8"
+                        src={values?.[FormFieldsEnum.profileImage]}
                         fallback={
                           <img
                             src={ZAvatarImage}
@@ -237,7 +255,31 @@ const Profile: React.FC = () => {
                           />
                         }
                       />
-                      <ZButton className="mt-2">Upload profile picture</ZButton>
+
+                      <ZFileDropUploader
+                        validator={(file) =>
+                          fileValidation({
+                            file,
+                            maxFileSize: fileSettingRState?.size,
+                          })
+                        }
+                        onChange={async ({ fileRejections, localUrl }) => {
+                          setFieldValue(FormFieldsEnum.profileImage, localUrl);
+
+                          if (fileRejections?.length) {
+                            const { message, code } =
+                              fileRejections[0].errors[0];
+
+                            if (code === fileErrorEnum.sizeTooLarge) {
+                              showErrorNotification(message);
+                            }
+                          }
+                        }}
+                      >
+                        <ZButton className="mt-2" type="button">
+                          Upload profile picture
+                        </ZButton>
+                      </ZFileDropUploader>
                     </ZFlex>
 
                     <ZBox className="mt-7">
@@ -249,25 +291,45 @@ const Profile: React.FC = () => {
                         className="flex-wrap justify-center w-auto gap-y-4 gap-x-2"
                         align={ZRUAlignE.center}
                       >
-                        {[...Array(8)].map((el, index) => (
+                        {values?.photos?.map((el, index) => (
                           <ZBox className="lg:w-[20%]" key={index}>
-                            <ZAvatar
-                              size="6"
-                              fallback={<ZAddIcon className="w-5 h-5" />}
-                              radius={ZRURadiusE.medium}
-                              className="cursor-pointer"
-                            />
+                            <ZFileDropUploader
+                              validator={(file) =>
+                                fileValidation({
+                                  file,
+                                  maxFileSize: fileSettingRState?.size,
+                                })
+                              }
+                              onChange={async ({
+                                fileRejections,
+                                localUrl,
+                              }) => {
+                                setFieldValue(`photos[${index}]`, localUrl);
+                                if (fileRejections?.length) {
+                                  const { message, code } =
+                                    fileRejections[0].errors[0];
+
+                                  if (code === fileErrorEnum.sizeTooLarge) {
+                                    showErrorNotification(message);
+                                  }
+                                }
+                              }}
+                            >
+                              <ZAvatar
+                                size="6"
+                                fallback={<ZAddIcon className="w-5 h-5" />}
+                                radius={ZRURadiusE.medium}
+                                className="cursor-pointer"
+                                src={el}
+                              />
+                            </ZFileDropUploader>
                           </ZBox>
                         ))}
                       </ZFlex>
                     </ZBox>
                   </ZFlex>
                 </ZFlex>
-                <ZButton
-                  className="mt-6 max900px:w-full"
-                  type="submit"
-                  disabled={!isValid}
-                >
+                <ZButton className="mt-6 max900px:w-full" type="submit">
                   Save & Continue <ZArrowRightLongIcon className="mt-px" />
                 </ZButton>
               </ZContainer>

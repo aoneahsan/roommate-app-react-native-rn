@@ -56,6 +56,7 @@ const ZGetCurrentLocation: React.FC<{
       loading={loading || processing}
       disabled={disabled || processing}
       onClick={handleOnClick}
+      className="maxMd:w-full"
     >
       <ZLocationOutlineIcon className="w-5 h-5" /> Get Current Location
     </ZButton>

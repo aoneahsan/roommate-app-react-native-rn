@@ -9,6 +9,7 @@ import {
 import { FormFieldsEnum } from '@/utils/enums/formFieldsEnum';
 import dayjs from 'dayjs';
 import { z as ZOD } from 'zod';
+import { agreementEnumVal, frequencyEnumVal, privateShareEnumVal } from './enumsVal';
 
 const isValidRUSelectValue = (label: string) => ZOD?.object({
 	value: ZOD?.string()?.trim()?.min(1, { message: `Not a Valid ${label}.` })?.max(100),
@@ -172,4 +173,96 @@ export const postingListStepOneValidationSchema = ZOD.object({
 	[FormFieldsEnum.location]: ZOD?.object({}, { message: 'Location is required.' }),
 	[FormFieldsEnum.placePreference]: isValidStringValue('Place'),
 	[FormFieldsEnum.rentFee]: rentFeeSchema,
+})
+
+export const postingListStepThreeValidationSchema = ZOD.object({
+	[FormFieldsEnum.moveInDate]: ZOD.string({
+		message: "Move-in date is required",
+	}),
+	[FormFieldsEnum.moveOutDate]: ZOD.string({
+		message: "Move-out date is required",
+	}),
+
+	[FormFieldsEnum.description]: ZOD.string().optional(),
+
+	[FormFieldsEnum.frequency]: ZOD.enum(frequencyEnumVal, {
+		required_error: "Frequency is required.",
+		invalid_type_error: "Invalid frequency value",
+	}),
+
+	[FormFieldsEnum.numOfBedroom]: ZOD.number({
+		required_error: "Number of bedrooms is required",
+	}).nonnegative({ message: "Number of bedrooms must be a non-negative number" }),
+
+	[FormFieldsEnum.numOfParking]: ZOD.number({
+		required_error: "Number of parking spots is required",
+	}).nonnegative({ message: "Number of parking spots must be a non-negative number" }),
+
+	[FormFieldsEnum.numOfWashroom]: ZOD.number({
+		required_error: "Number of washrooms is required",
+	}).nonnegative({ message: "Number of washrooms must be a non-negative number" }),
+
+	[FormFieldsEnum.minimumLease]: ZOD.number({
+		required_error: "Minimum lease period is required",
+	}).nonnegative({ message: "Minimum lease period must be a non-negative number" }),
+
+	[FormFieldsEnum.pets]: ZOD.enum(agreementEnumVal, {
+		invalid_type_error: "Invalid value for pets",
+		required_error: "Pets is required."
+	}),
+
+	[FormFieldsEnum.smoke]: ZOD.enum(agreementEnumVal, {
+		invalid_type_error: "Invalid value for smoke",
+		required_error: "Smoke is required."
+	}),
+
+	[FormFieldsEnum.furnished]: ZOD.enum(agreementEnumVal, {
+		invalid_type_error: "Invalid value for furnished",
+		required_error: "Furnished is required."
+	}),
+}).superRefine((data, ctx) => {
+	const moveInDate = dayjs(data?.[FormFieldsEnum.moveInDate]);
+	const moveOutDate = dayjs(data?.[FormFieldsEnum.moveOutDate]);
+	if (!moveInDate?.isValid()) {
+		ctx.addIssue({
+			path: [FormFieldsEnum.moveInDate],
+			message: "Move-in date should be a valid date",
+			code: 'custom'
+		});
+	}
+
+	if (!moveOutDate?.isValid()) {
+		ctx.addIssue({
+			code: 'custom',
+			message: "Move-out date should be a valid date",
+			path: [FormFieldsEnum.moveOutDate],
+		});
+	}
+
+	if (moveOutDate.isBefore(moveInDate)) {
+		ctx.addIssue({
+			code: 'custom',
+			message: "Move-out date must be after move-in date",
+			path: [FormFieldsEnum.moveOutDate],
+		});
+	}
+});
+
+export const postingListStepFourValidationSchema = ZOD.object({
+	[FormFieldsEnum.bedroom]: ZOD.enum(privateShareEnumVal, {
+		required_error: "Required.",
+		invalid_type_error: "Invalid value",
+	}),
+	[FormFieldsEnum.livingRoom]: ZOD.enum(privateShareEnumVal, {
+		message: "Required.",
+	}),
+	[FormFieldsEnum.kitchen]: ZOD.enum(privateShareEnumVal, {
+		message: "Required.",
+	}),
+	[FormFieldsEnum.washroom]: ZOD.enum(privateShareEnumVal, {
+		message: "Required.",
+	}),
+	[FormFieldsEnum.livingWithLandlord]: ZOD.enum(agreementEnumVal, {
+		message: "Required.",
+	}),
 })

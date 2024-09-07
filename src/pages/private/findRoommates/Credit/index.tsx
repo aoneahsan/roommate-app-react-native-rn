@@ -45,6 +45,7 @@ import {
   ZPersonalInfoSvg,
   ZAuthenticationSvg,
   ZMaleAvatarSvg,
+  ZArrowRightLongIcon,
 } from "@/assets";
 import CircularProgress from "@/components/private/CircularProgress";
 
@@ -188,6 +189,9 @@ const Credit: React.FC = () => {
             </ZBox>
           </ZFlex>
         </ZCard>
+        <ZButton className="mt-6 max900px:w-full">
+          Save & Continue <ZArrowRightLongIcon className="mt-px" />
+        </ZButton>
       </ZContainer>
     </ZPage>
   );

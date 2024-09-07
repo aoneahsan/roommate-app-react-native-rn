@@ -57,6 +57,7 @@ export interface IPLStepThree {
     [FormFieldsEnum.numOfBedroom]?: number
     [FormFieldsEnum.numOfParking]?: number
     [FormFieldsEnum.numOfWashroom]?: number
+    [FormFieldsEnum.minimumLease]?: number
     [FormFieldsEnum.pets]?: agreementStatusEnum
     [FormFieldsEnum.smoke]?: agreementStatusEnum
     [FormFieldsEnum.furnished]?: agreementStatusEnum

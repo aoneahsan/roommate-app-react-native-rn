@@ -1,3 +1,5 @@
+import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
+
 // enums
 export enum ECleanlinessType {
     superClean = 'superClean',
@@ -47,4 +49,13 @@ export enum EGenderType {
     female = 'female',
     nonBinary = 'nonBinary',
     all = 'all',
+}
+
+// Interfaces
+export interface IRoommatesPreference {
+    [FormFieldsEnum.gender]?: EGenderType
+    [FormFieldsEnum.smoke]?: ESmokeType
+    [FormFieldsEnum.pets]?: EPetsType
+    [FormFieldsEnum.guests]?: EGuestsType
+    [FormFieldsEnum.cleanliness]?: ECleanlinessType
 }

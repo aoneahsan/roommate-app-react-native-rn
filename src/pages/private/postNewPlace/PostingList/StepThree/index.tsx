@@ -37,6 +37,7 @@ import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
 import { agreementStatusEnum, frequencyEnum } from "@/types/generic";
 import NumberAdjuster from "@/components/NumberAdjuster";
 import FormActionButtons from "@/components/form/FormActionButtons";
+import ZFrequenciesData from "@/data/frequencies";
 
 // #endregion
 
@@ -52,7 +53,8 @@ import { formValidationRStateAtom } from "@/state/formState";
 
 // #region ---- Images Imports ----
 import { ZArrowLeftLongIcon, ZArrowRightLongIcon } from "@/assets";
-import ZFrequenciesData from "@/data/frequencies";
+import { postingListStepThreeValidationSchema } from "@/validationSchema";
+import dayjs from "dayjs";
 
 // #endregion
 
@@ -65,6 +67,13 @@ const StepThree: React.FC = () => {
       [FormFieldsEnum.numOfBedroom]: 0,
       [FormFieldsEnum.numOfParking]: 0,
       [FormFieldsEnum.numOfWashroom]: 0,
+      [FormFieldsEnum.minimumLease]: 0,
+      [FormFieldsEnum.moveInDate]: "",
+      [FormFieldsEnum.moveOutDate]: "",
+      [FormFieldsEnum.description]: "",
+      [FormFieldsEnum.pets]: undefined,
+      [FormFieldsEnum.smoke]: undefined,
+      [FormFieldsEnum.furnished]: undefined,
       term: termEnum.shortTerm,
     }),
     []
@@ -86,16 +95,16 @@ const StepThree: React.FC = () => {
   const agreementOptions = useMemo(
     () => [
       {
-        label: agreementStatusEnum.yes,
-        value: "Yes",
+        value: agreementStatusEnum.yes,
+        label: "Yes",
       },
       {
-        label: agreementStatusEnum.no,
-        value: "No",
+        value: agreementStatusEnum.no,
+        label: "No",
       },
       {
-        label: agreementStatusEnum.negotiated,
-        value: "Negotiated",
+        value: agreementStatusEnum.negotiated,
+        label: "Negotiated",
       },
     ],
     []
@@ -142,6 +151,7 @@ const StepThree: React.FC = () => {
   const formikValidation = useCallback((values: IPLStepThree) => {
     if (formValidationRState.frontendFormValidationIsEnabled) {
       try {
+        postingListStepThreeValidationSchema.parse(values);
       } catch (error) {
         if (error instanceof ZodError) {
           return error.formErrors.fieldErrors;
@@ -162,6 +172,7 @@ const StepThree: React.FC = () => {
                   to: AppRoutes.postingListSub.stepTwo,
                 });
               }}
+              className="maxMd:w-full"
             >
               <ZArrowLeftLongIcon /> Go Back
             </ZButton>
@@ -173,7 +184,11 @@ const StepThree: React.FC = () => {
         initialValues={initialValues}
         validate={formikValidation}
         enableReinitialize
-        onSubmit={() => {}}
+        onSubmit={() => {
+          navigate({
+            to: AppRoutes.postingListSub.stepFour,
+          });
+        }}
       >
         {({
           values,
@@ -200,7 +215,7 @@ const StepThree: React.FC = () => {
 
                     <ZFlex
                       align={ZRUAlignE.start}
-                      className="space-x-3 *:flex-1"
+                      className="md:space-x-3 *:flex-1 maxMd:flex-col maxMd:gap-y-3 maxMd:*:w-full"
                     >
                       <ZInput
                         required
@@ -227,7 +242,10 @@ const StepThree: React.FC = () => {
                       />
                     </ZFlex>
 
-                    <ZFlex align={ZRUAlignE.start} className="space-x-3">
+                    <ZFlex
+                      align={ZRUAlignE.start}
+                      className="md:space-x-3 maxMd:flex-col maxMd:space-y-2 maxMd:*:w-full"
+                    >
                       <ZInput
                         required
                         className="flex-1"
@@ -235,15 +253,16 @@ const StepThree: React.FC = () => {
                         onChange={handleChange}
                         label="The minimum lease"
                         type={ZRUInputTypeE.number}
-                        name={FormFieldsEnum.moveOutDate}
-                        value={values?.[FormFieldsEnum.moveOutDate]}
-                        isTouched={touched?.[FormFieldsEnum.moveOutDate]}
-                        errorMessage={errors?.[FormFieldsEnum.moveOutDate]}
+                        name={FormFieldsEnum.minimumLease}
+                        value={values?.[FormFieldsEnum.minimumLease]}
+                        isTouched={touched?.[FormFieldsEnum.minimumLease]}
+                        errorMessage={errors?.[FormFieldsEnum.minimumLease]}
                       />
 
                       <ZSelect
                         required
                         label="Frequency"
+                        className="maxMd:*:w-full"
                         options={ZFrequenciesData}
                         name={FormFieldsEnum.frequency}
                         value={values?.[FormFieldsEnum.frequency]}
@@ -269,7 +288,7 @@ const StepThree: React.FC = () => {
                       House Information
                     </ZHeading>
 
-                    <ZFlex className="pt-4 gap-3 *:w-[49%] flex-wrap">
+                    <ZFlex className="pt-4 gap-3 md*:w-[49%] maxMd:flex-col flex-wrap">
                       {houseInformation?.map((el, index) => {
                         return (
                           <ZCard key={index}>
@@ -336,15 +355,31 @@ const StepThree: React.FC = () => {
                       />
                     </ZBox>
                   </ZCard>
-                  <FormActionButtons
-                    showResetButton={false}
-                    submitButtonContent={
-                      <>
-                        Save & Continue{" "}
-                        <ZArrowRightLongIcon className="mt-px" />
-                      </>
-                    }
-                  />
+
+                  <ZFlex className="maxMd:flex-col md:justify-between md:items-center">
+                    <FormActionButtons
+                      showResetButton={false}
+                      submitButtonContent={
+                        <>
+                          Save & Continue{" "}
+                          <ZArrowRightLongIcon className="mt-px" />
+                        </>
+                      }
+                    />
+
+                    <ZButton
+                      color={ZRUColorE.iris}
+                      type="button"
+                      className="maxMd:w-full"
+                      onClick={() => {
+                        navigate({
+                          to: AppRoutes.postingListSub.stepFour,
+                        });
+                      }}
+                    >
+                      Skip
+                    </ZButton>
+                  </ZFlex>
                 </ZBox>
               </ZContainer>
             </Form>

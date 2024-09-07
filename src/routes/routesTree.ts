@@ -15,7 +15,7 @@ import {
 	plStepFour,
 	plStepFive,
 	selectLocationRoute,
-	iWentToRoute
+	iWantToRoute
 } from './AllRoutes';
 import tanstackRootRoute from './RootRoute';
 import testPagesRootRouteTree from './testPagesRoutes';
@@ -36,7 +36,7 @@ const routeTree = tanstackRootRoute.addChildren([
 	plStepFour,
 	plStepFive,
 	selectLocationRoute,
-	iWentToRoute,
+	iWantToRoute,
 
 	appRouteTree,
 	testPagesRootRouteTree,

@@ -136,9 +136,9 @@ export const profileRoute = createRoute({
   ),
 });
 
-export const iWentToRoute = createRoute({
+export const iWantToRoute = createRoute({
   getParentRoute: () => tanstackRootRoute,
-  path: AppRoutes.iWentTo,
+  path: AppRoutes.iWantTo,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
       await import("@/pages/private/IWantTo")

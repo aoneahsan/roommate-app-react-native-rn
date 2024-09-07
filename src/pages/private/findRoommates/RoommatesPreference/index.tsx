@@ -20,11 +20,14 @@ import {
   ZTextArea,
 } from "zaions-react-ui-kit";
 import { Form, Formik } from "formik";
+import { useNavigate } from "@tanstack/react-router";
 
 // #endregion
 
 // #region ---- Custom Imports ----
 import NavigationHeader from "@/components/private/NavigationHeader";
+import FormActionButtons from "@/components/form/FormActionButtons";
+import { AppRoutes } from "@/routes/appRoutes";
 
 // #endregion
 
@@ -35,6 +38,7 @@ import {
   EGuestsType,
   EPetsType,
   ESmokeType,
+  type IRoommatesPreference,
 } from "@/types/preference";
 
 // #endregion
@@ -44,12 +48,23 @@ import {
 // #endregion
 
 // #region ---- Images Imports ----
-import { ZArrowRightLongIcon } from "@/assets";
+import { ZArrowLeftLongIcon, ZArrowRightLongIcon } from "@/assets";
+import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
 
 // #endregion
 
 const RoommatesPreference: React.FC = () => {
-  const initialValues = useMemo(() => ({}), []);
+  const navigate = useNavigate();
+  const initialValues = useMemo<IRoommatesPreference>(
+    () => ({
+      [FormFieldsEnum.gender]: undefined,
+      [FormFieldsEnum.smoke]: undefined,
+      [FormFieldsEnum.pets]: undefined,
+      [FormFieldsEnum.guests]: undefined,
+      [FormFieldsEnum.cleanliness]: undefined,
+    }),
+    []
+  );
 
   const roommatesPreference = useMemo(
     () => [
@@ -145,14 +160,36 @@ const RoommatesPreference: React.FC = () => {
 
   return (
     <ZPage>
-      <NavigationHeader title="Roommates Preference" />
+      <NavigationHeader
+        title="Roommates Preference"
+        beforeBoxContent={
+          <>
+            <ZButton
+              onClick={() => {
+                navigate({
+                  to: AppRoutes.myLifeStyle,
+                });
+              }}
+            >
+              <ZArrowLeftLongIcon /> Go Back
+            </ZButton>
+          </>
+        }
+      />
 
-      <Formik initialValues={initialValues} onSubmit={() => {}}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={() => {
+          navigate({
+            to: AppRoutes.credit,
+          });
+        }}
+      >
         {() => {
           return (
             <Form>
               <ZContainer size="3" className="my-6 maxLg:mx-3">
-                <ZCard className="*:w-full space-y-3 p-5">
+                <ZCard className="*:w-full space-y-3 p-5 mb-4">
                   <ZCard>
                     <ZText>Age</ZText>
                     <ZFlex align={ZRUAlignE.center} className="w-full gap-3">
@@ -165,26 +202,23 @@ const RoommatesPreference: React.FC = () => {
                   </ZCard>
 
                   {roommatesPreference?.map((el, index) => (
-                    <>
-                      <ZCard key={index}>
-                        <ZText className="inline-block mb-1">{el?.label}</ZText>
-                        <ZRadioCardsGroup
-                          className="*:w-max justify-start flex *:h-8 flex-wrap"
-                          color={ZRUColorE.purple}
-                        >
-                          {el?.items?.map((item, itemIndex) => (
-                            <ZRadioCardsItem
-                              value={item?.value}
-                              key={itemIndex}
-                              className="w-max"
-                            >
-                              {item?.label}
-                            </ZRadioCardsItem>
-                          ))}
-                        </ZRadioCardsGroup>
-                      </ZCard>
-                      {/* <ZSeparator /> */}
-                    </>
+                    <ZCard key={index}>
+                      <ZText className="inline-block mb-1">{el?.label}</ZText>
+                      <ZRadioCardsGroup
+                        className="*:w-max justify-start flex *:h-8 flex-wrap"
+                        color={ZRUColorE.purple}
+                      >
+                        {el?.items?.map((item, itemIndex) => (
+                          <ZRadioCardsItem
+                            value={item?.value}
+                            key={itemIndex}
+                            className="w-max"
+                          >
+                            {item?.label}
+                          </ZRadioCardsItem>
+                        ))}
+                      </ZRadioCardsGroup>
+                    </ZCard>
                   ))}
 
                   <ZTextArea
@@ -193,9 +227,14 @@ const RoommatesPreference: React.FC = () => {
                     rows={6}
                   />
                 </ZCard>
-                <ZButton className="mt-6 max900px:w-full">
-                  Save & Continue <ZArrowRightLongIcon className="mt-px" />
-                </ZButton>
+                <FormActionButtons
+                  showResetButton={false}
+                  submitButtonContent={
+                    <>
+                      Save & Continue <ZArrowRightLongIcon className="mt-px" />
+                    </>
+                  }
+                />
               </ZContainer>
             </Form>
           );
