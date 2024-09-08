@@ -216,6 +216,7 @@ const MyLifeStyle: React.FC = () => {
                   to: AppRoutes.hobbies,
                 });
               }}
+              className="maxMd:w-full"
             >
               <ZArrowLeftLongIcon /> Go Back
             </ZButton>

@@ -48,11 +48,14 @@ import {
   ZArrowRightLongIcon,
 } from "@/assets";
 import CircularProgress from "@/components/private/CircularProgress";
+import { useZMediaQueryScale } from "zaions-react-tool-kit";
 
 // #endregion
 
 const Credit: React.FC = () => {
   const navigate = useNavigate();
+  const { is1100pxScale, is1150pxScale, is900pxScale, isMdScale, isXsScale } =
+    useZMediaQueryScale();
 
   return (
     <ZPage>
@@ -60,10 +63,10 @@ const Credit: React.FC = () => {
         title="Credit"
         afterBoxContent={
           <ZButton
-            size="3"
-            className="font-medium tracking-wider me-1"
+            size={isMdScale ? "3" : "2"}
+            className="font-medium tracking-wider me-1 maxMd:w-full"
             color={ZRUColorE.yellow}
-            variant={ZRUVariantE.ghost}
+            variant={isMdScale ? ZRUVariantE.ghost : ZRUVariantE.solid}
           >
             Skip
           </ZButton>
@@ -73,9 +76,10 @@ const Credit: React.FC = () => {
             <ZButton
               onClick={() => {
                 navigate({
-                  to: AppRoutes.myLifeStyle,
+                  to: AppRoutes.roommatesPreference,
                 });
               }}
+              className="maxMd:w-full"
             >
               <ZArrowLeftLongIcon /> Go Back
             </ZButton>
@@ -84,83 +88,103 @@ const Credit: React.FC = () => {
       />
 
       <ZContainer size="4" className="my-6 maxLg:mx-3">
-        <ZCard>
-          <ZHeading as={ZRUHeadingAsE.h4}>Credit Score</ZHeading>
+        <ZCard className="md:mx-2">
+          <ZHeading as={ZRUHeadingAsE.h4} className="maxMd:text-center">
+            Credit Score
+          </ZHeading>
 
-          <CreditScore textSize="5" classNames="mt-7" />
+          <CreditScore textSize="5" classNames="md:mt-7 mt-3" />
 
-          <ZText className="block mt-3 text-base ms-2">
+          <ZText className="block mt-3 text-base ms-2 maxMd:text-center">
             Your current credit score
           </ZText>
 
-          <ZBox className="mt-7">
+          <ZBox className="mt-3 md:mt-7">
             <Swiper
-              spaceBetween={25}
-              slidesPerView={3}
+              spaceBetween={is1150pxScale ? 25 : 5}
+              slidesPerView={is900pxScale ? 3 : isMdScale ? 2 : 1}
               className="*:items-stretch"
             >
               <SwiperSlide className="h-auto">
-                <ZCard className="flex items-center justify-center w-full h-full gap-3 transition-all duration-300 scale-95 cursor-pointer select-none hover:scale-100">
+                <ZCard className="flex items-center justify-center w-full h-full gap-3 transition-all duration-300 scale-95 cursor-pointer select-none hover:scale-100 maxXs:flex-col-reverse">
                   <ZBox>
-                    <ZBox className="h-36">
+                    <ZBox
+                      className="min1150px:h-36 h-28 lg:h-30"
+                      show={isXsScale}
+                    >
                       <ZPersonalInfoSvg className="w-full h-full" />
                     </ZBox>
                     <ZHeading
                       as={ZRUHeadingAsE.h4}
-                      className="mt-3 font-normal"
+                      className="mt-3 text-lg font-normal lg:text-xl min1150px:text-2xl"
                     >
                       Personal Info
                     </ZHeading>
                   </ZBox>
                   <ZFlex className="flex-col items-end justify-center flex-1 gap-3">
-                    <CircularProgress size={130} progress={20} />
+                    <CircularProgress
+                      size={is1150pxScale ? 130 : is1100pxScale ? 120 : 110}
+                      progress={20}
+                    />
                   </ZFlex>
                 </ZCard>
               </SwiperSlide>
 
               <SwiperSlide className="h-auto">
-                <ZCard className="flex items-center justify-center w-full h-full gap-3 transition-all duration-300 scale-95 cursor-pointer select-none hover:scale-100">
+                <ZCard className="flex items-center justify-center w-full h-full gap-3 transition-all duration-300 scale-95 cursor-pointer select-none hover:scale-100 maxXs:flex-col-reverse">
                   <ZBox>
-                    <ZBox className="h-36">
+                    <ZBox
+                      className="h-24 lg:h-28 min1150px:h-36"
+                      show={isXsScale}
+                    >
                       <ZAuthenticationSvg className="w-full h-full" />
                     </ZBox>
                     <ZHeading
                       as={ZRUHeadingAsE.h4}
-                      className="mt-3 font-normal"
+                      className="mt-3 text-lg font-normal lg:text-xl min1150px:text-2xl"
                     >
                       ID Verification
                     </ZHeading>
                   </ZBox>
                   <ZFlex className="flex-col items-end justify-center flex-1 gap-3">
-                    <CircularProgress size={130} progress={30} />
+                    <CircularProgress
+                      size={is1150pxScale ? 130 : is1100pxScale ? 120 : 110}
+                      progress={30}
+                    />
                   </ZFlex>
                 </ZCard>
               </SwiperSlide>
 
               <SwiperSlide className="h-auto">
-                <ZCard className="flex items-center w-full h-full gap-3 transition-all duration-300 scale-95 cursor-pointer select-none hover:scale-100">
+                <ZCard className="flex items-center w-full h-full gap-3 transition-all duration-300 scale-95 cursor-pointer select-none hover:scale-100 maxXs:flex-col-reverse">
                   <ZBox>
-                    <ZBox className="h-36">
+                    <ZBox
+                      className="h-24 lg:h-28 min1150px:h-36"
+                      show={isXsScale}
+                    >
                       <ZMaleAvatarSvg className="w-full h-full" />
                     </ZBox>
 
                     <ZHeading
                       as={ZRUHeadingAsE.h4}
-                      className="mt-3 font-normal"
+                      className="mt-3 text-lg font-normal lg:text-xl min1150px:text-2xl "
                     >
                       Face verification
                     </ZHeading>
                   </ZBox>
 
                   <ZFlex className="flex-col items-end flex-1 gap-3">
-                    <CircularProgress size={130} progress={30} />
+                    <CircularProgress
+                      size={is1150pxScale ? 130 : is1100pxScale ? 120 : 110}
+                      progress={30}
+                    />
                   </ZFlex>
                 </ZCard>
               </SwiperSlide>
             </Swiper>
           </ZBox>
 
-          <ZFlex className="items-end justify-center gap-6 mt-7 *:flex-1">
+          <ZFlex className="md:items-end md:justify-center maxMd:flex-col gap-6 mt-7 min900px:*:flex-1">
             <ZBox className="space-y-4 *:py-2">
               <ZCallout
                 content="Complete your verification, let more people trust you!"
@@ -182,10 +206,17 @@ const Credit: React.FC = () => {
               />
             </ZBox>
             <ZBox className="flex flex-col items-center justify-center">
-              <ZHeading as={ZRUHeadingAsE.h5} className="mb-3 font-medium">
+              <ZHeading
+                as={ZRUHeadingAsE.h5}
+                className="mb-3 text-xl font-medium min900px:text-2xl"
+              >
                 Proportion
               </ZHeading>
-              <CircularProgress size={150} strokeWidth={10} progress={25} />
+              <CircularProgress
+                size={is900pxScale ? 150 : 120}
+                strokeWidth={10}
+                progress={25}
+              />
             </ZBox>
           </ZFlex>
         </ZCard>

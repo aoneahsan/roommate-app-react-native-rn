@@ -37,6 +37,7 @@ import {
   ZCloseIcon,
   ZHomeOutlineIcon,
   ZMessageOutlineIcon,
+  ZUserOutlineIcon,
   ZUserPlusOutlineIcon,
 } from "@/assets";
 
@@ -72,6 +73,13 @@ const ZPrivSidebarContent: React.FC<{ closeSidebar?: () => void }> = ({
         icon: <ZMessageOutlineIcon className="w-6 h-6" />,
         routes: [AppRoutes.appSub.messages.completePath],
         mainRoute: AppRoutes.appSub.messages.completePath,
+        isVisible: true,
+      },
+      {
+        title: "Profile",
+        icon: <ZUserOutlineIcon className="w-6 h-6" />,
+        routes: [AppRoutes.appSub.profile.completePath],
+        mainRoute: AppRoutes.appSub.profile.completePath,
         isVisible: true,
       },
     ],

@@ -107,10 +107,20 @@ export const messagesRoute = createRoute({
   ),
 });
 
+export const appProfileRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: AppRoutes.appSub.profile.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/ViewProfile")
+  ),
+});
+
 export const appRouteTree = appRoute.addChildren([
   placesListRoute,
   usersRoute,
   messagesRoute,
+  appProfileRoute,
 ]);
 
 // Reset password

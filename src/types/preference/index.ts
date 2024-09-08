@@ -58,4 +58,5 @@ export interface IRoommatesPreference {
     [FormFieldsEnum.pets]?: EPetsType
     [FormFieldsEnum.guests]?: EGuestsType
     [FormFieldsEnum.cleanliness]?: ECleanlinessType
+    [FormFieldsEnum.others]?: string
 }

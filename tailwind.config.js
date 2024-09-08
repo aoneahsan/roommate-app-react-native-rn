@@ -45,6 +45,9 @@ export default {
       min950px: { min: "950px" },
       max950px: { max: "949px" },
 
+      min1150px: { min: "1150px" },
+      max1150px: { max: "1149px" },
+
       lg: { min: "1100px" },
       maxLg: { max: "1099px" },
 

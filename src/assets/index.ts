@@ -52,6 +52,7 @@ import { IoImageOutline as ZImageOutlineIcon } from "react-icons/io5";
 import { FiUserPlus as ZUserPlusOutlineIcon } from "react-icons/fi";
 import { IoFilterSharp as ZFilterSharpOutlineIcon } from "react-icons/io5";
 import { AiOutlineMessage as ZMessageOutlineIcon } from "react-icons/ai";
+import { FiUser as ZUserOutlineIcon } from "react-icons/fi";
 
 // Custom svg's
 import ZHeaterSvg from './svgs/Heater';
@@ -122,5 +123,6 @@ export {
     ZImageOutlineIcon,
     ZUserPlusOutlineIcon,
     ZFilterSharpOutlineIcon,
-    ZMessageOutlineIcon
+    ZMessageOutlineIcon,
+    ZUserOutlineIcon
 }

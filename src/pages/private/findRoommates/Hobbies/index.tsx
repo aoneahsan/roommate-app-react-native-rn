@@ -146,6 +146,7 @@ const Hobbies: React.FC = () => {
                   to: AppRoutes.roomPreference,
                 });
               }}
+              className="maxMd:w-full"
             >
               <ZArrowLeftLongIcon /> Go Back
             </ZButton>

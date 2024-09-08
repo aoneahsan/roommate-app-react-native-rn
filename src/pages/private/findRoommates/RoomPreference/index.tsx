@@ -96,6 +96,7 @@ const RoomPreference: React.FC = () => {
                 to: AppRoutes.appSub.placesList.completePath,
               });
             }}
+            className="maxMd:w-full"
           >
             Cancel
           </ZButton>

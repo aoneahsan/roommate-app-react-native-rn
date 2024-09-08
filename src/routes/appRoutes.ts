@@ -35,6 +35,11 @@ const AppRoutesE = {
 			completePath: `${AppRoutesCommonPath.app}/places-list`,
 		},
 
+		profile: {
+			path: '/profile',
+			completePath: `${AppRoutesCommonPath.app}/profile`,
+		},
+
 		users: {
 			path: '/users',
 			completePath: `${AppRoutesCommonPath.app}/users`,

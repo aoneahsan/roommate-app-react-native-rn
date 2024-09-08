@@ -168,6 +168,7 @@ export enum FormFieldsEnum {
 	occupation = 'occupation',
 	foodPreference = 'foodPreference',
 	workSchedule = 'workSchedule',
+	others = 'others',
 
 	// Offer
 	rate = 'rate',
