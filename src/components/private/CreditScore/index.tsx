@@ -58,7 +58,14 @@ const CreditScore: React.FC<CreditScoreProps> = ({
             }
           )}
         >
-          <ZText size={textSize} show={scorePercentage > 0}>
+          <ZText
+            size={textSize}
+            show={
+              scorePercentage !== undefined &&
+              scorePercentage !== null &&
+              scorePercentage > 0
+            }
+          >
             {scorePercentage}%
           </ZText>
         </ZBox>
