@@ -190,7 +190,7 @@ const Hobbies: React.FC = () => {
                   {hobbies?.map((el, index) => {
                     return (
                       <ZRCSelect
-                        showLabelBtn
+                        // showLabelBtn
                         isMulti
                         key={index}
                         label={el?.label}
@@ -203,11 +203,12 @@ const Hobbies: React.FC = () => {
                         onChange={(value) => {
                           setFieldValue(el?.name, value);
                         }}
-                        labelBtnProps={{
-                          children: el?.labelBtnText,
-                          variant: ZRUVariantE.ghost,
-                          onClick: () => showCustomHobbyModal(el?.type),
-                        }}
+                        // labelBtnProps={{
+                        //   children: el?.labelBtnText,
+                        //   variant: ZRUVariantE.ghost,
+                        //   type: "button",
+                        //   onClick: () => showCustomHobbyModal(el?.type),
+                        // }}
                       />
                     );
                   })}

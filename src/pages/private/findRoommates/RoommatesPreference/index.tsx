@@ -13,6 +13,7 @@ import {
   ZPage,
   ZRadioCardsGroup,
   ZRadioCardsItem,
+  ZRCSelect,
   ZRUAlignE,
   ZRUColorE,
   ZSlider,
@@ -50,6 +51,7 @@ import {
 // #region ---- Images Imports ----
 import { ZArrowLeftLongIcon, ZArrowRightLongIcon } from "@/assets";
 import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
+import ZAgesData from "@/data/ages";
 
 // #endregion
 
@@ -197,12 +199,13 @@ const RoommatesPreference: React.FC = () => {
           errors,
           touched,
           dirty,
+          setFieldTouched,
         }) => {
           return (
             <Form>
               <ZContainer size="3" className="my-6 maxLg:mx-3">
                 <ZCard className="*:w-full space-y-3 sm:p-5 mb-4">
-                  <ZCard>
+                  {/* <ZCard>
                     <ZText>Age</ZText>
                     <ZFlex className="w-full gap-3 maxSm:flex-col sm:items-center">
                       <ZText className="text-lg">18+</ZText>
@@ -214,7 +217,27 @@ const RoommatesPreference: React.FC = () => {
                       </ZBox>
                       <ZText className="text-lg maxSm:ms-auto">100</ZText>
                     </ZFlex>
-                  </ZCard>
+                  </ZCard> */}
+
+                  <ZRCSelect
+                    label="Age"
+                    name={FormFieldsEnum.age}
+                    // required
+                    // value={values?.[FormFieldsEnum.age]}
+                    isTouched={touched?.[FormFieldsEnum.age]}
+                    placeholder="Select Your Age"
+                    isMulti={false}
+                    options={ZAgesData}
+                    errorMessage={errors?.[FormFieldsEnum.age]}
+                    onBlur={() => {
+                      if (!touched?.[FormFieldsEnum.age]) {
+                        setFieldTouched(FormFieldsEnum.age, true);
+                      }
+                    }}
+                    onChange={(value) => {
+                      setFieldValue(FormFieldsEnum.age, value);
+                    }}
+                  />
 
                   {roommatesPreference?.map((el, index) => (
                     <ZCard key={index}>

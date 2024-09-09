@@ -59,4 +59,5 @@ export interface IRoommatesPreference {
     [FormFieldsEnum.guests]?: EGuestsType
     [FormFieldsEnum.cleanliness]?: ECleanlinessType
     [FormFieldsEnum.others]?: string
+    [FormFieldsEnum.age]?: string
 }

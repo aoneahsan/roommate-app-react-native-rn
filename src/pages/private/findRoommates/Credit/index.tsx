@@ -67,6 +67,11 @@ const Credit: React.FC = () => {
             className="font-medium tracking-wider me-1 maxMd:w-full"
             color={ZRUColorE.yellow}
             variant={isMdScale ? ZRUVariantE.ghost : ZRUVariantE.solid}
+            onClick={() => {
+              navigate({
+                to: AppRoutes.appSub.placesList.completePath,
+              });
+            }}
           >
             Skip
           </ZButton>
@@ -220,7 +225,14 @@ const Credit: React.FC = () => {
             </ZBox>
           </ZFlex>
         </ZCard>
-        <ZButton className="mt-6 max900px:w-full">
+        <ZButton
+          className="mt-6 max900px:w-full"
+          onClick={() => {
+            navigate({
+              to: AppRoutes.appSub.placesList.completePath,
+            });
+          }}
+        >
           Save & Continue <ZArrowRightLongIcon className="mt-px" />
         </ZButton>
       </ZContainer>

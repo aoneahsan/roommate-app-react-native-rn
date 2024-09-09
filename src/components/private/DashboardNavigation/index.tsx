@@ -82,7 +82,10 @@ const ZPrivNavigation: React.FC = () => {
             }}
           />
         ) : null}
-        <ZHeading as={ZRUHeadingAsE.h1} className="text-body">
+        <ZHeading
+          as={ZRUHeadingAsE.h1}
+          className="text-lg sm:text-xl text-body md:text-2xl"
+        >
           {constants.productInfo.name}
         </ZHeading>
       </ZFlex>

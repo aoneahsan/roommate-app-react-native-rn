@@ -53,6 +53,12 @@ import { FiUserPlus as ZUserPlusOutlineIcon } from "react-icons/fi";
 import { IoFilterSharp as ZFilterSharpOutlineIcon } from "react-icons/io5";
 import { AiOutlineMessage as ZMessageOutlineIcon } from "react-icons/ai";
 import { FiUser as ZUserOutlineIcon } from "react-icons/fi";
+import { IoIosArrowForward as ZArrowForwardOutlineIcon } from "react-icons/io";
+import { FaRegUser as ZRegUserOutlineIcon } from "react-icons/fa";
+import { IoNotificationsOutline as ZNotificationsOutlineIcon } from "react-icons/io5";
+import { PiUserSwitch as ZUserSwitchOutlineIcon } from "react-icons/pi";
+import { LuHelpCircle as ZHelpCircleOutlineIcon } from "react-icons/lu";
+import { RiUserFollowLine as ZUserFollowLineOutlineIcon } from "react-icons/ri";
 
 // Custom svg's
 import ZHeaterSvg from './svgs/Heater';
@@ -124,5 +130,11 @@ export {
     ZUserPlusOutlineIcon,
     ZFilterSharpOutlineIcon,
     ZMessageOutlineIcon,
-    ZUserOutlineIcon
+    ZUserOutlineIcon,
+    ZArrowForwardOutlineIcon,
+    ZRegUserOutlineIcon,
+    ZNotificationsOutlineIcon,
+    ZUserSwitchOutlineIcon,
+    ZHelpCircleOutlineIcon,
+    ZUserFollowLineOutlineIcon
 }
