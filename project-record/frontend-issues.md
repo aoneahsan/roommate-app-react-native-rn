@@ -1,5 +1,18 @@
 # Room mate app frontend issues
 
+- 9-9-24
+  - http://localhost:5173/posting-list/step-four
+    - form validation incorrect
+  - http://localhost:5173/posting-list/step-five
+    - please keep two items per row for small devices, below 463, right now only one item per row
+      - talking about, wifi, etc boxes/cards
+  - http://localhost:5173/app/users
+    - need to confirm from task video
+      - Incomplete work
+        - user info modal not added, click anywhere on the card and it opens the "Offer Modal", no way to view the user info
+  - http://localhost:5173/app/messages
+    - need to confirm from task video
+      - not page created for 1 to 1 chat
 - 6-9-24
   - profile page
     - form submission
