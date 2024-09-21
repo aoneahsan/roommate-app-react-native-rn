@@ -76,6 +76,13 @@ const ZPrivSidebarContent: React.FC<{ closeSidebar?: () => void }> = ({
         isVisible: true,
       },
       {
+        title: "Inbox & Notifications",
+        icon: <ZMessageOutlineIcon className="w-6 h-6" />,
+        routes: [AppRoutes.appSub.inboxNotifications.completePath],
+        mainRoute: AppRoutes.appSub.inboxNotifications.completePath,
+        isVisible: true,
+      },
+      {
         title: "Profile",
         icon: <ZUserOutlineIcon className="w-6 h-6" />,
         routes: [AppRoutes.appSub.profile.completePath],

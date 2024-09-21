@@ -4,14 +4,13 @@ import React, { useCallback, useMemo } from "react";
 // #endregion
 
 // #region ---- Packages Imports ----
+import { useNavigate } from "@tanstack/react-router";
+import { Form, Formik, FormikHelpers } from "formik";
+import { useRecoilValue } from "recoil";
+import { IApiResponse, IUser } from "zaions-react-tool-kit";
 import {
-  isZNonEmptyString,
-  ResponseCodeEnum,
-  ResponseStatusEnum,
-  zJsonParse,
-  zStringify,
-} from "zaions-tool-kit";
-import {
+  showErrorNotification,
+  showSuccessNotification,
   ZBox,
   ZCard,
   ZCheckboxGroup,
@@ -28,35 +27,35 @@ import {
   ZRUJustifyE,
   ZRUTextAsE,
   ZText,
-  showErrorNotification,
-  showSuccessNotification,
 } from "zaions-react-ui-kit";
-import { IApiResponse, IUser } from "zaions-react-tool-kit";
+import {
+  isZNonEmptyString,
+  ResponseCodeEnum,
+  ResponseStatusEnum,
+  zStringify,
+} from "zaions-tool-kit";
 import { ZodError } from "zod";
-import { Form, Formik, FormikHelpers } from "formik";
-import { useNavigate } from "@tanstack/react-router";
-import { useRecoilValue } from "recoil";
 
 // #endregion
 
 // #region ---- Custom Imports ----
+import FormActionButtons from "@/components/form/FormActionButtons";
+import ZPubNavigation from "@/components/public/Navigation";
+import { getFrbAuthInstance } from "@/firebaseInstance";
 import { usePostRequest } from "@/hooks/reactQuery";
 import { AppRoutes } from "@/routes/appRoutes";
 import { reactQueryKeys } from "@/utils/constants/reactQuery";
 import { MESSAGES } from "@/utils/messages";
 import { registerFormValidationSchema } from "@/validationSchema";
-import ZPubNavigation from "@/components/public/Navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import FormActionButtons from "@/components/form/FormActionButtons";
-import { getFrbAuthInstance } from "@/firebaseInstance";
 
 // #endregion
 
 // #region ---- Types Imports ----
+import { ApiPathEnum } from "@/enums/backendApi";
 import { RegisterFormFieldsEnum } from "@/enums/formData";
 import { ZRegisterI } from "@/types/auth";
-import { ApiPathEnum } from "@/enums/backendApi";
-import { ZWithdrawOptionE } from "@/types/user/index.type";
+import { ZWithdrawOptionE } from "@/types/user";
 
 // #endregion
 

@@ -4,8 +4,9 @@ import React, { useMemo } from "react";
 // #endregion
 
 // #region ---- Packages Imports ----
+import { useNavigate } from "@tanstack/react-router";
+import { Form, Formik } from "formik";
 import {
-  ZBox,
   ZButton,
   ZCard,
   ZContainer,
@@ -14,31 +15,25 @@ import {
   ZRadioCardsGroup,
   ZRadioCardsItem,
   ZRCSelect,
-  ZRUAlignE,
   ZRUColorE,
-  ZSlider,
   ZText,
   ZTextArea,
 } from "zaions-react-ui-kit";
-import { Form, Formik } from "formik";
-import { useNavigate } from "@tanstack/react-router";
 
 // #endregion
 
 // #region ---- Custom Imports ----
-import NavigationHeader from "@/components/private/NavigationHeader";
 import FormActionButtons from "@/components/form/FormActionButtons";
+import NavigationHeader from "@/components/private/NavigationHeader";
 import { AppRoutes } from "@/routes/appRoutes";
 
 // #endregion
 
 // #region ---- Types Imports ----
 import {
-  ECleanlinessType,
   EGenderType,
   EGuestsType,
   EPetsType,
-  ESmokeType,
   type IRoommatesPreference,
 } from "@/types/preference";
 
@@ -50,8 +45,10 @@ import {
 
 // #region ---- Images Imports ----
 import { ZArrowLeftLongIcon, ZArrowRightLongIcon } from "@/assets";
-import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
 import ZAgesData from "@/data/ages";
+import ZCleanlinessData from "@/data/cleanliness";
+import ZSmokeData from "@/data/smoke";
+import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
 
 // #endregion
 
@@ -86,20 +83,7 @@ const RoommatesPreference: React.FC = () => {
         {
           label: "Smoke",
           name: FormFieldsEnum.smoke,
-          items: [
-            {
-              value: ESmokeType.no,
-              label: "No",
-            },
-            {
-              value: ESmokeType.yes,
-              label: "Yes",
-            },
-            {
-              value: ESmokeType.other,
-              label: "Other",
-            },
-          ],
+          items: ZSmokeData,
         },
         {
           label: "Pets",
@@ -140,24 +124,7 @@ const RoommatesPreference: React.FC = () => {
         {
           label: "Cleanliness",
           name: FormFieldsEnum.cleanliness,
-          items: [
-            {
-              value: ECleanlinessType.superClean,
-              label: "Super Clean",
-            },
-            {
-              value: ECleanlinessType.clean,
-              label: "Clean",
-            },
-            {
-              value: ECleanlinessType.lessClean,
-              label: "Less Clean",
-            },
-            {
-              value: ECleanlinessType.normalClean,
-              label: "Normal Clean",
-            },
-          ],
+          items: ZCleanlinessData,
         },
       ] as const,
     []

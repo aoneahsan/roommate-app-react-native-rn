@@ -5,10 +5,10 @@ import { RouterProvider } from "@tanstack/react-router";
 import AppRouter from "./routes";
 
 // Import Radix UI CSS
-import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer } from "react-toastify";
+import { RecoilRoot } from "recoil";
 
 import "@radix-ui/themes/styles.css";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -20,8 +20,8 @@ import "zaions-react-ui-kit/dist/index.css";
 // importing this here so the ENVs validation will kick in as soon as ap starts
 import "@/utils/envKeys";
 
-import { configureZTK } from "zaions-tool-kit";
 import ENVS from "@/utils/envKeys";
+import { configureZTK } from "zaions-tool-kit";
 
 // Import Swiper styles
 import "swiper/css";

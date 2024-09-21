@@ -4,7 +4,8 @@ import React, { useMemo } from "react";
 // #endregion
 
 // #region ---- Packages Imports ----
-import { Formik, Form } from "formik";
+import { useNavigate } from "@tanstack/react-router";
+import { Form, Formik } from "formik";
 import {
   ZButton,
   ZCard,
@@ -17,7 +18,6 @@ import {
   ZSeparator,
   ZText,
 } from "zaions-react-ui-kit";
-import { useNavigate } from "@tanstack/react-router";
 
 // #endregion
 
@@ -29,12 +29,9 @@ import { AppRoutes } from "@/routes/appRoutes";
 
 // #region ---- Types Imports ----
 import {
-  ECleanlinessType,
   EFoodPreferenceType,
-  EGuestsType,
   EOccupationType,
   EPetsType,
-  ESmokeType,
   EWorkScheduleType,
 } from "@/types/preference";
 
@@ -47,6 +44,9 @@ import {
 // #region ---- Images Imports ----
 import { ZArrowLeftLongIcon, ZArrowRightLongIcon } from "@/assets";
 import FormActionButtons from "@/components/form/FormActionButtons";
+import ZCleanlinessData from "@/data/cleanliness";
+import ZGuestsData from "@/data/guests";
+import ZSmokeData from "@/data/smoke";
 import { IMyLifeStyle } from "@/types/myLifeStyle";
 import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
 
@@ -73,42 +73,12 @@ const MyLifeStyle: React.FC = () => {
         {
           label: "Cleanliness",
           name: FormFieldsEnum.cleanliness,
-          items: [
-            {
-              value: ECleanlinessType.superClean,
-              label: "Super Clean",
-            },
-            {
-              value: ECleanlinessType.clean,
-              label: "Clean",
-            },
-            {
-              value: ECleanlinessType.lessClean,
-              label: "Less Clean",
-            },
-            {
-              value: ECleanlinessType.normalClean,
-              label: "Normal Clean",
-            },
-          ],
+          items: ZCleanlinessData,
         },
         {
           label: "Smoke",
           name: FormFieldsEnum.smoke,
-          items: [
-            {
-              value: ESmokeType.no,
-              label: "No",
-            },
-            {
-              value: ESmokeType.yes,
-              label: "Yes",
-            },
-            {
-              value: ESmokeType.other,
-              label: "Other",
-            },
-          ],
+          items: ZSmokeData,
         },
         {
           label: "Pets",
@@ -131,20 +101,7 @@ const MyLifeStyle: React.FC = () => {
         {
           label: "Guests",
           name: FormFieldsEnum.guests,
-          items: [
-            {
-              value: EGuestsType.no,
-              label: "No",
-            },
-            {
-              value: EGuestsType.yes,
-              label: "Yes",
-            },
-            {
-              value: EGuestsType.occasionally,
-              label: "Occasionally",
-            },
-          ],
+          items: ZGuestsData,
         },
         {
           label: "Occupation",

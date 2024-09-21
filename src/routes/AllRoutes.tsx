@@ -1,16 +1,16 @@
 // #region Packages imports
 import {
+  createRoute,
   lazyRouteComponent,
   redirect,
-  createRoute,
 } from "@tanstack/react-router";
 // #endregion
 
 // #region Custom imports
-import tanstackRootRoute from "./RootRoute";
-import { AppRoutes } from "@/routes/appRoutes";
 import { getFrbAuthInstance } from "@/firebaseInstance";
+import { AppRoutes } from "@/routes/appRoutes";
 import { isZNonEmptyString } from "zaions-tool-kit";
+import tanstackRootRoute from "./RootRoute";
 // #endregion
 
 const frbAuth = getFrbAuthInstance();
@@ -98,6 +98,15 @@ export const usersRoute = createRoute({
   ),
 });
 
+export const usersFilterRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: AppRoutes.appSub.users.filter.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/Users/Filter")
+  ),
+});
+
 export const messagesRoute = createRoute({
   getParentRoute: () => appRoute,
   path: AppRoutes.appSub.messages.path,
@@ -116,11 +125,42 @@ export const appProfileRoute = createRoute({
   ),
 });
 
+export const gigiRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: AppRoutes.appSub.gigi.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/Gigi")
+  ),
+});
+
+export const inboxNotificationsRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: AppRoutes.appSub.inboxNotifications.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/InboxNotifications")
+  ),
+});
+
+export const viewPersonRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: AppRoutes.appSub.viewPerson.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/ViewPerson")
+  ),
+});
+
 export const appRouteTree = appRoute.addChildren([
   placesListRoute,
   usersRoute,
+  usersFilterRoute,
   messagesRoute,
   appProfileRoute,
+  gigiRoute,
+  inboxNotificationsRoute,
+  viewPersonRoute,
 ]);
 
 // Reset password

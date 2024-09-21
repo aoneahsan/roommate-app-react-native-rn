@@ -43,6 +43,10 @@ const AppRoutesE = {
 		users: {
 			path: '/users',
 			completePath: `${AppRoutesCommonPath.app}/users`,
+			filter: {
+				path: '/users/filter',
+				completePath: `${AppRoutesCommonPath.app}/users/filter`,
+			}
 		},
 
 		messages: {
@@ -50,10 +54,19 @@ const AppRoutesE = {
 			completePath: `${AppRoutesCommonPath.app}/messages`,
 		},
 
+		gigi: {
+			path: '/gigi',
+			completePath: `${AppRoutesCommonPath.app}/gigi`,
+		},
 
-		games: {
-			path: '/games',
-			completePath: `${AppRoutesCommonPath.app}/games`,
+		inboxNotifications: {
+			path: '/inbox-notifications',
+			completePath: `${AppRoutesCommonPath.app}/inbox-notifications`,
+		},
+
+		viewPerson: {
+			path: '/view-person',
+			completePath: `${AppRoutesCommonPath.app}/view-person`,
 		}
 	},
 

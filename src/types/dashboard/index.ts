@@ -1,4 +1,4 @@
-import { IUser } from "../user/index.type";
+import { IUser } from "../user";
 // Interfaces
 export interface IDashboard {
     activeUsers?: Array<IUser>

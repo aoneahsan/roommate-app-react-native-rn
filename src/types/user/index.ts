@@ -1,6 +1,8 @@
 import { FormFieldsEnum } from '@/utils/enums/formFieldsEnum';
 import { IUser as IUserZRTK } from 'zaions-react-tool-kit';
 import { ZRUSelectValueI } from 'zaions-react-ui-kit';
+import { ECleanlinessType, EGenderType, EGuestsType, EPetsType, ESmokeType } from '../preference';
+import { EBuildingType } from '../roomPreference';
 
 // Enums
 export enum ZWithdrawOptionE {
@@ -50,4 +52,19 @@ export interface IUser extends Partial<IUserZRTK> {
 
     // For frontend 
     [FormFieldsEnum.actions]?: string
+}
+
+export interface IUserFilter {
+    [FormFieldsEnum.buildingType]?: EBuildingType
+    [FormFieldsEnum.gender]?: EGenderType
+    [FormFieldsEnum.cleanliness]?: ECleanlinessType
+    [FormFieldsEnum.smoke]?: ESmokeType
+    [FormFieldsEnum.pets]?: EPetsType
+    [FormFieldsEnum.overnightGuests]?: EGuestsType
+    [FormFieldsEnum.city]?: string
+    [FormFieldsEnum.age]?: string
+    [FormFieldsEnum.minBudget]?: string
+    [FormFieldsEnum.maxBudget]?: string
+    [FormFieldsEnum.moveInDate]?: string
+    [FormFieldsEnum.moveOutDate]?: string
 }

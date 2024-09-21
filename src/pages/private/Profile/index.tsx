@@ -5,6 +5,7 @@ import React, { useCallback, useMemo } from "react";
 
 // #region ---- Packages Imports ----
 import { Form, Formik } from "formik";
+import { useRecoilValue } from "recoil";
 import {
   showErrorNotification,
   ZAvatar,
@@ -21,29 +22,28 @@ import {
   ZRURadiusE,
   ZText,
 } from "zaions-react-ui-kit";
-import { useRecoilValue } from "recoil";
 import { ZodError } from "zod";
 
 // #endregion
 
 // #region ---- Custom Imports ----
-import ZAgesData from "@/data/ages";
-import ZGenderData from "@/data/gender";
-import ZConstellationsData from "@/data/constellations";
 import NavigationHeader from "@/components/private/NavigationHeader";
+import ZAgesData from "@/data/ages";
+import ZConstellationsData from "@/data/constellations";
+import ZGenderData from "@/data/gender";
 import {
   fileSettingRStateAtom,
   formValidationRStateAtom,
 } from "@/state/formState";
-import { profileFormValidationSchema } from "@/validationSchema";
-import { fileValidation } from "@/utils/helpers";
 import { FormFieldsEnum } from "@/utils/enums/formFieldsEnum";
+import { fileValidation } from "@/utils/helpers";
+import { profileFormValidationSchema } from "@/validationSchema";
 
 // #endregion
 
 // #region ---- Types Imports ----
-import { IUser } from "@/types/user/index.type";
 import { fileErrorEnum } from "@/types/generic";
+import { IUser } from "@/types/user";
 
 // #endregion
 
@@ -53,10 +53,10 @@ import { fileErrorEnum } from "@/types/generic";
 
 // #region ---- Images Imports ----
 import { ZAddIcon, ZArrowRightLongIcon, ZAvatarImage } from "@/assets";
-import { useNavigate } from "@tanstack/react-router";
-import { AppRoutes } from "@/routes/appRoutes";
 import ZCitiesData from "@/data/cities";
 import ZLanguagesData from "@/data/languages";
+import { AppRoutes } from "@/routes/appRoutes";
+import { useNavigate } from "@tanstack/react-router";
 
 // #endregion
 

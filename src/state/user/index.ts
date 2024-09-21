@@ -1,6 +1,5 @@
 
-import { IUser } from '@/types/user/index.type';
-import constants from '@/utils/constants';
+import { IUser } from '@/types/user';
 import { FormFieldsEnum } from '@/utils/enums/formFieldsEnum';
 import { atom, selector } from 'recoil';
 import { ZFilterAndPaginateData, ZFilterOptions, ZPaginationInfoI } from 'zaions-react-tool-kit';

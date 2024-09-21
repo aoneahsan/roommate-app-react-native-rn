@@ -15,6 +15,7 @@ export enum FormFieldsEnum {
 	otherPlayerId = 'otherPlayerId',
 	otherPlayerData = 'otherPlayerData',
 	actions = 'actions',
+	overnightGuests = 'overnightGuests',
 
 	title = 'title',
 	description = 'description',

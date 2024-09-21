@@ -1,7 +1,9 @@
+import { EGenderType } from "@/types/preference";
+
 const ZGenderData = [
-    { value: 'male', label: 'Male' },
-    { value: 'female', label: 'Female' },
-    { value: 'non-binary', label: 'Non-Binary' },
+    { value: EGenderType.male, label: 'Male' },
+    { value: EGenderType.female, label: 'Female' },
+    { value: EGenderType.nonBinary, label: 'Non-Binary' },
 ];
 
 export default ZGenderData

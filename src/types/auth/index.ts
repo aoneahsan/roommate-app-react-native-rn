@@ -1,5 +1,5 @@
 import { RegisterFormFieldsEnum, ResetPasswordFormFieldsEnum } from "@/enums/formData";
-import { ZWithdrawOptionE } from "../user/index.type";
+import { ZWithdrawOptionE } from "../user";
 
 // Enums
 export enum ZResetPasswordStepE {

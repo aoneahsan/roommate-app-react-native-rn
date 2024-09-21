@@ -1,7 +1,10 @@
 // #region ---- Core Imports ----
-import { ZFilterSharpOutlineIcon } from "@/assets";
-import OtherUserInfoCard from "@/components/private/OtherUserInfoCard";
-import React from "react";
+import React, { useCallback } from "react";
+
+// #endregion
+
+// #region ---- Packages Imports ----
+import { useNavigate } from "@tanstack/react-router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useZMediaQueryScale } from "zaions-react-tool-kit";
 import {
@@ -15,11 +18,9 @@ import {
 
 // #endregion
 
-// #region ---- Packages Imports ----
-
-// #endregion
-
 // #region ---- Custom Imports ----
+import OtherUserInfoCard from "@/components/private/OtherUserInfoCard";
+import { AppRoutes } from "@/routes/appRoutes";
 
 // #endregion
 
@@ -32,11 +33,20 @@ import {
 // #endregion
 
 // #region ---- Images Imports ----
+import { ZFilterSharpOutlineIcon } from "@/assets";
 
 // #endregion
 
 const Users: React.FC = () => {
+  const navigate = useNavigate();
   const { is768Scale, isSmScale } = useZMediaQueryScale();
+
+  const gotoFilter = useCallback(() => {
+    navigate({
+      to: AppRoutes.appSub.users.filter.completePath,
+    });
+  }, []);
+
   return (
     <>
       <ZBox className="md:px-2 md:py-2">
@@ -49,7 +59,7 @@ const Users: React.FC = () => {
             Users
           </ZHeading>
 
-          <ZButton>
+          <ZButton onClick={gotoFilter}>
             <ZFilterSharpOutlineIcon className="w-5 h-5" /> Filter
           </ZButton>
         </ZFlex>
