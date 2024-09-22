@@ -116,6 +116,15 @@ export const messagesRoute = createRoute({
   ),
 });
 
+export const chatRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: AppRoutes.appSub.chat.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import("@/pages/private/Messages/Chat")
+  ),
+});
+
 export const appProfileRoute = createRoute({
   getParentRoute: () => appRoute,
   path: AppRoutes.appSub.profile.path,
@@ -157,6 +166,7 @@ export const appRouteTree = appRoute.addChildren([
   usersRoute,
   usersFilterRoute,
   messagesRoute,
+  chatRoute,
   appProfileRoute,
   gigiRoute,
   inboxNotificationsRoute,

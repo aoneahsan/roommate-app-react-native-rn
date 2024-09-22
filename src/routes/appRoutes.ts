@@ -54,6 +54,11 @@ const AppRoutesE = {
 			completePath: `${AppRoutesCommonPath.app}/messages`,
 		},
 
+		chat: {
+			path: '/chat',
+			completePath: `${AppRoutesCommonPath.app}/chat`,
+		},
+
 		gigi: {
 			path: '/gigi',
 			completePath: `${AppRoutesCommonPath.app}/gigi`,

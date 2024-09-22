@@ -1,22 +1,22 @@
 import {
-  indigo,
-  gold,
-  gray,
+  amber,
+  blue,
   bronze,
   brown,
-  yellow,
-  amber,
-  orange,
-  tomato,
-  red,
-  blue,
-  sky,
-  jade,
-  indigoDarkA,
+  gold,
   grass,
   grassDark,
-  slateDark,
+  gray,
+  indigo,
+  indigoDarkA,
+  jade,
+  orange,
+  red,
+  sky,
   slate,
+  slateDark,
+  tomato,
+  yellow,
 } from "@radix-ui/colors";
 
 /** @type {import('tailwindcss').Config} */
@@ -59,6 +59,9 @@ export default {
 
       "2xl": { min: "1440px" },
       max2Xl: { max: "1439px" },
+
+      min1500px: { min: "1500px" },
+      max1499px: { max: "1499px" },
     },
     extend: {
       colors: {

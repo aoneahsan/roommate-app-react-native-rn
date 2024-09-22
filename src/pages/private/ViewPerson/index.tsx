@@ -77,7 +77,7 @@ const ViewPerson: React.FC = () => {
         </ZFlex>
       </ZCard>
 
-      <ZFlex align={ZRUAlignE.start} className="gap-5 mt-5">
+      <ZFlex align={ZRUAlignE.start} className="flex-wrap gap-5 mt-5">
         <ZCard className="w-96">
           <ZDataList
             dataList={[

@@ -346,7 +346,7 @@ const Layout: React.FC = () => {
               </defs>
             </svg>
 
-            <ZBox className="relative z-30">
+            <ZBox className="relative z-30 h-full">
               <Outlet />
             </ZBox>
           </ZBox>

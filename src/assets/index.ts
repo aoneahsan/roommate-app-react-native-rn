@@ -14,7 +14,7 @@ import { CgProfile as ZProfileIcon } from "react-icons/cg";
 import { CiInboxOut as ZInboxOutOutlineIcon } from "react-icons/ci";
 import { FaRegUser as ZRegUserOutlineIcon } from "react-icons/fa";
 import { FaArrowLeftLong as ZArrowLeftLongIcon, FaArrowRightLong as ZArrowRightLongIcon, FaWifi as ZWifiOutlineIcon } from "react-icons/fa6";
-import { FiHome as ZHomeOutlineIcon, FiUser as ZUserOutlineIcon, FiUserPlus as ZUserPlusOutlineIcon } from "react-icons/fi";
+import { FiFileText as ZFileTextOutlineIcon, FiHome as ZHomeOutlineIcon, FiUser as ZUserOutlineIcon, FiUserPlus as ZUserPlusOutlineIcon } from "react-icons/fi";
 import { GrGamepad as ZGamepadOutlineIcon } from "react-icons/gr";
 import { HiOutlineFilm as ZFilmOutlineIcon, HiMiniMagnifyingGlass as ZMagnifyingGlassOutlineIcon, HiOutlineTv as ZTvOutlineIcon } from "react-icons/hi2";
 import { IoMdAdd as ZAddIcon, IoIosArrowForward as ZArrowForwardOutlineIcon, IoIosRemove as ZRemoveIcon } from "react-icons/io";
@@ -42,7 +42,7 @@ export {
     NewsPaperAppIcon,
     NewYorkTimesLogo,
     userDashboardImage, ZAddIcon, ZAddLocationOutlineIcon, ZArrowDownIcon, ZArrowForwardOutlineIcon, ZArrowLeftLongIcon, ZArrowRightLongIcon, ZArrowUpSquareIcon, ZAuthenticationSvg, ZAvatarImage,
-    ZAvatarLgImage, ZBalconyOutlineIcon, ZBathtubOutlineIcon, ZBedOutlineIcon, ZCarOutlineIcon, ZCityLightOutlineIcon, ZCloseIcon, ZClosetOutlineIcon, ZCoinsOutlineIcon, ZDoorOpenOutlineIcon, ZEditOutlineIcon, ZElectricBoltOutlineIcon, ZEllipsisVerticalCircleOutlineIcon, ZFilmOutlineIcon, ZFilterSharpOutlineIcon, ZGamepadOutlineIcon, ZGroupOutlineIcon, ZHandCoinsOutlineIcon, ZHeaterSvg, ZHelpCircleOutlineIcon, ZHomeOutlineIcon, ZImageOutlineIcon, ZInboxesOutlineIcon, ZInboxOutOutlineIcon, ZLaundryOutlineIcon, ZLocationOutlineIcon, ZLogOutOutlineIcon, ZMagnifyingGlassOutlineIcon, ZMaleAvatarSvg, ZMapAltOutlineIcon, ZMenuIcon, ZMessageOutlineIcon, ZMusicOutlineIcon, ZNotificationsOutlineIcon, ZParkingCircleOutlineIcon, ZPeopleSearchSvg, ZPersonalInfoSvg, ZPlaceSvg,
+    ZAvatarLgImage, ZBalconyOutlineIcon, ZBathtubOutlineIcon, ZBedOutlineIcon, ZCarOutlineIcon, ZCityLightOutlineIcon, ZCloseIcon, ZClosetOutlineIcon, ZCoinsOutlineIcon, ZDoorOpenOutlineIcon, ZEditOutlineIcon, ZElectricBoltOutlineIcon, ZEllipsisVerticalCircleOutlineIcon, ZFileTextOutlineIcon, ZFilmOutlineIcon, ZFilterSharpOutlineIcon, ZGamepadOutlineIcon, ZGroupOutlineIcon, ZHandCoinsOutlineIcon, ZHeaterSvg, ZHelpCircleOutlineIcon, ZHomeOutlineIcon, ZImageOutlineIcon, ZInboxesOutlineIcon, ZInboxOutOutlineIcon, ZLaundryOutlineIcon, ZLocationOutlineIcon, ZLogOutOutlineIcon, ZMagnifyingGlassOutlineIcon, ZMaleAvatarSvg, ZMapAltOutlineIcon, ZMenuIcon, ZMessageOutlineIcon, ZMusicOutlineIcon, ZNotificationsOutlineIcon, ZParkingCircleOutlineIcon, ZPeopleSearchSvg, ZPersonalInfoSvg, ZPlaceSvg,
     // Icons
     ZPresentationChartOutlineIcon, ZProfileIcon, ZRegUserOutlineIcon, ZRemoveIcon,
     ZRoomOutlineIcon, ZSearchLocationOutlineIcon, ZSecurityOutlineIcon, ZTrashOutlineIcon, ZTvOutlineIcon, ZUserFollowLineOutlineIcon, ZUserOutlineIcon, ZUserPlusOutlineIcon, ZUserSwitchOutlineIcon, ZWarningOutlineIcon, ZWashTemperatureOutlineIcon, ZWaterOutlineIcon, ZWifiOutlineIcon
