@@ -13,22 +13,20 @@ import {
   showSuccessNotification,
   ZBox,
   ZCard,
-  ZCheckboxGroup,
-  ZCheckboxItem,
   ZFlex,
   ZHeading,
   ZInput,
   ZLink,
   ZRUAlignE,
-  ZRUColorE,
   ZRUDirectionE,
   ZRUGeneralAlignE,
   ZRUInputTypeE,
   ZRUJustifyE,
-  ZRUTextAsE,
   ZText,
 } from "zaions-react-ui-kit";
 import {
+  ApiPathEnum,
+  FormFieldsEnum,
   isZNonEmptyString,
   ResponseCodeEnum,
   ResponseStatusEnum,
@@ -51,11 +49,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 // #endregion
 
-// #region ---- Types Imports ----
-import { ApiPathEnum } from "@/enums/backendApi";
-import { RegisterFormFieldsEnum } from "@/enums/formData";
+// #region ---- Types Imports ----x
 import { ZRegisterI } from "@/types/auth";
-import { ZWithdrawOptionE } from "@/types/user";
 
 // #endregion
 
@@ -96,7 +91,7 @@ const Register: React.FC = () => {
             <RegisterForm />
           </ZBox>
         </ZCard>
-        <ZText mt="3" className="mb-7">
+        <ZText className="mt-3 mb-7">
           Already have a account?{" "}
           <ZLink onClick={navigateToLoginPage} className="pointer">
             Login
@@ -110,31 +105,12 @@ const Register: React.FC = () => {
 const RegisterForm: React.FC = () => {
   const navigate = useNavigate();
 
-  // const initialValues = useMemo<ZRegisterI>(
-  // 	() => ({
-  // 		[RegisterFormFieldsEnum.name]: 'ahsan',
-  // 		[RegisterFormFieldsEnum.email]: 'ahsan@gmail.com',
-  // 		[RegisterFormFieldsEnum.phoneNumber]: '+923046619706',
-  // 		[RegisterFormFieldsEnum.city]: 'lahore',
-  // 		[RegisterFormFieldsEnum.country]: 'pakistan',
-  // 		[RegisterFormFieldsEnum.referralCode]: '2842dsdf',
-  // 		[RegisterFormFieldsEnum.withdrawOption]: [ZWithdrawOptionE.jazzCash],
-  // 		[RegisterFormFieldsEnum.password]: 'asdasd',
-  // 		[RegisterFormFieldsEnum.passwordConfirmation]: 'asdasd',
-  // 	}),
-  // 	[]
-  // );
   const initialValues = useMemo<ZRegisterI>(
     () => ({
-      [RegisterFormFieldsEnum.name]: "Talha bin Irshad",
-      [RegisterFormFieldsEnum.email]: "ahsan@gmail.com",
-      [RegisterFormFieldsEnum.phoneNumber]: "+923030033030",
-      [RegisterFormFieldsEnum.city]: "Lahore",
-      [RegisterFormFieldsEnum.country]: "Pakistan",
-      [RegisterFormFieldsEnum.referralCode]: "123123",
-      [RegisterFormFieldsEnum.withdrawOptions]: [ZWithdrawOptionE.jazzCash],
-      [RegisterFormFieldsEnum.password]: "asdasd",
-      [RegisterFormFieldsEnum.passwordConfirmation]: "asdasd",
+      [FormFieldsEnum.email]: "",
+      [FormFieldsEnum.phoneNumber]: "",
+      [FormFieldsEnum.password]: "",
+      [FormFieldsEnum.passwordConfirmation]: "",
     }),
     []
   );
@@ -160,17 +136,11 @@ const RegisterForm: React.FC = () => {
   const formikOnSubmit = useCallback(
     async (values: ZRegisterI, { setErrors }: FormikHelpers<ZRegisterI>) => {
       const reqData = zStringify({
-        name: values.name,
-        city: values.city,
-        country: values.country,
-        email: values.email,
-        phoneNumber: values.phoneNumber,
-        referralCode: values.referralCode ? values.referralCode : undefined,
-        withdrawOptions: values.withdrawOptions?.length
-          ? values.withdrawOptions
-          : [ZWithdrawOptionE.jazzCash],
-        password: values.password,
-        passwordConfirmation: values.passwordConfirmation,
+        [FormFieldsEnum.email]: values?.[FormFieldsEnum.email],
+        [FormFieldsEnum.phoneNumber]: values?.[FormFieldsEnum.phoneNumber],
+        [FormFieldsEnum.password]: values?.[FormFieldsEnum.password],
+        [FormFieldsEnum.passwordConfirmation]:
+          values?.[FormFieldsEnum.passwordConfirmation],
       });
 
       try {
@@ -190,7 +160,7 @@ const RegisterForm: React.FC = () => {
 
             if (isZNonEmptyString(token)) {
               await navigate({
-                to: AppRoutes.appSub.dashboard.completePath,
+                to: AppRoutes.profile,
               });
 
               showSuccessNotification(MESSAGES.generic.registerSuccessfully);
@@ -218,35 +188,17 @@ const RegisterForm: React.FC = () => {
     <Formik
       initialValues={initialValues}
       validate={formikValidation}
+      enableReinitialize
       onSubmit={(values, formikHelpers) => {
         if (!isRegisterUserPending) {
           formikOnSubmit(values, formikHelpers);
         }
       }}
-      enableReinitialize
     >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        setFieldValue,
-      }) => {
+      {({ values, errors, touched, handleChange, handleBlur }) => {
         return (
           <Form>
             <ZBox className="mb-6 space-y-4">
-              <ZInput
-                name="name"
-                required
-                label="Name"
-                value={values?.name}
-                isTouched={touched?.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                errorMessage={errors?.name}
-              />
-
               <ZInput
                 name="email"
                 required
@@ -268,90 +220,6 @@ const RegisterForm: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-
-              <ZInput
-                name="city"
-                label="City"
-                value={values?.city}
-                isTouched={touched?.city}
-                errorMessage={errors?.city}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-
-              <ZInput
-                name="country"
-                label="Country"
-                value={values?.country}
-                isTouched={touched?.country}
-                errorMessage={errors?.country}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-
-              <ZInput
-                name="referralCode"
-                label="Referral Code"
-                value={values?.referralCode}
-                errorMessage={errors?.referralCode}
-                isTouched={touched?.referralCode}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-
-              <ZBox>
-                <ZText as={ZRUTextAsE.label} className="block mb-1">
-                  Withdraw Option
-                  <ZText
-                    as={ZRUTextAsE.span}
-                    className="ms-1"
-                    color={ZRUColorE.tomato}
-                  >
-                    *
-                  </ZText>
-                </ZText>
-                <ZCheckboxGroup
-                  name="withdrawOptions"
-                  onValueChange={(value) => {
-                    setFieldValue("withdrawOptions", value);
-                  }}
-                >
-                  <ZFlex className="gap-5">
-                    <ZCheckboxItem value={ZWithdrawOptionE.jazzCash}>
-                      JazzCash
-                    </ZCheckboxItem>
-                    <ZCheckboxItem value={ZWithdrawOptionE.easyPaisa}>
-                      EasyPaisa
-                    </ZCheckboxItem>
-                  </ZFlex>
-                </ZCheckboxGroup>
-                <ZText
-                  size="1"
-                  color={ZRUColorE.tomato}
-                  className="font-medium"
-                >
-                  {errors?.withdrawOptions
-                    ? Array.isArray(errors?.withdrawOptions)
-                      ? errors?.withdrawOptions[0]
-                      : errors?.withdrawOptions
-                    : null}
-                </ZText>
-                {/* <ZBox className="flex gap-7">
-                  <ZText as={ZRUTextAsE.label} size="2">
-                    <ZFlex gap="2">
-                      <ZCheckbox />
-                      JazzCash
-                    </ZFlex>
-                  </ZText>
-
-                  <ZText as={ZRUTextAsE.label} size="2">
-                    <ZFlex gap="2">
-                      <ZCheckbox />
-                      EasyPaisa
-                    </ZFlex>
-                  </ZText>
-                </ZBox> */}
-              </ZBox>
 
               <ZInput
                 name="password"

@@ -1,16 +1,18 @@
+import { ConstellationsEnum } from "zaions-tool-kit/dist/roommate";
+
 const ZConstellationsData = [
-    { value: 'aries', label: 'Aries (Mesha)' },
-    { value: 'taurus', label: 'Taurus (Vrushabha)' },
-    { value: 'gemini', label: 'Gemini (Mithuna)' },
-    { value: 'crab/cancer', label: 'Crab/Cancer (Karka)' },
-    { value: 'leo', label: 'Leo (Simha)' },
-    { value: 'virgo', label: 'Virgo (Kanya)' },
-    { value: 'libra', label: 'Libra (Tula)' },
-    { value: 'scorpion', label: 'Scorpion (Vruschika)' },
-    { value: 'saggitarius', label: 'Saggitarius (Dhanusha)' },
-    { value: 'capricorn', label: 'Capricorn (Makara)' },
-    { value: 'aquarius', label: 'Aquarius (Kumbha)' },
-    { value: 'pisces', label: 'Pisces (Meena)' },
+  { value: ConstellationsEnum.aries, label: "Aries (Mesha)" },
+  { value: ConstellationsEnum.taurus, label: "Taurus (Vrushabha)" },
+  { value: ConstellationsEnum.gemini, label: "Gemini (Mithuna)" },
+  { value: ConstellationsEnum.crabCancer, label: "Crab/Cancer (Karka)" },
+  { value: ConstellationsEnum.leo, label: "Leo (Simha)" },
+  { value: ConstellationsEnum.virgo, label: "Virgo (Kanya)" },
+  { value: ConstellationsEnum.libra, label: "Libra (Tula)" },
+  { value: ConstellationsEnum.scorpion, label: "Scorpion (Vruschika)" },
+  { value: ConstellationsEnum.saggitarius, label: "Saggitarius (Dhanusha)" },
+  { value: ConstellationsEnum.capricorn, label: "Capricorn (Makara)" },
+  { value: ConstellationsEnum.aquarius, label: "Aquarius (Kumbha)" },
+  { value: ConstellationsEnum.pisces, label: "Pisces (Meena)" },
 ];
 
-export default ZConstellationsData
+export default ZConstellationsData;

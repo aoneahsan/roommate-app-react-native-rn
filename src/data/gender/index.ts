@@ -1,9 +1,9 @@
-import { EGenderType } from "@/types/preference";
+import { GenderEnum } from "zaions-tool-kit/dist/roommate";
 
 const ZGenderData = [
-    { value: EGenderType.male, label: 'Male' },
-    { value: EGenderType.female, label: 'Female' },
-    { value: EGenderType.nonBinary, label: 'Non-Binary' },
+  { value: GenderEnum.male, label: "Male" },
+  { value: GenderEnum.female, label: "Female" },
+  { value: GenderEnum.nonBinary, label: "Non-Binary" },
 ];
 
-export default ZGenderData
+export default ZGenderData;

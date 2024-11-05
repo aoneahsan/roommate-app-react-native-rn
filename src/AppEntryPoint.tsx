@@ -1,13 +1,9 @@
 import { Theme, ThemePanel } from "@radix-ui/themes";
 
 // Tanstack React Router
-import { RouterProvider } from "@tanstack/react-router";
-import AppRouter from "./routes";
 
 // Import Radix UI CSS
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ToastContainer } from "react-toastify";
 import { RecoilRoot } from "recoil";
 
 import "@radix-ui/themes/styles.css";
@@ -25,6 +21,8 @@ import { configureZTK } from "zaions-tool-kit";
 
 // Import Swiper styles
 import "swiper/css";
+import AppRoutesEntry from "./AppRoutesEntry";
+import AppStateAndSideEffectsHOC from "./HOC/AppStateAndSideEffectsHOC";
 
 configureZTK({ cryptoSecret: ENVS.cryptoSecret });
 
@@ -36,14 +34,12 @@ const AppEntryPoint: React.FC = () => {
       <Theme appearance="dark" radius="full">
         <RecoilRoot>
           <QueryClientProvider client={queryClient}>
-            <RouterProvider router={AppRouter} />
+            <AppRoutesEntry />
 
-            <ReactQueryDevtools initialIsOpen={false} />
+            <AppStateAndSideEffectsHOC />
           </QueryClientProvider>
         </RecoilRoot>
         <ThemePanel defaultOpen={false} />
-
-        <ToastContainer />
       </Theme>
     </>
   );

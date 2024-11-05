@@ -9,7 +9,10 @@ import {
 // #region Custom imports
 import { getFrbAuthInstance } from "@/firebaseInstance";
 import { AppRoutes } from "@/routes/appRoutes";
+import constants from "@/utils/constants";
+import { STORAGE } from "zaions-react-tool-kit";
 import { isZNonEmptyString } from "zaions-tool-kit";
+import type { IUser } from "zaions-tool-kit/dist/play-and-win";
 import tanstackRootRoute from "./RootRoute";
 // #endregion
 
@@ -17,23 +20,36 @@ const frbAuth = getFrbAuthInstance();
 
 // on window refresh
 const privateRouteHandler = async () => {
-  const user = frbAuth.currentUser;
-  const token = await user?.getIdToken();
+  const user = await STORAGE.get<IUser>(constants.localStorageKeys.userData);
   if (
     user &&
     isZNonEmptyString(user?.email) &&
-    isZNonEmptyString(user?.uid) &&
-    isZNonEmptyString(token)
+    isZNonEmptyString(user?.id) &&
+    isZNonEmptyString(user?.phoneNumber)
   ) {
     return null;
+  } else {
+    throw redirect({
+      to: AppRoutes.login,
+    });
   }
-
-  throw redirect({
-    to: AppRoutes.login,
-  });
 };
 
-const publicRouteHandler = () => {};
+const publicRouteHandler = async () => {
+  const user = await STORAGE.get<IUser>(constants.localStorageKeys.userData);
+  if (
+    user &&
+    isZNonEmptyString(user?.email) &&
+    isZNonEmptyString(user?.id) &&
+    isZNonEmptyString(user?.phoneNumber)
+  ) {
+    throw redirect({
+      to: AppRoutes.appSub.placesList.completePath,
+    });
+  } else {
+    return null;
+  }
+};
 
 // #region  ----- Public routes -----
 // --- Home

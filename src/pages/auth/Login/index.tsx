@@ -1,39 +1,39 @@
-import ZPubNavigation from "@/components/public/Navigation";
 import FormActionButtons from "@/components/form/FormActionButtons";
+import ZPubNavigation from "@/components/public/Navigation";
 import { LoginFormFieldsEnum } from "@/enums/formData";
 import { formValidationRStateAtom } from "@/state/formState";
 
 import { AppRoutes } from "@/routes/appRoutes";
 
+import { getFrbAuthInstance } from "@/firebaseInstance";
+import { firebaseResponseCode } from "@/utils/constants/apis";
 import { MESSAGES } from "@/utils/messages";
+import { useNavigate } from "@tanstack/react-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { Form, Formik, FormikHelpers } from "formik";
 import React, { useCallback, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import {
   LoginI,
-  loginFormValidationSchema,
-  ZInput,
-  loginFormFields,
   ZBox,
-  ZFlex,
   ZCard,
+  ZFlex,
   ZHeading,
+  ZInput,
   ZLink,
-  ZText,
-  ZRUColorE,
-  ZRUJustifyE,
   ZRUAlignE,
-  ZRUGeneralAlignE,
+  ZRUColorE,
   ZRUDirectionE,
+  ZRUGeneralAlignE,
+  ZRUJustifyE,
+  ZText,
+  loginFormFields,
+  loginFormValidationSchema,
   showErrorNotification,
   showSuccessNotification,
 } from "zaions-react-ui-kit";
-import { FormikHelpers, Form, Formik } from "formik";
-import { useNavigate } from "@tanstack/react-router";
-import { ZodError } from "zod";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { getFrbAuthInstance } from "@/firebaseInstance";
 import { isZNonEmptyString } from "zaions-tool-kit";
-import { firebaseResponseCode } from "@/utils/constants/apis";
+import { ZodError } from "zod";
 
 const frbAuth = getFrbAuthInstance();
 
@@ -79,7 +79,7 @@ const Login: React.FC = () => {
           </ZBox>
         </ZCard>
 
-        <ZText mt="3">
+        <ZText className="mt-3">
           Don't have a account yet?{" "}
           <ZLink onClick={navigateToRegisterPage} className="pointer">
             Create a Account
